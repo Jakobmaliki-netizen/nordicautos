@@ -1,0 +1,4 @@
+# file: /Users/jakobmaliki/Desktop/nordic-autos-website adam nordic/deployment_system/source_analyzer/html_scanner.py
+# hypothesis_version: 6.151.4
+
+[500, '#', '*.htm', '*.html', ',', '.', '../', './', '.bak', '.bmp', '.css', '.gif', '.git', '.htm', '.html', '.ico', '.idea', '.jpeg', '.jpg', '.js', '.jsx', '.mjs', '.next', '.nuxt', '.png', '.svg', '.tiff', '.tmp', '.ts', '.tsx', '.vscode', '.webp', '/', '//', ':', '?', '\\', '__pycache__', 'a', 'build', 'coverage', 'data:', 'dist', 'ftp:', 'href', 'html.parser', 'html_scanner', 'http://', 'https://', 'icon', 'ignore', 'img', 'javascript:', 'link', 'mailto:', 'node_modules', 'r', 'script', 'source', 'src', 'srcset', 'style', 'stylesheet', 'tel:', 'test', 'tests', 'utf-8', '~']

@@ -1,0 +1,1088 @@
+/* Nordic Autos Website - Main CSS */
+
+/* CSS Variables for Nordic Autos Design System */
+:root {
+    --bg-main: #0a0f0b;
+    --bg-card: #151a16;
+    --accent-green: #0f3d2e;
+    --text-main: #f5f5f5;
+    --text-muted: #9ca3af;
+    --accent-gold: #c8a24d;
+    
+    /* Legacy variables for compatibility */
+    --primary: #0f3d2e;
+    --primary-dark: #0a2d21;
+    --background-light: #f6f6f8;
+    --background-dark: #0a0f0b;
+    --card-dark: #151a16;
+    --border-dark: #243047;
+    --text-light: #9ca3af;
+    --text-dark: #f5f5f5;
+}
+
+/* Base Styles */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #0a0f0b !important;
+    color: #f5f5f5 !important;
+}
+
+/* Perfect Image Quality Rules */
+img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: high-quality;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+    image-rendering: optimizeQuality;
+    -ms-interpolation-mode: bicubic;
+}
+
+/* Background images with perfect quality */
+[style*="background-image"] {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: high-quality;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+/* Hero images specific optimization */
+.aspect-\[16\/9\] {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: high-quality;
+}
+
+/* Showroom images optimization */
+.aspect-\[4\/3\] img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: high-quality;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Material Symbols Configuration */
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* Filled stars for reviews - GULD FARVE */
+.material-symbols-outlined.star-filled {
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    color: #c8a24d !important; /* Guld farve */
+}
+
+/* Custom Tailwind Configuration */
+.bg-primary { background-color: var(--accent-green) !important; }
+.bg-primary-dark { background-color: var(--primary-dark) !important; }
+.text-primary { color: var(--accent-green) !important; }
+.border-primary { border-color: var(--accent-green) !important; }
+.bg-background-light { background-color: var(--background-light); }
+.bg-background-dark { background-color: var(--bg-main) !important; }
+.bg-card-dark { background-color: var(--bg-card) !important; }
+.border-border-dark { border-color: var(--border-dark); }
+
+/* New color classes */
+.bg-main { background-color: var(--bg-main) !important; }
+.bg-card { background-color: var(--bg-card) !important; }
+.text-main { color: var(--text-main) !important; }
+.text-muted { color: var(--text-muted) !important; }
+.accent-green { color: var(--accent-green) !important; }
+.accent-gold { color: var(--accent-gold) !important; }
+
+/* Specific overrides - only what we need */
+.btn-primary {
+    background-color: #0f3d2e !important;
+    color: #f5f5f5 !important;
+}
+
+.btn-primary:hover {
+    background-color: #0a2d21 !important;
+}
+
+/* Card backgrounds */
+.bg-white.dark\:bg-card-dark,
+.bg-white.dark\:bg-slate-900\/50,
+.dark .bg-card-dark,
+.dark .bg-slate-900\/50 {
+    background-color: #111827 !important;
+}
+
+/* Focus rings */
+.focus\:ring-primary:focus {
+    --tw-ring-color: #0f3d2e !important;
+}
+
+/* Gradient backgrounds */
+.bg-gradient-to-r.from-primary {
+    background: linear-gradient(to right, #0f3d2e, #0a2d21) !important;
+}
+
+/* Custom Components */
+.car-card {
+    display: flex;
+    flex-direction: column;
+    background-color: #151a16;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid #374151;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.car-card:hover {
+    box-shadow: 0 25px 50px -12px rgba(15, 61, 46, 0.05);
+}
+
+.car-card-image {
+    position: relative;
+    aspect-ratio: 16/10;
+    overflow: hidden;
+}
+
+.car-card-image-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.5s ease;
+}
+
+.car-card:hover .car-card-image-bg {
+    transform: scale(1.05);
+}
+
+.car-card-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background-color: rgba(15, 61, 46, 0.9);
+    color: white;
+    font-size: 10px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+
+.car-card-content {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.car-card-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #f5f5f5;
+    margin: 0;
+}
+
+.car-card-specs {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: #9ca3af;
+    font-size: 14px;
+}
+
+.car-card-price {
+    font-size: 24px;
+    font-weight: 900;
+    color: #f5f5f5;
+    margin: 0;
+    padding-top: 8px;
+}
+
+/* Navigation Styles */
+.nav-link {
+    color: #64748b;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.dark .nav-link {
+    color: #cbd5e1;
+}
+
+.nav-link:hover {
+    color: #0f3d2e;
+}
+
+.nav-link-active {
+    color: #0f3d2e;
+    font-size: 0.875rem;
+    font-weight: 700;
+    border-bottom: 2px solid #0f3d2e;
+    padding: 0.25rem 0;
+}
+
+/* Button Styles */
+.btn-primary {
+    background-color: #0f3d2e !important;
+    color: #f5f5f5 !important;
+    font-size: 0.875rem;
+    font-weight: 700;
+    padding: 0 1.25rem;
+    height: 2.75rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+    box-shadow: 0 10px 15px -3px rgba(15, 61, 46, 0.2);
+}
+
+.btn-primary:hover {
+    background-color: #0a2d21 !important;
+}
+
+.btn-secondary {
+    background-color: white;
+    color: #0f172a;
+    font-weight: 700;
+    height: 3.5rem;
+    padding: 0 2rem;
+    border-radius: 0.75rem;
+    border: 1px solid #e2e8f0;
+    white-space: nowrap;
+    transition: all 0.2s;
+}
+
+.dark .btn-secondary {
+    background-color: #1e293b;
+    color: white;
+    border-color: #374151;
+}
+
+.btn-secondary:hover {
+    background-color: #f8fafc;
+}
+
+.dark .btn-secondary:hover {
+    background-color: #374151;
+}
+
+/* Form Styles */
+.form-input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    background-color: white;
+    color: #0f172a !important;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+}
+
+.dark .form-input {
+    border-color: #374151;
+    background-color: white !important;
+    color: #0f172a !important;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #0f3d2e;
+    box-shadow: 0 0 0 3px rgba(15, 61, 46, 0.1);
+}
+
+.form-input::placeholder {
+    color: #64748b !important;
+}
+
+.dark .form-input::placeholder {
+    color: #64748b !important;
+}
+
+/* Force dark text in ALL form elements - highest priority */
+input[type="text"], 
+input[type="email"], 
+input[type="tel"], 
+input[type="number"], 
+input[type="password"],
+select, 
+textarea,
+.form-input,
+input.form-input,
+select.form-input,
+textarea.form-input {
+    color: #0f172a !important; 
+    background-color: #ffffff !important;
+    -webkit-text-fill-color: #0f172a !important; /* For webkit browsers */
+}
+
+/* Force placeholder colors */
+input::placeholder, 
+textarea::placeholder,
+.form-input::placeholder {
+    color: #64748b !important;
+    opacity: 1 !important;
+}
+
+/* Force option text to be dark */
+option {
+    color: #0f172a !important;
+    background-color: #ffffff !important;
+}
+
+.form-select {
+    @apply w-full px-3 py-2 border border-slate-200 dark:border-border-dark rounded-lg bg-white dark:bg-white text-slate-900 dark:text-slate-900 focus:ring-2 focus:ring-primary focus:border-primary transition-all text-sm appearance-none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+    color: #0f172a !important;
+    background-color: #ffffff !important;
+}
+
+.form-select.filter-selected {
+    @apply border-primary bg-primary/5 text-primary font-semibold;
+}
+
+.form-textarea {
+    @apply w-full px-4 py-3 border border-slate-200 dark:border-border-dark rounded-lg bg-white dark:bg-white text-slate-900 dark:text-slate-900 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-primary focus:border-primary transition-all resize-vertical min-h-[120px];
+    color: #0f172a !important;
+    background-color: #ffffff !important;
+}
+
+/* Filter Styles */
+.filter-button {
+    @apply flex items-center justify-center py-2 px-3 border border-slate-200 dark:border-border-dark text-slate-700 dark:text-slate-300 text-xs font-medium rounded-lg hover:border-primary hover:text-primary transition-all cursor-pointer;
+}
+
+.filter-button-active {
+    @apply flex items-center justify-center py-2 px-3 border border-primary bg-primary text-white text-xs font-bold rounded-lg transition-all cursor-pointer;
+    background-color: #0f3d2e !important;
+    border-color: #0f3d2e !important;
+    color: #f5f5f5 !important;
+}
+
+/* Checkbox Styles */
+.form-checkbox {
+    @apply rounded border-slate-300 dark:border-border-dark bg-white dark:bg-white text-primary focus:ring-primary focus:ring-offset-0;
+}
+
+.form-checkbox:checked {
+    background-color: #0f3d2e !important;
+    border-color: #0f3d2e !important;
+}
+
+.form-checkbox:focus {
+    --tw-ring-color: #0f3d2e !important;
+}
+
+.form-checkbox:checked {
+    @apply bg-primary border-primary;
+}
+
+/* Price Filter Specific Styles */
+.price-filter-container {
+    @apply flex gap-2;
+}
+
+.price-filter-container input {
+    @apply min-w-0 flex-1;
+}
+
+/* Ensure no white blocks in filter sections */
+.filters-container > div {
+    @apply bg-transparent;
+}
+
+/* Remove any potential white blocks from grid layouts */
+.grid.grid-cols-2 {
+    @apply flex gap-2;
+}
+
+.grid.grid-cols-2 > input {
+    @apply flex-1 min-w-0;
+}
+
+/* Brand Filter Selected State */
+#selected-brand {
+    @apply text-xs text-primary font-semibold bg-primary/10 px-2 py-1 rounded;
+}
+
+/* Mobile Menu Styles */
+.mobile-menu {
+    @apply fixed inset-0 z-50 bg-white dark:bg-background-dark transform transition-transform duration-300 ease-in-out;
+}
+
+.mobile-menu.hidden {
+    @apply translate-x-full;
+}
+
+.mobile-menu.visible {
+    @apply translate-x-0;
+}
+
+/* Focus Styles */
+.focus-visible\:focus:focus-visible {
+    @apply outline-2 outline-offset-2 outline-primary;
+}
+
+/* Utility Classes */
+.btn-outline {
+    @apply border border-slate-200 dark:border-border-dark text-slate-600 dark:text-slate-300 hover:border-primary hover:text-primary transition-all px-4 py-2 rounded-lg text-sm font-medium;
+}
+
+
+
+/* Breadcrumb Styles */
+.breadcrumb {
+    @apply flex flex-wrap gap-2 mb-4;
+}
+
+.breadcrumb-link {
+    @apply text-slate-500 dark:text-slate-400 text-sm font-medium hover:text-primary transition-colors;
+}
+
+.breadcrumb-current {
+    @apply text-slate-900 dark:text-white text-sm font-medium;
+}
+
+.breadcrumb-separator {
+    @apply text-slate-400 dark:text-slate-500 text-sm font-medium;
+}
+
+/* Utility Classes */
+.text-gradient {
+    background: linear-gradient(135deg, var(--accent-green) 0%, #0a2d21 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.shadow-primary {
+    box-shadow: 0 10px 25px -3px rgba(15, 61, 46, 0.1), 0 4px 6px -2px rgba(15, 61, 46, 0.05);
+}
+
+/* Animation Classes */
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-in {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+}
+
+/* Mobile Menu Styles */
+.mobile-menu {
+    @apply fixed inset-0 z-50 bg-background-light dark:bg-background-dark transform transition-transform duration-300 ease-in-out;
+}
+
+.mobile-menu.hidden {
+    transform: translateX(-100%);
+}
+
+.mobile-menu.visible {
+    transform: translateX(0);
+}
+
+/* Responsive Utilities */
+@media (max-width: 768px) {
+    .mobile-hidden {
+        display: none;
+    }
+    
+    .mobile-visible {
+        display: block;
+    }
+}
+
+@media (min-width: 769px) {
+    .mobile-hidden {
+        display: block;
+    }
+    
+    .mobile-visible {
+        display: none;
+    }
+}
+
+/* Accessibility */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Focus Styles */
+.focus-visible:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* Print Styles */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+}
+/* Button Styles */
+.btn-primary {
+    @apply inline-flex items-center justify-center px-6 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-all duration-200;
+}
+
+.btn-secondary {
+    @apply inline-flex items-center justify-center px-6 py-3 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-semibold rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 transition-all duration-200;
+}
+
+.btn-outline {
+    @apply inline-flex items-center justify-center px-6 py-3 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 font-semibold rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 transition-all duration-200;
+}
+
+.btn-white {
+    @apply inline-flex items-center justify-center px-6 py-3 bg-white text-slate-900 font-semibold rounded-lg hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 transition-all duration-200;
+}
+
+.btn-outline-white {
+    @apply inline-flex items-center justify-center px-6 py-3 border border-white/30 text-white font-semibold rounded-lg hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 transition-all duration-200;
+}
+
+
+
+/* Navigation Styles */
+.nav-link {
+    @apply text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary font-medium transition-colors duration-200;
+}
+
+/* Mobile Menu */
+.mobile-menu {
+    @apply fixed inset-0 z-40 bg-white dark:bg-background-dark transform transition-transform duration-300 ease-in-out;
+}
+
+.mobile-menu.hidden {
+    @apply -translate-x-full;
+}
+
+.mobile-menu.visible {
+    @apply translate-x-0;
+}
+
+/* Focus Styles for Accessibility */
+.focus-visible:focus {
+    @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-white dark:ring-offset-slate-900;
+}
+
+/* Skip Links */
+.skip-links {
+    @apply absolute top-0 left-0 z-50;
+}
+
+.skip-link {
+    @apply absolute -top-24 left-2 bg-primary text-white px-4 py-2 rounded-md font-semibold text-sm transition-all duration-300 focus:top-2;
+}
+
+/* High Contrast Mode */
+.high-contrast {
+    filter: contrast(150%) brightness(120%);
+}
+
+.high-contrast .text-slate-500,
+.high-contrast .text-slate-400 {
+    @apply text-slate-900 dark:text-white;
+}
+
+.high-contrast button,
+.high-contrast a {
+    @apply outline outline-2 outline-current outline-offset-2;
+}
+
+/* Loading States */
+.loading {
+    @apply animate-pulse;
+}
+
+.loading-spinner {
+    @apply animate-spin;
+}
+
+/* Image Optimization */
+img[data-lazy] {
+    @apply opacity-0 transition-opacity duration-300;
+}
+
+img[data-lazy].loaded {
+    @apply opacity-100;
+}
+
+.image-error {
+    @apply bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400;
+}
+
+/* Admin Styles */
+.admin-header {
+    @apply bg-white dark:bg-card-dark border-b border-slate-200 dark:border-border-dark;
+}
+
+.admin-card {
+    @apply bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-border-dark p-6;
+}
+
+.admin-table {
+    @apply w-full divide-y divide-slate-200 dark:divide-border-dark;
+}
+
+.admin-table th {
+    @apply px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider bg-slate-50 dark:bg-slate-800;
+}
+
+.admin-table td {
+    @apply px-6 py-4 whitespace-nowrap text-sm text-slate-900 dark:text-white;
+}
+
+/* Responsive Design Helpers */
+@media (max-width: 768px) {
+    .mobile-hidden {
+        @apply hidden;
+    }
+    
+    .mobile-full {
+        @apply w-full;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .no-print {
+        @apply hidden;
+    }
+    
+    .print-break {
+        page-break-after: always;
+    }
+}
+
+/* Animation Classes */
+.fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.slide-up {
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { 
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to { 
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Utility Classes */
+.text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.backdrop-blur-custom {
+    backdrop-filter: blur(8px);
+}
+
+/* Dark Mode Improvements */
+.dark .bg-gradient-to-r {
+    background-image: linear-gradient(to right, var(--accent-green), #0a2d21);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    @apply bg-slate-100 dark:bg-slate-800;
+}
+
+::-webkit-scrollbar-thumb {
+    @apply bg-slate-300 dark:bg-slate-600 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    @apply bg-slate-400 dark:bg-slate-500;
+}
+
+/* Selection Styles */
+::selection {
+    @apply bg-primary/20 text-primary;
+}
+
+::-moz-selection {
+    @apply bg-primary/20 text-primary;
+}
+
+/* CORRECT COLOR SCHEME IMPLEMENTATION */
+/* Following the exact color scheme provided */
+
+/* 3D Car Showcase Styles */
+.car-3d-container {
+    perspective: 1000px;
+    height: 400px;
+}
+
+.car-3d-card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+    cursor: pointer;
+}
+
+.car-3d-container:hover .car-3d-card {
+    transform: rotateY(15deg) rotateX(5deg) translateZ(20px);
+}
+
+.car-3d-image {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #151a16 0%, #1f2937 100%);
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.car-3d-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+    filter: brightness(1.1) contrast(1.1);
+    background: linear-gradient(135deg, #151a16 0%, #1f2937 100%);
+}
+
+/* Car Placeholder Styles */
+.car-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #151a16 0%, #1f2937 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.car-placeholder::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(15, 61, 46, 0.1) 0%, rgba(31, 41, 55, 0.1) 100%);
+    z-index: 1;
+}
+
+.car-icon {
+    font-size: 5rem;
+    margin-bottom: 1rem;
+    z-index: 2;
+    position: relative;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.car-brand {
+    font-size: 1.2rem;
+    font-weight: 900;
+    letter-spacing: 3px;
+    color: #f5f5f5;
+    z-index: 2;
+    position: relative;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Brand-specific styling */
+.porsche-placeholder {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+}
+
+.porsche-placeholder .car-icon {
+    color: #ffcc00;
+}
+
+.mercedes-placeholder {
+    background: linear-gradient(135deg, #0f1419 0%, #1e2832 100%);
+}
+
+.mercedes-placeholder .car-icon {
+    color: #c8c8c8;
+}
+
+.audi-placeholder {
+    background: linear-gradient(135deg, #1a0f0f 0%, #2d1e1e 100%);
+}
+
+.audi-placeholder .car-icon {
+    color: #ff0000;
+}
+
+.volkswagen-placeholder {
+    background: linear-gradient(135deg, #0f1a1a 0%, #1e2d32 100%);
+}
+
+.volkswagen-placeholder .car-icon {
+    color: #00b4d8;
+}
+
+/* Hover effects for placeholders */
+.car-3d-container:hover .car-placeholder .car-icon {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
+
+.car-3d-container:hover .car-placeholder .car-brand {
+    color: #0f3d2e;
+    transition: color 0.3s ease;
+}
+
+/* Fallback for broken images */
+.car-3d-img:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #151a16 0%, #1f2937 100%);
+    z-index: -1;
+}
+
+.car-3d-img[src=""],
+.car-3d-img:not([src]),
+.car-3d-img[src*="data:image/svg+xml"] {
+    background: linear-gradient(135deg, #151a16 0%, #1f2937 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.car-3d-img[src=""]:after,
+.car-3d-img:not([src]):after,
+.car-3d-img[src*="data:image/svg+xml"]:after {
+    content: '🚗';
+    font-size: 4rem;
+    color: #0f3d2e;
+}
+
+.car-3d-container:hover .car-3d-img {
+    transform: scale(1.1);
+}
+
+.car-3d-reflection {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(
+        to top,
+        rgba(15, 61, 46, 0.2) 0%,
+        transparent 100%
+    );
+    pointer-events: none;
+}
+
+.car-3d-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(
+        to top,
+        rgba(10, 15, 11, 0.95) 0%,
+        rgba(10, 15, 11, 0.8) 70%,
+        transparent 100%
+    );
+    padding: 20px;
+    border-radius: 0 0 16px 16px;
+    transform: translateZ(10px);
+}
+
+.car-3d-container:hover .car-3d-info {
+    transform: translateZ(30px);
+}
+
+/* 3D Animation Keyframes */
+@keyframes float3d {
+    0%, 100% {
+        transform: translateY(0px) rotateY(0deg);
+    }
+    50% {
+        transform: translateY(-10px) rotateY(2deg);
+    }
+}
+
+.car-3d-container:nth-child(1) .car-3d-card {
+    animation: float3d 6s ease-in-out infinite;
+    animation-delay: 0s;
+}
+
+.car-3d-container:nth-child(2) .car-3d-card {
+    animation: float3d 6s ease-in-out infinite;
+    animation-delay: 2s;
+}
+
+.car-3d-container:nth-child(3) .car-3d-card {
+    animation: float3d 6s ease-in-out infinite;
+    animation-delay: 4s;
+}
+
+/* 3D Glow Effect */
+.car-3d-container:hover .car-3d-image::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #0f3d2e, #1f2937, #0f3d2e);
+    border-radius: 18px;
+    z-index: -1;
+    opacity: 0.7;
+    filter: blur(10px);
+}
+
+/* Responsive 3D Effects */
+@media (max-width: 768px) {
+    .car-3d-container {
+        height: 350px;
+        perspective: 800px;
+    }
+    
+    .car-3d-image {
+        height: 200px;
+    }
+    
+    .car-3d-container:hover .car-3d-card {
+        transform: rotateY(10deg) rotateX(3deg) translateZ(15px);
+    }
+}
+
+/* Force correct background colors */
+body, 
+html,
+.bg-background-dark,
+.dark\:bg-background-dark {
+    background-color: #0a0f0b !important; /* --bg-main */
+}
+
+/* Force correct card backgrounds */
+.bg-white.dark\:bg-card-dark,
+.bg-white.dark\:bg-slate-900\/50,
+.dark .bg-card-dark,
+.dark .bg-slate-900\/50,
+.bg-card-dark,
+.admin-card,
+.car-card {
+    background-color: #151a16 !important; /* --bg-card */
+}
+
+/* Force correct text colors */
+.text-slate-900.dark\:text-white,
+.dark\:text-white,
+h1, h2, h3, h4, h5, h6,
+.text-main {
+    color: #f5f5f5 !important; /* --text-main */
+}
+
+.text-slate-600.dark\:text-slate-400,
+.dark\:text-slate-400,
+.text-slate-500,
+p, span,
+.text-muted {
+    color: #9ca3af !important; /* --text-muted */
+}
+
+/* Force correct accent colors */
+.bg-primary,
+.btn-primary,
+button.btn-primary,
+a.btn-primary {
+    background-color: #0f3d2e !important; /* --accent-green */
+    color: #f5f5f5 !important; /* --text-main */
+}
+
+.text-primary,
+a.text-primary,
+.hover\:text-primary:hover {
+    color: #0f3d2e !important; /* --accent-green */
+}
+
+.border-primary,
+.focus\:border-primary:focus {
+    border-color: #0f3d2e !important; /* --accent-green */
+}
+
+/* Focus rings with correct color */
+.focus\:ring-primary:focus,
+input:focus,
+select:focus,
+textarea:focus {
+    --tw-ring-color: #0f3d2e !important; /* --accent-green */
+    box-shadow: 0 0 0 3px rgba(15, 61, 46, 0.3) !important;
+}
+
+/* Gradient with correct colors */
+.bg-gradient-to-r.from-primary {
+    background: linear-gradient(to right, #0f3d2e, #0a2d21) !important;
+}
+
+/* Filter buttons with correct colors */
+.filter-button-active {
+    background-color: #0f3d2e !important; /* --accent-green */
+    border-color: #0f3d2e !important; /* --accent-green */
+    color: #f5f5f5 !important; /* --text-main */
+}
+
+/* Form elements with correct colors */
+.form-checkbox:checked {
+    background-color: #0f3d2e !important; /* --accent-green */
+    border-color: #0f3d2e !important; /* --accent-green */
+}
+
+/* Navigation active states */
+.nav-link-active {
+    color: #0f3d2e !important; /* --accent-green */
+    border-color: #0f3d2e !important; /* --accent-green */
+}
+
+/* Optional gold accent for special elements */
+.accent-gold {
+    color: #c8a24d !important; /* --accent-gold */
+}
+
+/* Ensure proper contrast for readability */
+.bg-primary .text-white,
+.btn-primary,
+button.btn-primary {
+    color: #f5f5f5 !important; /* --text-main for contrast */
+}

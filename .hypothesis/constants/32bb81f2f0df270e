@@ -1,0 +1,4 @@
+# file: /Users/jakobmaliki/Desktop/nordic-autos-website adam nordic/deployment_system/utils/file_utils.py
+# hypothesis_version: 6.151.4
+
+['*', '.css', '.csv', '.htm', '.html', '.js', '.json', '.md', '.svg', '.txt', '.xml', '.yaml', '.yml', 'application/json', 'application/xml', 'file_utils', 'r', 'text/', 'utf-8', 'w']

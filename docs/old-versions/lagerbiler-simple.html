@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html class="dark" lang="da">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Lagerbiler - Nordic Autos</title>
+    <meta name="description" content="Udforsk Nordic Autos' eksklusive lagerbiler. Premium køretøjer fra Porsche, Audi, Mercedes-Benz, BMW og Tesla i Skive."/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+    <link rel="stylesheet" href="assets/css/main.css"/>
+    <link rel="stylesheet" href="assets/css/custom-theme.css"/>
+    <script src="components/navigation-clean.js?v=3" defer></script>
+    <script src="assets/js/main.js?v=2" defer></script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-white transition-colors duration-300">
+    <!-- Navigation will be loaded here -->
+    <div id="navigation-container"></div>
+    
+    <main class="max-w-[1440px] mx-auto w-full px-6 lg:px-10 py-8">
+        <!-- Page Heading -->
+        <div class="flex flex-wrap justify-between items-end gap-4 mb-10">
+            <div class="flex flex-col gap-2">
+                <h1 class="text-slate-900 dark:text-white text-4xl md:text-5xl font-black leading-tight tracking-[-0.033em]">Lagerbiler</h1>
+                <p class="text-slate-600 dark:text-slate-400 text-lg font-normal max-w-2xl">Oplev vores nøje udvalgte sortiment af biler.</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <div class="flex flex-col items-end">
+                    <span id="car-count" class="text-primary font-bold text-2xl">4</span>
+                    <span class="text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider font-semibold">Biler fundet</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Area: Sidebar + Grid -->
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Sidebar Filters -->
+            <aside class="w-full lg:w-80 flex flex-col gap-6">
+                <div class="bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-border-dark p-6 shadow-sm">
+                    <div class="flex items-center justify-between mb-6">
+                        <div>
+                            <h3 class="text-slate-900 dark:text-white text-lg font-bold">Filtre</h3>
+                            <p class="text-slate-500 dark:text-slate-400 text-xs">Tilpas din søgning</p>
+                        </div>
+                        <span class="material-symbols-outlined text-slate-400">tune</span>
+                    </div>
+                    <div class="flex flex-col gap-6">
+                        <!-- Brand Filter -->
+                        <div class="flex flex-col gap-3">
+                            <label class="text-slate-900 dark:text-white text-sm font-bold flex items-center gap-2">
+                                <span class="material-symbols-outlined text-primary text-lg">directions_car</span>
+                                Mærke
+                            </label>
+                            <select id="brand-filter" class="form-select" onchange="filterCars()">
+                                <option value="">Alle mærker</option>
+                                <option value="Porsche">Porsche</option>
+                                <option value="Mercedes-Benz">Mercedes-Benz</option>
+                                <option value="Volkswagen">Volkswagen</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Inventory Grid -->
+            <div class="flex-1">
+                <div id="cars-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                    <!-- Car 1 - Porsche -->
+                    <div class="car-card" data-brand="Porsche" style="display: flex; flex-direction: column; background-color: #151a16; border-radius: 16px; overflow: hidden; border: 1px solid #374151; cursor: pointer; transition: all 0.3s ease;" onclick="window.location.href='bil-detaljer.html?id=1'">
+                        <div style="position: relative; aspect-ratio: 16/10; overflow: hidden;">
+                            <div style="position: absolute; inset: 0; background: linear-gradient(135deg, #1f2937 0%, #374151 100%); display: flex; align-items: center; justify-content: center;">
+                                <div style="text-align: center; color: #f5f5f5;">
+                                    <div style="font-size: 48px; margin-bottom: 8px;">🏎️</div>
+                                    <div style="font-size: 18px; font-weight: bold;">Porsche</div>
+                                </div>
+                            </div>
+                            <div style="position: absolute; top: 16px; left: 16px; background-color: rgba(15, 61, 46, 0.9); color: white; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; padding: 4px 12px; border-radius: 20px;">Nyhed</div>
+                        </div>
+                        <div style="padding: 24px; display: flex; flex-direction: column; gap: 12px;">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                <h3 style="font-size: 18px; font-weight: bold; color: #f5f5f5; margin: 0;">Porsche 911 Carrera S</h3>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 16px; color: #9ca3af; font-size: 14px;">
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <span class="material-symbols-outlined" style="font-size: 16px;">calendar_today</span>
+                                    2022
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <span class="material-symbols-outlined" style="font-size: 16px;">speed</span>
+                                    15.000 km
+                                </div>
+                            </div>
+                            <p style="font-size: 24px; font-weight: 900; color: #f5f5f5; margin: 0; padding-top: 8px;">1.895.000 DKK</p>
+                        </div>
+                    </div>
+
+                    <!-- Car 2 - Mercedes -->
+                    <div class="car-card" data-brand="Mercedes-Benz" style="display: flex; flex-direction: column; background-color: #151a16; border-radius: 16px; overflow: hidden; border: 1px solid #374151; cursor: pointer; transition: all 0.3s ease;" onclick="window.location.href='bil-detaljer.html?id=2'">
+                        <div style="position: relative; aspect-ratio: 16/10; overflow: hidden;">
+                            <div style="position: absolute; inset: 0; background: linear-gradient(135deg, #1f2937 0%, #374151 100%); display: flex; align-items: center; justify-content: center;">
+                                <div style="text-align: center; color: #f5f5f5;">
+                                    <div style="font-size: 48px; margin-bottom: 8px;">⚡</div>
+                                    <div style="font-size: 18px; font-weight: bold;">Mercedes-Benz</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="padding: 24px; display: flex; flex-direction: column; gap: 12px;">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                <h3 style="font-size: 18px; font-weight: bold; color: #f5f5f5; margin: 0;">Mercedes-Benz EQA 250</h3>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 16px; color: #9ca3af; font-size: 14px;">
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <span class="material-symbols-outlined" style="font-size: 16px;">calendar_today</span>
+                                    2023
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <span class="material-symbols-outlined" style="font-size: 16px;">speed</span>
+                                    12.000 km
+                                </div>
+                            </div>
+                            <p style="font-size: 24px; font-weight: 900; color: #f5f5f5; margin: 0; padding-top: 8px;">485.000 DKK</p>
+                        </div>
+                    </div>
+
+                    <!-- Car 3 - Mercedes EQB -->
+                    <div class="car-card" data-brand="Mercedes-Benz" style="display: flex; flex-direction: column; background-color: #151a16; border-radius: 16px; overflow: hidden; border: 1px solid #374151; cursor: pointer; transition: all 0.3s ease;" onclick="window.location.href='bil-detaljer.html?id=3'">
+                        <div style="position: relative; aspect-ratio: 16/10; overflow: hidden;">
+                            <div style="position: absolute; inset: 0; background: linear-gradient(135deg, #1f2937 0%, #374151 100%); display: flex; align-items: center; justify-content: center;">
+                                <div style="text-align: center; color: #f5f5f5;">
+                                    <div style="font-size: 48px; margin-bottom: 8px;">🚙</div>
+                                    <div style="font-size: 18px; font-weight: bold;">Mercedes-Benz</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="padding: 24px; display: flex; flex-direction: column; gap: 12px;">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                <h3 style="font-size: 18px; font-weight: bold; color: #f5f5f5; margin: 0;">Mercedes-Benz EQB 350</h3>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 16px; color: #9ca3af; font-size: 14px;">
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <span class="material-symbols-outlined" style="font-size: 16px;">calendar_today</span>
+                                    2023
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <span class="material-symbols-outlined" style="font-size: 16px;">speed</span>
+                                    8.500 km
+                                </div>
+                            </div>
+                            <p style="font-size: 24px; font-weight: 900; color: #f5f5f5; margin: 0; padding-top: 8px;">525.000 DKK</p>
+                        </div>
+                    </div>
+
+                    <!-- Car 4 - VW ID.3 -->
+                    <div class="car-card" data-brand="Volkswagen" style="display: flex; flex-direction: column; background-color: #151a16; border-radius: 16px; overflow: hidden; border: 1px solid #374151; cursor: pointer; transition: all 0.3s ease;" onclick="window.location.href='bil-detaljer.html?id=4'">
+                        <div style="position: relative; aspect-ratio: 16/10; overflow: hidden;">
+                            <div style="position: absolute; inset: 0; background: linear-gradient(135deg, #1f2937 0%, #374151 100%); display: flex; align-items: center; justify-content: center;">
+                                <div style="text-align: center; color: #f5f5f5;">
+                                    <div style="font-size: 48px; margin-bottom: 8px;">🚗</div>
+                                    <div style="font-size: 18px; font-weight: bold;">Volkswagen</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="padding: 24px; display: flex; flex-direction: column; gap: 12px;">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                <h3 style="font-size: 18px; font-weight: bold; color: #f5f5f5; margin: 0;">Volkswagen ID.3 Pro</h3>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 16px; color: #9ca3af; font-size: 14px;">
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <span class="material-symbols-outlined" style="font-size: 16px;">calendar_today</span>
+                                    2023
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <span class="material-symbols-outlined" style="font-size: 16px;">speed</span>
+                                    15.000 km
+                                </div>
+                            </div>
+                            <p style="font-size: 24px; font-weight: 900; color: #f5f5f5; margin: 0; padding-top: 8px;">385.000 DKK</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer will be loaded here -->
+    <div id="footer-container"></div>
+
+    <script>
+        // Initialize page-specific functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Lagerbiler page loading...');
+            
+            // Set current page for navigation
+            if (window.Navigation) {
+                window.navigation = new Navigation('lagerbiler');
+                console.log('Navigation initialized for lagerbiler');
+            } else {
+                console.error('Navigation class not found');
+            }
+            
+            console.log('Lagerbiler page loaded successfully');
+        });
+
+        // Simple filter function
+        function filterCars() {
+            const brandFilter = document.getElementById('brand-filter').value;
+            const carCards = document.querySelectorAll('.car-card');
+            let visibleCount = 0;
+            
+            carCards.forEach(card => {
+                const cardBrand = card.getAttribute('data-brand');
+                if (brandFilter === '' || cardBrand === brandFilter) {
+                    card.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Update car count
+            document.getElementById('car-count').textContent = visibleCount;
+        }
+    </script>
+</body>
+</html>

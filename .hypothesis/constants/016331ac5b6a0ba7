@@ -1,0 +1,4 @@
+# file: /Users/jakobmaliki/Desktop/nordic-autos-website adam nordic/deployment_system/models/__init__.py
+# hypothesis_version: 6.151.4
+
+['AssetReference', 'HtmlFile', 'ProductionPackage', 'ValidationResult']

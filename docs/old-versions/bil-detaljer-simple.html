@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html class="dark" lang="da">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title id="page-title">Bil Detaljer - Nordic Autos</title>
+    <meta id="page-description" name="description" content="Se detaljerede oplysninger om denne eksklusive bil fra Nordic Autos i Skive."/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+    <link rel="stylesheet" href="assets/css/main.css"/>
+    <link rel="stylesheet" href="assets/css/custom-theme.css"/>
+    <script src="components/navigation-clean.js?v=3" defer></script>
+    <script src="assets/js/main.js?v=2" defer></script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-white transition-colors duration-300">
+    <!-- Navigation will be loaded here -->
+    <div id="navigation-container"></div>
+    
+    <main class="max-w-[1440px] mx-auto w-full px-6 lg:px-10 py-8">
+        <!-- Breadcrumb -->
+        <nav class="flex mb-8" aria-label="Breadcrumb">
+            <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                <li class="inline-flex items-center">
+                    <a href="index.html" class="inline-flex items-center text-sm font-medium text-slate-700 hover:text-primary dark:text-slate-400 dark:hover:text-white">
+                        <span class="material-symbols-outlined mr-2 text-sm">home</span>
+                        Forside
+                    </a>
+                </li>
+                <li>
+                    <div class="flex items-center">
+                        <span class="material-symbols-outlined text-slate-400 mx-1">chevron_right</span>
+                        <a href="lagerbiler.html" class="ml-1 text-sm font-medium text-slate-700 hover:text-primary md:ml-2 dark:text-slate-400 dark:hover:text-white">Lagerbiler</a>
+                    </div>
+                </li>
+                <li aria-current="page">
+                    <div class="flex items-center">
+                        <span class="material-symbols-outlined text-slate-400 mx-1">chevron_right</span>
+                        <span id="breadcrumb-car-name" class="ml-1 text-sm font-medium text-slate-500 md:ml-2 dark:text-slate-400">Bil Detaljer</span>
+                    </div>
+                </li>
+            </ol>
+        </nav>
+
+        <!-- Car Details Content -->
+        <div id="car-details-content">
+            <!-- Car will be loaded here by JavaScript -->
+        </div>
+
+        <!-- Error State -->
+        <div id="error-state" class="hidden text-center py-20">
+            <div class="max-w-md mx-auto">
+                <span class="material-symbols-outlined text-6xl text-red-300 mb-4 block">error</span>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Bil ikke fundet</h3>
+                <p class="text-slate-600 dark:text-slate-400 mb-6">Den ønskede bil kunne ikke findes eller er ikke længere tilgængelig.</p>
+                <a href="lagerbiler.html" class="btn-primary">
+                    Tilbage til lagerbiler
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer will be loaded here -->
+    <div id="footer-container"></div>
+
+    <script>
+        // Car data
+        const cars = {
+            1: {
+                id: 1,
+                brand: "Porsche",
+                model: "911 Carrera S",
+                variant: "3.0 Turbo PDK",
+                year: 2022,
+                mileage: 15000,
+                price: 1895000,
+                fuelType: "Benzin",
+                bodyType: "Coupe",
+                horsepower: 450,
+                features: ["Sport Chrono Package", "PASM Sport Suspension", "Sport Exhaust System", "LED Matrix Headlights"],
+                description: "En fantastisk Porsche 911 Carrera S med mange ekstrafunktioner og sportspakke. Bilen er i perfekt stand og klar til nye eventyr.",
+                status: "available",
+                isNew: true
+            },
+            2: {
+                id: 2,
+                brand: "Mercedes-Benz",
+                model: "EQA 250",
+                variant: "Electric",
+                year: 2023,
+                mileage: 12000,
+                price: 485000,
+                fuelType: "El",
+                bodyType: "SUV",
+                horsepower: 190,
+                features: ["MBUX Infotainment", "LED High Performance", "Keyless-Go", "Panorama Soltag"],
+                description: "Moderne elektrisk SUV fra Mercedes-Benz med avanceret teknologi og komfort. Perfekt til familier der ønsker miljøvenlig kørsel.",
+                status: "available"
+            },
+            3: {
+                id: 3,
+                brand: "Mercedes-Benz",
+                model: "EQB 350",
+                variant: "4MATIC",
+                year: 2023,
+                mileage: 8500,
+                price: 525000,
+                fuelType: "El",
+                bodyType: "SUV",
+                horsepower: 292,
+                features: ["AMG Line", "MBUX Hyperscreen", "Burmester Sound", "Air Body Control"],
+                description: "Kraftfuld elektrisk SUV med 4MATIC firehjulstræk. Luksus og performance i ét.",
+                status: "available"
+            },
+            4: {
+                id: 4,
+                brand: "Volkswagen",
+                model: "ID.3 Pro",
+                variant: "Electric",
+                year: 2023,
+                mileage: 15000,
+                price: 385000,
+                fuelType: "El",
+                bodyType: "Hatchback",
+                horsepower: 204,
+                features: ["ID.Light", "Wireless Charging", "Travel Assist", "IQ.Drive"],
+                description: "Kompakt elektrisk bil med moderne teknologi og god rækkevidde. Perfekt til bylivet.",
+                status: "available"
+            }
+        };
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Bil detaljer page loading...');
+            
+            // Set current page for navigation
+            if (window.Navigation) {
+                window.navigation = new Navigation('bil-detaljer');
+                console.log('Navigation initialized for bil-detaljer');
+            }
+            
+            // Get car ID from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const carId = parseInt(urlParams.get('id'));
+            
+            console.log('Car ID from URL:', carId);
+            
+            if (carId && cars[carId]) {
+                displayCar(cars[carId]);
+            } else {
+                showError();
+            }
+        });
+
+        function displayCar(car) {
+            console.log('Displaying car:', car);
+            
+            // Update page title and breadcrumb
+            document.getElementById('page-title').textContent = `${car.brand} ${car.model} - Nordic Autos`;
+            document.getElementById('breadcrumb-car-name').textContent = `${car.brand} ${car.model}`;
+            
+            // Create car details HTML
+            const carDetailsHTML = `
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
+                    <!-- Car Image -->
+                    <div class="space-y-4">
+                        <div class="aspect-[4/3] bg-slate-100 dark:bg-slate-800 rounded-xl overflow-hidden">
+                            <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #1f2937 0%, #374151 100%); display: flex; align-items: center; justify-content: center;">
+                                <div style="text-align: center; color: #f5f5f5;">
+                                    <div style="font-size: 96px; margin-bottom: 16px;">${getCarEmoji(car.brand)}</div>
+                                    <div style="font-size: 24px; font-weight: bold;">${car.brand}</div>
+                                    <div style="font-size: 18px; opacity: 0.8;">${car.model}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Car Information -->
+                    <div class="space-y-8">
+                        <div>
+                            <div class="flex items-center gap-3 mb-4">
+                                ${car.isNew ? '<span class="bg-primary text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Nyhed</span>' : ''}
+                                ${car.status === 'reserved' ? '<span class="bg-yellow-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Reserveret</span>' : ''}
+                            </div>
+                            <h1 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-2">
+                                ${car.brand} ${car.model}
+                            </h1>
+                            <p class="text-xl text-slate-600 dark:text-slate-400 mb-6">${car.variant}</p>
+                            <p class="text-3xl md:text-4xl font-black text-primary mb-8">
+                                ${car.price.toLocaleString('da-DK')} DKK
+                            </p>
+                        </div>
+
+                        <!-- Key Specs -->
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="bg-white dark:bg-card-dark p-4 rounded-lg border border-slate-200 dark:border-border-dark">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span class="material-symbols-outlined text-primary">calendar_today</span>
+                                    <span class="text-sm font-semibold text-slate-600 dark:text-slate-400">Årgang</span>
+                                </div>
+                                <p class="text-xl font-bold text-slate-900 dark:text-white">${car.year}</p>
+                            </div>
+                            <div class="bg-white dark:bg-card-dark p-4 rounded-lg border border-slate-200 dark:border-border-dark">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span class="material-symbols-outlined text-primary">speed</span>
+                                    <span class="text-sm font-semibold text-slate-600 dark:text-slate-400">Kilometerstand</span>
+                                </div>
+                                <p class="text-xl font-bold text-slate-900 dark:text-white">${car.mileage.toLocaleString('da-DK')} km</p>
+                            </div>
+                            <div class="bg-white dark:bg-card-dark p-4 rounded-lg border border-slate-200 dark:border-border-dark">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span class="material-symbols-outlined text-primary">local_gas_station</span>
+                                    <span class="text-sm font-semibold text-slate-600 dark:text-slate-400">Brændstof</span>
+                                </div>
+                                <p class="text-xl font-bold text-slate-900 dark:text-white">${car.fuelType}</p>
+                            </div>
+                            <div class="bg-white dark:bg-card-dark p-4 rounded-lg border border-slate-200 dark:border-border-dark">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span class="material-symbols-outlined text-primary">flash_on</span>
+                                    <span class="text-sm font-semibold text-slate-600 dark:text-slate-400">Hestekræfter</span>
+                                </div>
+                                <p class="text-xl font-bold text-slate-900 dark:text-white">${car.horsepower} HK</p>
+                            </div>
+                        </div>
+
+                        <!-- Contact Buttons -->
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <a href="kontakt.html?subject=car-inquiry&message=Jeg er interesseret i ${car.brand} ${car.model} (ID: ${car.id})" 
+                               class="btn-primary flex items-center justify-center gap-2">
+                                <span class="material-symbols-outlined">mail</span>
+                                Kontakt os om denne bil
+                            </a>
+                            <a href="tel:+4525454563" class="btn-secondary flex items-center justify-center gap-2">
+                                <span class="material-symbols-outlined">call</span>
+                                Ring: +45 25 45 45 63
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="bg-white dark:bg-card-dark rounded-xl p-8 border border-slate-200 dark:border-border-dark mb-12">
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">Beskrivelse</h2>
+                    <p class="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">${car.description}</p>
+                </div>
+
+                <!-- Features -->
+                <div class="bg-white dark:bg-card-dark rounded-xl p-8 border border-slate-200 dark:border-border-dark mb-12">
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6">Udstyr og Features</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        ${car.features.map(feature => `
+                            <div class="flex items-center gap-3">
+                                <span class="material-symbols-outlined text-green-500">check_circle</span>
+                                <span class="text-slate-600 dark:text-slate-400">${feature}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <!-- Back to Inventory -->
+                <div class="text-center">
+                    <a href="lagerbiler.html" class="btn-outline inline-flex items-center gap-2">
+                        <span class="material-symbols-outlined">arrow_back</span>
+                        Tilbage til lagerbiler
+                    </a>
+                </div>
+            `;
+            
+            document.getElementById('car-details-content').innerHTML = carDetailsHTML;
+        }
+
+        function getCarEmoji(brand) {
+            const emojis = {
+                'Porsche': '🏎️',
+                'Mercedes-Benz': '⚡',
+                'Volkswagen': '🚗',
+                'BMW': '🚙',
+                'Audi': '🚘'
+            };
+            return emojis[brand] || '🚗';
+        }
+
+        function showError() {
+            console.log('Showing error state');
+            document.getElementById('car-details-content').style.display = 'none';
+            document.getElementById('error-state').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

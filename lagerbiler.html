@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html class="dark" lang="da">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Lagerbiler - Nordic Autos</title>
+    <meta name="description" content="Udforsk Nordic Autos' eksklusive lagerbiler. Premium køretøjer fra Porsche, Audi, Mercedes-Benz, BMW og Tesla i Skive."/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+    <link rel="stylesheet" href="assets/css/main.css"/>
+    <link rel="stylesheet" href="assets/css/custom-theme.css"/>
+    <script src="components/navigation-clean.js?v=4" defer></script>
+    <script src="supabase-config.js?v=1" defer></script>
+    <script src="assets/js/car-catalog.js?v=4" defer></script>
+    <script src="assets/js/cookie-banner.js?v=1" defer></script>
+    <script src="assets/js/main.js?v=3" defer></script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-white transition-colors duration-300">
+    <!-- Navigation will be loaded here -->
+    <div id="navigation-container"></div>
+    
+    <main class="max-w-[1440px] mx-auto w-full px-6 lg:px-10 py-8">
+        <!-- Page Heading -->
+        <div class="flex flex-wrap justify-between items-end gap-4 mb-10">
+            <div class="flex flex-col gap-2">
+                <h1 class="text-slate-900 dark:text-white text-4xl md:text-5xl font-black leading-tight tracking-[-0.033em]">Lagerbiler</h1>
+                <p class="text-slate-600 dark:text-slate-400 text-lg font-normal max-w-2xl">Oplev vores nøje udvalgte sortiment af biler.</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <div class="flex flex-col items-end">
+                    <span id="car-count" class="text-primary font-bold text-2xl">0</span>
+                    <span class="text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider font-semibold">Biler fundet</span>
+                </div>
+                <select id="sort-select" class="form-select">
+                    <option value="newest">Nyeste først</option>
+                    <option value="price_low">Pris: Lav til høj</option>
+                    <option value="price_high">Pris: Høj til lav</option>
+                    <option value="year">Årgang</option>
+                    <option value="mileage">Kilometerstand</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Filters Sidebar -->
+            <aside class="lg:w-80 flex-shrink-0">
+                <div class="bg-white dark:bg-card-dark rounded-xl p-6 border border-slate-200 dark:border-border-dark">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex flex-col gap-1">
+                            <h3 class="text-slate-900 dark:text-white text-lg font-bold">Filtre</h3>
+                            <p class="text-slate-500 dark:text-slate-400 text-xs">Tilpas din søgning</p>
+                        </div>
+                        <span class="material-symbols-outlined text-slate-400">tune</span>
+                    </div>
+                    <div id="filters-container" class="flex flex-col gap-6">
+                        <!-- Filters will be loaded here by CarCatalog -->
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Inventory Grid -->
+            <div class="flex-1">
+                <!-- Loading State -->
+                <div id="loading-state" class="hidden text-center py-20">
+                    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+                    <p class="text-slate-600 dark:text-slate-400">Indlæser biler...</p>
+                </div>
+
+                <!-- Empty State -->
+                <div id="empty-state" class="hidden text-center py-20">
+                    <span class="material-symbols-outlined text-6xl text-slate-300 mb-4 block">search_off</span>
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Ingen biler fundet</h3>
+                    <p class="text-slate-600 dark:text-slate-400 mb-6">Prøv at justere dine filtre for at se flere resultater.</p>
+                    <button id="reset-filters" class="btn-primary">Nulstil filtre</button>
+                </div>
+
+                <div id="cars-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                    <!-- Cars will be loaded here by CarCatalog -->
+                </div>
+
+                <!-- Pagination -->
+                <div id="pagination-container" class="flex items-center justify-center gap-2 mt-12">
+                    <!-- Pagination will be loaded here by CarCatalog -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer will be loaded here -->
+    <div id="footer-container"></div>
+
+    <script>
+        // Initialize CarCatalog for Supabase integration
+        let carCatalog;
+        
+        // Function to initialize CarCatalog when ready
+        function initializeCarCatalog() {
+            if (window.CarCatalog && window.supabaseCarManager) {
+                console.log('🚀 Initializing CarCatalog...');
+                carCatalog = new CarCatalog();
+                console.log('✅ CarCatalog initialized for lagerbiler');
+                return true;
+            }
+            return false;
+        }
+        
+        // Test function to manually refresh cars
+        window.testRefreshCars = function() {
+            console.log('🧪 Manual test refresh triggered');
+            if (carCatalog) {
+                carCatalog.forceRefreshFromSupabase().then(() => {
+                    console.log('✅ Manual refresh completed');
+                });
+            } else {
+                console.error('❌ CarCatalog not initialized');
+            }
+        };
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Lagerbiler page loading...');
+            
+            // Try to initialize immediately
+            if (!initializeCarCatalog()) {
+                // If not ready, wait a bit and try again
+                console.log('⏳ Waiting for dependencies to load...');
+                setTimeout(() => {
+                    if (!initializeCarCatalog()) {
+                        console.error('❌ CarCatalog or SupabaseCarManager not available');
+                        // Fallback: show error message
+                        const carsGrid = document.getElementById('cars-grid');
+                        if (carsGrid) {
+                            carsGrid.innerHTML = `
+                                <div class="col-span-full text-center py-20">
+                                    <span class="material-symbols-outlined text-6xl text-red-300 mb-4 block">error</span>
+                                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Kunne ikke indlæse biler</h3>
+                                    <p class="text-slate-600 dark:text-slate-400 mb-6">Der opstod en fejl ved indlæsning af bilkataloget.</p>
+                                    <button onclick="location.reload()" class="btn-primary">Genindlæs siden</button>
+                                </div>
+                            `;
+                        }
+                    }
+                }, 2000);
+            }
+            
+            // Set current page for navigation
+            if (window.Navigation) {
+                window.navigation = new Navigation('lagerbiler');
+                console.log('Navigation initialized for lagerbiler');
+            } else {
+                console.error('Navigation class not found');
+            }
+            
+            console.log('Lagerbiler page loaded successfully');
+        });
+    </script>
+</body>
+</html>

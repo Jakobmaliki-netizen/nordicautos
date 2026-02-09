@@ -1,0 +1,52 @@
+{
+  "name": "nordic-autos-website",
+  "version": "1.0.0",
+  "description": "En komplet, moderne hjemmeside for Nordic Autos - premium bilforhandler i Skive, Danmark",
+  "main": "index.html",
+  "scripts": {
+    "test": "node test-runner.js",
+    "test:navigation": "node tests/navigation.test.js",
+    "test:responsive": "node tests/responsive.test.js",
+    "test:filter": "node tests/filter.test.js",
+    "test:search-sort": "node tests/search-sort.test.js",
+    "test:car-details": "node tests/car-details.test.js",
+    "test:financing": "node tests/financing.test.js",
+    "test:contact": "node tests/contact.test.js",
+    "test:lazy-loading": "node tests/lazy-loading.test.js",
+    "test:seo-accessibility": "node tests/seo-accessibility.test.js",
+    "serve": "python3 -m http.server 8000",
+    "serve:alt": "php -S localhost:8000",
+    "build": "echo 'Static website - no build required'",
+    "start": "echo 'Static website deployed'",
+    "dev": "python3 -m http.server 8000"
+  },
+  "keywords": [
+    "bilforhandler",
+    "car-dealership",
+    "nordic-autos",
+    "website",
+    "responsive",
+    "vanilla-javascript",
+    "tailwind-css",
+    "property-based-testing"
+  ],
+  "author": "Nordic Autos ApS",
+  "license": "UNLICENSED",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nordic-autos/website.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nordic-autos/website/issues"
+  },
+  "homepage": "https://nordicautos.dk",
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "dependencies": {
+    "resend": "^6.9.1"
+  }
+}

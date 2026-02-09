@@ -1,0 +1,304 @@
+/* NORDIC AUTOS CUSTOM THEME - HIGHEST PRIORITY */
+/* This file overrides all Tailwind CSS with your exact color scheme */
+
+/* Root variables */
+:root {
+    --bg-main: #0a0f0b;
+    --bg-card: #151a16;
+    --accent-green: #0f3d2e;
+    --text-main: #f5f5f5;
+    --text-muted: #9ca3af;
+    --accent-gold: #c8a24d;
+}
+
+/* CLEAN BACKGROUND OVERRIDE */
+body,
+html {
+    background-color: var(--bg-main) !important;
+    color: var(--text-main) !important;
+}
+
+/* CARD BACKGROUNDS - SPECIFIC SELECTORS ONLY */
+.bg-white.dark\:bg-card-dark,
+.bg-white.dark\:bg-slate-900\/50,
+.dark .bg-card-dark,
+.dark .bg-slate-900\/50,
+.admin-card {
+    background-color: var(--bg-card) !important;
+}
+
+/* SECTION BACKGROUNDS */
+.bg-slate-100.dark\:bg-slate-900\/30,
+.dark .bg-slate-900\/30 {
+    background-color: rgba(17, 24, 39, 0.3) !important;
+}
+
+/* TEXT COLORS */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-main) !important;
+}
+
+.text-slate-600.dark\:text-slate-400,
+.dark\:text-slate-400 {
+    color: var(--text-muted) !important;
+}
+
+/* FORCE ALL TEXT TO BE VISIBLE */
+p, span, div, small, strong, em, i, b,
+.text-slate-500,
+.text-slate-600,
+.text-slate-700,
+.text-slate-800,
+.text-slate-900,
+.dark\:text-slate-300,
+.dark\:text-slate-400,
+.dark\:text-slate-500 {
+    color: var(--text-main) !important;
+}
+
+/* MUTED TEXT ELEMENTS */
+.text-slate-400,
+.text-slate-500,
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+/* PRICE AND SPEC TEXT */
+.car-card-specs,
+.text-sm,
+.text-xs {
+    color: var(--text-muted) !important;
+}
+
+/* ENSURE PRICE TEXT IS VISIBLE */
+.car-card-price,
+.text-2xl,
+.font-black {
+    color: var(--text-main) !important;
+}
+
+/* ACCENT COLORS - ONLY PRIMARY ELEMENTS */
+.bg-primary,
+.btn-primary {
+    background-color: var(--accent-green) !important;
+    color: var(--text-main) !important;
+    border-color: var(--accent-green) !important;
+}
+
+.text-primary {
+    color: var(--accent-green) !important;
+}
+
+.border-primary {
+    border-color: var(--accent-green) !important;
+}
+
+/* HOVER STATES */
+.btn-primary:hover {
+    background-color: #0a2d21 !important;
+}
+
+.text-primary:hover {
+    color: #0a2d21 !important;
+}
+
+/* FOCUS STATES */
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--accent-green) !important;
+    box-shadow: 0 0 0 3px rgba(15, 61, 46, 0.3) !important;
+    outline: none !important;
+}
+
+/* FORM ELEMENTS */
+input,
+select,
+textarea {
+    background-color: white !important;
+    color: #0f172a !important;
+    border: 1px solid #d1d5db !important;
+}
+
+/* NAVIGATION */
+.nav-link-active {
+    color: var(--accent-green) !important;
+    border-color: var(--accent-green) !important;
+}
+
+/* GRADIENTS */
+.bg-gradient-to-r {
+    background: linear-gradient(to right, var(--accent-green), #0a2d21) !important;
+}
+
+/* FILTER BUTTONS */
+.filter-button-active {
+    background-color: var(--accent-green) !important;
+    color: var(--text-main) !important;
+    border-color: var(--accent-green) !important;
+}
+
+/* CHECKBOXES */
+input[type="checkbox"]:checked {
+    background-color: var(--accent-green) !important;
+    border-color: var(--accent-green) !important;
+}
+
+/* STARS - GULD FARVE */
+.star-filled {
+    color: #c8a24d !important; /* Guld farve */
+}
+
+/* SHADOWS WITH GREEN COLOR */
+.shadow-primary,
+.shadow-lg.shadow-primary\/30,
+.shadow-xl.shadow-primary\/30 {
+    box-shadow: 0 10px 25px -3px rgba(15, 61, 46, 0.1), 0 4px 6px -2px rgba(15, 61, 46, 0.05) !important;
+}
+
+.shadow-lg {
+    box-shadow: 0 10px 15px -3px rgba(15, 61, 46, 0.1), 0 4px 6px -2px rgba(15, 61, 46, 0.05) !important;
+}
+
+.shadow-xl {
+    box-shadow: 0 20px 25px -5px rgba(15, 61, 46, 0.1), 0 10px 10px -5px rgba(15, 61, 46, 0.04) !important;
+}
+
+/* SPECIFIC TAILWIND OVERRIDES - ONLY WHAT'S NEEDED */
+.bg-blue-600 { background-color: var(--accent-green) !important; }
+.bg-blue-500 { background-color: var(--accent-green) !important; }
+.text-blue-600 { color: var(--accent-green) !important; }
+.text-blue-500 { color: var(--accent-green) !important; }
+.border-blue-600 { border-color: var(--accent-green) !important; }
+.border-blue-500 { border-color: var(--accent-green) !important; }
+
+/* CAR CARD SPECIFIC TEXT VISIBILITY */
+.car-card .text-lg,
+.car-card .text-2xl,
+.car-card .font-bold,
+.car-card .font-black,
+.car-card-title,
+.car-card-price {
+    color: var(--text-main) !important;
+}
+
+.car-card .text-sm,
+.car-card .text-slate-500,
+.car-card-specs {
+    color: var(--text-muted) !important;
+}
+
+/* IMPORT SECTION TEXT */
+.text-5xl,
+.text-4xl,
+.text-3xl,
+.text-2xl,
+.text-xl,
+.text-lg {
+    color: var(--text-main) !important;
+}
+
+/* ENSURE ALL CONTENT IS READABLE */
+main *,
+section *,
+article *,
+div * {
+    color: inherit;
+}
+
+/* LAGERBILER PAGE SPECIFIC FIXES */
+#cars-grid .car-card,
+#cars-grid .car-card *,
+#featured-cars .car-card,
+#featured-cars .car-card * {
+    color: var(--text-main) !important;
+}
+
+#cars-grid .car-card .text-sm,
+#cars-grid .car-card .car-card-specs,
+#featured-cars .car-card .text-sm,
+#featured-cars .car-card .car-card-specs {
+    color: var(--text-muted) !important;
+}
+
+/* DYNAMIC CONTENT TEXT VISIBILITY */
+.grid .car-card .text-lg,
+.grid .car-card .text-2xl,
+.grid .car-card .font-bold,
+.grid .car-card .font-black {
+    color: var(--text-main) !important;
+}
+
+/* FILTER AND SORT TEXT */
+#car-count,
+.form-select,
+select {
+    color: var(--text-main) !important;
+}
+
+/* PAGINATION AND CONTROLS */
+.text-primary {
+    color: var(--accent-green) !important;
+}
+
+/* FORCE VISIBILITY FOR ALL GENERATED CONTENT */
+[id*="cars"] *,
+[class*="car-card"] *,
+[class*="grid"] * {
+    color: var(--text-main) !important;
+}
+
+[id*="cars"] .text-sm,
+[class*="car-card"] .text-sm,
+[class*="grid"] .text-sm {
+    color: var(--text-muted) !important;
+}
+
+/* RING COLORS */
+.focus\:ring-primary:focus {
+    --tw-ring-color: var(--accent-green) !important;
+}
+
+/* 3D CAR SHOWCASE ENHANCEMENTS */
+.car-3d-info h3 {
+    color: var(--text-main) !important;
+}
+
+.car-3d-info p {
+    color: var(--text-muted) !important;
+}
+
+.car-3d-info button {
+    background-color: var(--accent-green) !important;
+    color: var(--text-main) !important;
+}
+
+.car-3d-info button:hover {
+    background-color: #0a2d21 !important;
+}
+
+.car-3d-info .text-primary {
+    color: var(--accent-green) !important;
+}
+
+/* 3D SECTION BACKGROUND */
+.car-3d-container {
+    background: transparent !important;
+}
+
+/* ENSURE 3D SECTION TEXT VISIBILITY */
+.car-3d-container * {
+    color: inherit;
+}
+
+.car-3d-container h3 {
+    color: var(--text-main) !important;
+}
+
+.car-3d-container p {
+    color: var(--text-muted) !important;
+}
+
+.car-3d-container .text-primary {
+    color: var(--accent-green) !important;
+}

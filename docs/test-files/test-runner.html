@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nordic Autos - Test Runner</title>
+    <style>
+        body { font-family: monospace; padding: 20px; background: #1a1a1a; color: #fff; }
+        .test-output { background: #000; padding: 15px; border-radius: 5px; margin: 10px 0; }
+        .success { color: #4ade80; }
+        .error { color: #f87171; }
+        .info { color: #60a5fa; }
+    </style>
+</head>
+<body>
+    <h1>Nordic Autos Website - Property-Based Test Runner</h1>
+    <div id="test-output" class="test-output"></div>
+    <button onclick="runTests()" style="padding: 10px 20px; margin: 10px 0;">Run Navigation Tests</button>
+
+    <script src="components/navigation.js"></script>
+    <script src="tests/navigation.test.js"></script>
+    
+    <script>
+        // Override console.log to display in page
+        const originalLog = console.log;
+        const outputDiv = document.getElementById('test-output');
+        
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const message = args.join(' ');
+            const div = document.createElement('div');
+            
+            if (message.includes('PASSED')) {
+                div.className = 'success';
+            } else if (message.includes('FAILED') || message.includes('Error')) {
+                div.className = 'error';
+            } else {
+                div.className = 'info';
+            }
+            
+            div.textContent = message;
+            outputDiv.appendChild(div);
+            outputDiv.scrollTop = outputDiv.scrollHeight;
+        };
+
+        async function runTests() {
+            outputDiv.innerHTML = '';
+            console.log('Initializing test environment...');
+            
+            try {
+                const testSuite = new NavigationPropertyTests();
+                const results = await testSuite.runAllTests();
+                
+                console.log('\nTest execution completed.');
+                
+                // Update PBT status based on results
+                const allPassed = results.every(r => r.failed === 0);
+                if (allPassed) {
+                    console.log('✅ All navigation property tests PASSED');
+                } else {
+                    console.log('❌ Some navigation property tests FAILED');
+                }
+                
+            } catch (error) {
+                console.log('❌ Test execution failed:', error.message);
+            }
+        }
+    </script>
+</body>
+</html>

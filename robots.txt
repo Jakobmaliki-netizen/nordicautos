@@ -1,0 +1,36 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://nordicautos.dk/sitemap.xml
+
+# Block admin areas from search engines - SECURITY
+Disallow: /admin/
+Disallow: /debug-admin.html
+Disallow: /test-*
+Disallow: /implementer-billeder.html
+Disallow: /*.log
+Disallow: /*.txt
+Disallow: /SIKKERHEDSGUIDE.md
+
+# Block sensitive files - SECURITY
+Disallow: /firebase-config.js
+Disallow: /send-email.php
+Disallow: /.htaccess
+
+# Allow important pages
+Allow: /index.html
+Allow: /lagerbiler.html
+Allow: /om-os.html
+Allow: /kontakt.html
+Allow: /bil-detaljer.html
+Allow: /privatlivspolitik.html
+Allow: /cookies.html
+Allow: /handelsbetingelser.html
+
+# Allow assets
+Allow: /assets/
+Allow: /components/
+
+# Crawl delay (optional)
+Crawl-delay: 1

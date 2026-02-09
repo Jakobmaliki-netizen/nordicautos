@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html class="dark" lang="da">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Kontakt - Nordic Autos</title>
+    <meta name="description" content="Kontakt Nordic Autos i Skive. Ring +45 60 75 58 98 eller besøg os på Frisenborgvej 6L. CVR: 46194330"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+    <link rel="stylesheet" href="assets/css/main.css"/>
+    <link rel="stylesheet" href="assets/css/custom-theme.css"/>
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="emailjs-config.js"></script>
+    <script src="components/navigation-clean.js?v=4" defer></script>
+    <script src="components/breadcrumb.js?v=2" defer></script>
+    <script src="components/footer.js?v=2" defer></script>
+    <script src="assets/js/responsive.js?v=2" defer></script>
+    <script src="assets/js/contact.js?v=6" defer></script>
+    <script src="assets/js/cookie-banner.js?v=1" defer></script>
+    <script src="assets/js/main.js?v=3" defer></script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-white transition-colors duration-300">
+    <!-- Navigation will be loaded here -->
+    <div id="navigation-container"></div>
+    
+    <main class="max-w-[1440px] mx-auto w-full px-6 lg:px-10 py-8">
+        <!-- Breadcrumb will be loaded here -->
+        <div id="breadcrumb-container"></div>
+
+        <!-- Hero Section -->
+        <section class="text-center py-16 lg:py-24">
+            <div class="max-w-4xl mx-auto">
+                <h1 class="text-slate-900 dark:text-white text-4xl md:text-6xl font-black leading-tight tracking-[-0.033em] mb-6">
+                    Kontakt Nordic Autos
+                </h1>
+                <p class="text-slate-600 dark:text-slate-400 text-xl font-normal max-w-3xl mx-auto mb-8">
+                    Lad os hjælpe dig med at finde den rette bil. Du er velkommen til at kontakte os for en uforpligtende dialog eller aftale en fremvisning.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="tel:+4525454563" class="btn-primary flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined">call</span>
+                        Ring nu: +45 25 45 45 63
+                    </a>
+                    <a href="#contact-form" class="btn-secondary flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined">mail</span>
+                        Send besked
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Information -->
+        <section class="py-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Address -->
+                <div class="bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-border-dark p-8 text-center hover:shadow-xl transition-all duration-300">
+                    <div class="size-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="material-symbols-outlined text-primary text-2xl">location_on</span>
+                    </div>
+                    <h3 class="text-slate-900 dark:text-white text-lg font-bold mb-4">Adresse</h3>
+                    <div class="text-slate-600 dark:text-slate-400 space-y-1">
+                        <p>Nordic Autos ApS</p>
+                        <p>Frisenborgvej 6L</p>
+                        <p>7800 Skive</p>
+                        <p class="text-sm mt-2">CVR: 46194330</p>
+                    </div>
+                </div>
+
+                <!-- Phone -->
+                <div class="bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-border-dark p-8 text-center hover:shadow-xl transition-all duration-300">
+                    <div class="size-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="material-symbols-outlined text-primary text-2xl">call</span>
+                    </div>
+                    <h3 class="text-slate-900 dark:text-white text-lg font-bold mb-4">Telefon</h3>
+                    <div class="text-slate-600 dark:text-slate-400 space-y-2">
+                        <p><a href="tel:+4525454563" class="hover:text-primary transition-colors">+45 25 45 45 63</a></p>
+                        <p class="text-sm">Hverdage: 9:00 - 17:30</p>
+                        <p class="text-sm">Lørdag: 10:00 - 14:00</p>
+                        <p class="text-sm">Søndag: Lukket</p>
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-border-dark p-8 text-center hover:shadow-xl transition-all duration-300">
+                    <div class="size-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="material-symbols-outlined text-primary text-2xl">mail</span>
+                    </div>
+                    <h3 class="text-slate-900 dark:text-white text-lg font-bold mb-4">Email</h3>
+                    <div class="text-slate-600 dark:text-slate-400 space-y-2">
+                        <p><a href="mailto:info@nordicautos.dk" class="hover:text-primary transition-colors">info@nordicautos.dk</a></p>
+                    </div>
+                </div>
+
+                <!-- Opening Hours -->
+                <div class="bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-border-dark p-8 text-center hover:shadow-xl transition-all duration-300">
+                    <div class="size-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="material-symbols-outlined text-primary text-2xl">schedule</span>
+                    </div>
+                    <h3 class="text-slate-900 dark:text-white text-lg font-bold mb-4">Åbningstider</h3>
+                    <div class="text-slate-600 dark:text-slate-400 space-y-2 text-sm">
+                        <p class="text-center">
+                            Åbning efter aftale betyder, at vi kan tilpasse vores tid til dig og sikre, at du får den bedst mulige oplevelse hos os.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Form and Map -->
+        <section class="py-16">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Contact Form -->
+                <div id="contact-form">
+                    <h2 class="text-slate-900 dark:text-white text-3xl font-bold mb-8">
+                        Send os en besked
+                    </h2>
+                    
+                    <form id="main-contact-form" class="space-y-6" method="POST">
+                        <!-- Honeypot field for spam protection -->
+                        <div style="display: none;">
+                            <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="contact-name" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                                    Navn *
+                                </label>
+                                <input type="text" id="contact-name" name="name" required 
+                                       class="form-input w-full" placeholder="Dit fulde navn">
+                            </div>
+                            <div>
+                                <label for="contact-email" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                                    Email *
+                                </label>
+                                <input type="email" id="contact-email" name="email" required 
+                                       class="form-input w-full" placeholder="din@email.dk">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="contact-phone" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                                    Telefon
+                                </label>
+                                <input type="tel" id="contact-phone" name="phone" 
+                                       class="form-input w-full" placeholder="+45 12 34 56 78">
+                            </div>
+                            <div>
+                                <label for="contact-subject" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                                    Emne
+                                </label>
+                                <select id="contact-subject" name="subject" class="form-input w-full">
+                                    <option value="">Vælg emne</option>
+                                    <option value="general">Generel henvendelse</option>
+                                    <option value="car-inquiry">Forespørgsel om bil</option>
+                                    <option value="service">Service og vedligeholdelse</option>
+                                    <option value="appointment">Book fremvisning</option>
+                                    <option value="other">Andet</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="contact-message" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                                Besked *
+                            </label>
+                            <textarea id="contact-message" name="message" rows="6" required
+                                      class="form-input w-full resize-none" 
+                                      placeholder="Beskriv hvordan vi kan hjælpe dig..."></textarea>
+                        </div>
+
+                        <div class="flex items-start gap-3">
+                            <input type="checkbox" id="contact-consent" name="consent" required
+                                   class="mt-1 rounded border-slate-300 dark:border-border-dark text-primary focus:ring-primary">
+                            <label for="contact-consent" class="text-sm text-slate-600 dark:text-slate-400">
+                                Jeg accepterer at Nordic Autos kontakter mig vedrørende min henvendelse. 
+                                Læs vores <a href="privatlivspolitik.html" class="text-primary hover:underline">privatlivspolitik</a>.
+                            </label>
+                        </div>
+
+                        <button type="submit" class="w-full btn-primary flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined">send</span>
+                            Send besked
+                        </button>
+
+                        <div id="form-message" class="hidden text-sm text-center py-3 rounded-lg"></div>
+                    </form>
+                </div>
+
+                <!-- Map -->
+                <div>
+                    <h2 class="text-slate-900 dark:text-white text-3xl font-bold mb-8">
+                        Find os her
+                    </h2>
+                    
+                    <div class="bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-border-dark overflow-hidden">
+                        <!-- Interactive Map Placeholder -->
+                        <div id="map-container" class="aspect-[4/3] bg-slate-100 dark:bg-slate-800 relative">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="text-center">
+                                    <span class="material-symbols-outlined text-4xl text-slate-400 mb-4 block">map</span>
+                                    <p class="text-slate-500 dark:text-slate-400 mb-4">Interaktivt kort</p>
+                                    <button id="load-map" class="btn-primary">
+                                        Indlæs kort
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Map Info -->
+                        <div class="p-6">
+                            <div class="flex items-start gap-4">
+                                <div class="size-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <span class="material-symbols-outlined text-primary">location_on</span>
+                                </div>
+                                <div>
+                                    <h3 class="text-slate-900 dark:text-white font-bold mb-2">Nordic Autos Showroom</h3>
+                                    <p class="text-slate-600 dark:text-slate-400 mb-2">
+                                        Frisenborgvej 6L, 7800 Skive
+                                    </p>
+                                    <p class="text-slate-600 dark:text-slate-400 text-sm mb-4">
+                                        Centralt beliggende i Skive med nem adgang og gratis parkering.
+                                    </p>
+                                    <div class="flex gap-3">
+                                        <a href="https://maps.google.com/?q=Nordic+Autos+Frisenborgvej+6L+7800+Skive" 
+                                           target="_blank" rel="noopener"
+                                           class="text-primary hover:text-primary-dark font-semibold text-sm flex items-center gap-1">
+                                            <span class="material-symbols-outlined text-sm">directions</span>
+                                            Få vejvisning
+                                        </a>
+                                        <a href="tel:+4560755898" 
+                                           class="text-primary hover:text-primary-dark font-semibold text-sm flex items-center gap-1">
+                                            <span class="material-symbols-outlined text-sm">call</span>
+                                            Ring før besøg
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Contact -->
+        <section class="py-16">
+            <div class="text-center mb-12">
+                <h2 class="text-slate-900 dark:text-white text-3xl md:text-4xl font-bold mb-4">
+                    Kontakt vores team direkte
+                </h2>
+                <p class="text-slate-600 dark:text-slate-400 text-lg max-w-2xl mx-auto">
+                    Vores team håndterer alle henvendelser og er klar til at hjælpe dig.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Sales Team -->
+                <div class="bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-border-dark p-8 text-center hover:shadow-xl transition-all duration-300">
+                    <div class="size-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="material-symbols-outlined text-primary text-2xl">person</span>
+                    </div>
+                    <h3 class="text-slate-900 dark:text-white text-xl font-bold mb-4">Ejer & Direktør</h3>
+                    <p class="text-slate-600 dark:text-slate-400 mb-6">
+                        Spørgsmål om biler, priser, service og alt andet.
+                    </p>
+                    <div class="space-y-3">
+                        <div>
+                            <div class="text-slate-900 dark:text-white font-semibold">Adam Maliki</div>
+                            <div class="text-slate-500 dark:text-slate-400 text-sm">Ejer & Direktør</div>
+                        </div>
+                        <div class="flex justify-center gap-3">
+                            <a href="tel:+4525454563" class="btn-outline flex items-center gap-2">
+                                <span class="material-symbols-outlined text-sm">call</span>
+                                Ring
+                            </a>
+                            <a href="mailto:info@nordicautos.dk" class="btn-outline flex items-center gap-2">
+                                <span class="material-symbols-outlined text-sm">mail</span>
+                                Email
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-border-dark p-8 text-center hover:shadow-xl transition-all duration-300">
+                    <div class="size-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="material-symbols-outlined text-primary text-2xl">business</span>
+                    </div>
+                    <h3 class="text-slate-900 dark:text-white text-xl font-bold mb-4">Nordic Autos</h3>
+                    <p class="text-slate-600 dark:text-slate-400 mb-6">
+                        Kontakt os for alle henvendelser vedrørende køb, salg og service.
+                    </p>
+                    <div class="space-y-3">
+                        <div>
+                            <div class="text-slate-900 dark:text-white font-semibold">Frisenborgvej 6L, 7800 Skive</div>
+                            <div class="text-slate-500 dark:text-slate-400 text-sm">CVR: 46194330</div>
+                        </div>
+                        <div class="flex justify-center gap-3">
+                            <a href="tel:+4525454563" class="btn-primary flex items-center gap-2">
+                                <span class="material-symbols-outlined text-sm">call</span>
+                                +45 25 45 45 63
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="py-16">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-slate-900 dark:text-white text-3xl md:text-4xl font-bold mb-4">
+                        Ofte stillede spørgsmål
+                    </h2>
+                    <p class="text-slate-600 dark:text-slate-400 text-lg">
+                        Find svar på de mest almindelige spørgsmål om Nordic Autos.
+                    </p>
+                </div>
+
+                <div class="space-y-4">
+                    <!-- FAQ Item 1 -->
+                    <div class="bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-border-dark">
+                        <button class="w-full p-6 text-left flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors faq-toggle">
+                            <span class="text-slate-900 dark:text-white font-semibold">Skal jeg booke tid for at se en bil?</span>
+                            <span class="material-symbols-outlined text-slate-400 transform transition-transform">expand_more</span>
+                        </button>
+                        <div class="faq-content hidden px-6 pb-6">
+                            <p class="text-slate-600 dark:text-slate-400">
+                                Ja, det er nødvendigt at booke tid for at se en bil. Dette sikrer, at den ønskede bil er tilgængelig, 
+                                og at en af vores salgskonsulenter kan give dig den fulde opmærksomhed. Du kan booke tid ved at ringe til os 
+                                eller sende en besked gennem vores kontaktformular.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 2 -->
+                    <div class="bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-border-dark">
+                        <button class="w-full p-6 text-left flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors faq-toggle">
+                            <span class="text-slate-900 dark:text-white font-semibold">Tilbyder I prøvekørsel?</span>
+                            <span class="material-symbols-outlined text-slate-400 transform transition-transform">expand_more</span>
+                        </button>
+                        <div class="faq-content hidden px-6 pb-6">
+                            <p class="text-slate-600 dark:text-slate-400">
+                                Ja, vi tilbyder prøvekørsel på alle vores biler. Du skal medbringe gyldigt kørekort, og vi kan arrangere 
+                                prøvekørsel samme dag, hvis bilen er tilgængelig. Kontakt os for at aftale en tid.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 3 -->
+                    <div class="bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-border-dark">
+                        <button class="w-full p-6 text-left flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors faq-toggle">
+                            <span class="text-slate-900 dark:text-white font-semibold">Hjælper I med lån og leasing?</span>
+                            <span class="material-symbols-outlined text-slate-400 transform transition-transform">expand_more</span>
+                        </button>
+                        <div class="faq-content hidden px-6 pb-6">
+                            <p class="text-slate-600 dark:text-slate-400">
+                                Vi hjælper gerne med at finde den bedste løsning til dine behov. Vi tilbyder både traditionelle billån og forskellige leasingmuligheder. 
+                                Kontakt os for mere information om mulighederne.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 4 -->
+                    <div class="bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-border-dark">
+                        <button class="w-full p-6 text-left flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors faq-toggle">
+                            <span class="text-slate-900 dark:text-white font-semibold">Tager I biler i bytte?</span>
+                            <span class="material-symbols-outlined text-slate-400 transform transition-transform">expand_more</span>
+                        </button>
+                        <div class="faq-content hidden px-6 pb-6">
+                            <p class="text-slate-600 dark:text-slate-400">
+                                Ja, vi tager gerne din nuværende bil i bytte. Vi laver en professionel vurdering af din bil og tilbyder 
+                                en fair pris, som kan bruges som udbetaling på din nye bil. Kontakt os for en uforpligtende vurdering.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer will be loaded here -->
+    <div id="footer-container"></div>
+
+    <script>
+        // Initialize page-specific functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set current page for navigation
+            if (window.Navigation) {
+                window.navigation = new Navigation('kontakt');
+            }
+            
+            // Initialize contact form
+            if (window.ContactForm) {
+                window.contactForm = new ContactForm();
+            }
+
+            // Load and apply saved content
+            loadAndApplyContent();
+            
+            // Listen for content changes from other pages
+            window.addEventListener('storage', function(e) {
+                if (e.key === 'nordic-autos-content') {
+                    console.log('Content changed, refreshing...');
+                    loadAndApplyContent();
+                }
+            });
+
+            // FAQ Toggle functionality
+            document.querySelectorAll('.faq-toggle').forEach(button => {
+                button.addEventListener('click', () => {
+                    const content = button.nextElementSibling;
+                    const icon = button.querySelector('.material-symbols-outlined');
+                    
+                    content.classList.toggle('hidden');
+                    icon.style.transform = content.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+                });
+            });
+
+            // Load map functionality
+            document.getElementById('load-map')?.addEventListener('click', function() {
+                const mapContainer = document.getElementById('map-container');
+                mapContainer.innerHTML = `
+                    <iframe 
+                        src="https://www.google.com/maps?q=Frisenborgvej+6L,+7800+Skive,+Denmark&output=embed"
+                        width="100%" 
+                        height="100%" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                `;
+            });
+
+            // Pre-fill form from URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const subject = urlParams.get('subject');
+            const message = urlParams.get('message');
+            
+            if (subject) {
+                const subjectField = document.getElementById('contact-subject');
+                if (subjectField) {
+                    subjectField.value = subject;
+                }
+            }
+            
+            if (message) {
+                const messageField = document.getElementById('contact-message');
+                if (messageField) {
+                    messageField.value = message;
+                }
+            }
+        });
+
+        function loadAndApplyContent() {
+            const savedContent = localStorage.getItem('nordic-autos-content');
+            if (!savedContent) return;
+            
+            try {
+                const content = JSON.parse(savedContent);
+                
+                // Apply kontakt content
+                if (content.kontakt) {
+                    applyKontaktContent(content.kontakt);
+                }
+                
+            } catch (e) {
+                console.error('Error loading content:', e);
+            }
+        }
+
+        function applyKontaktContent(content) {
+            // Update phone numbers
+            if (content.phone) {
+                // Update all phone number displays
+                const phoneElements = document.querySelectorAll('a[href^="tel:"]');
+                phoneElements.forEach(el => {
+                    el.textContent = content.phone;
+                    el.href = `tel:${content.phone.replace(/\s/g, '')}`;
+                });
+                
+                // Update phone display text
+                const phoneTexts = document.querySelectorAll('p:contains("+45")');
+                phoneTexts.forEach(el => {
+                    if (el.textContent.includes('+45')) {
+                        el.innerHTML = el.innerHTML.replace(/\+45\s*\d+\s*\d+\s*\d+\s*\d+/, content.phone);
+                    }
+                });
+            }
+            
+            // Update email addresses
+            if (content.email) {
+                const emailElements = document.querySelectorAll('a[href^="mailto:"]');
+                emailElements.forEach(el => {
+                    el.textContent = content.email;
+                    el.href = `mailto:${content.email}`;
+                });
+            }
+            
+            // Update address
+            if (content.address) {
+                const addressElements = document.querySelectorAll('p:contains("Frisenborgvej")');
+                addressElements.forEach(el => {
+                    if (el.textContent.includes('Frisenborgvej')) {
+                        el.textContent = content.address;
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html class="dark" lang="da">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Navigation Test - Nordic Autos</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+    <link rel="stylesheet" href="assets/css/main.css"/>
+    <link rel="stylesheet" href="assets/css/custom-theme.css"/>
+    <script src="components/navigation.js" defer></script>
+    <script src="assets/js/main.js" defer></script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen flex flex-col font-display">
+    <!-- Navigation will be loaded here -->
+    <div id="navigation-container"></div>
+    
+    <main class="flex-grow p-8">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-4xl font-bold mb-8">Navigation Test</h1>
+            <div class="bg-white dark:bg-card-dark p-6 rounded-lg border border-slate-200 dark:border-slate-700">
+                <h2 class="text-2xl font-bold mb-4">Navigation Links Should Be:</h2>
+                <ul class="space-y-2 text-lg">
+                    <li>✅ Hjem</li>
+                    <li>✅ Lagerbiler</li>
+                    <li>✅ Import</li>
+                    <li>✅ Om os</li>
+                    <li>✅ Kontakt</li>
+                </ul>
+                <div class="mt-6 p-4 bg-red-100 dark:bg-red-900/30 rounded-lg">
+                    <h3 class="font-bold text-red-800 dark:text-red-200 mb-2">❌ Should NOT contain:</h3>
+                    <p class="text-red-700 dark:text-red-300">Finansiering (this link has been completely removed)</p>
+                </div>
+                <div class="mt-6 p-4 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
+                    <h3 class="font-bold text-blue-800 dark:text-blue-200 mb-2">🔧 If you still see "Finansiering":</h3>
+                    <ol class="text-blue-700 dark:text-blue-300 space-y-1">
+                        <li>1. Press Ctrl+F5 (Windows) or Cmd+Shift+R (Mac) to hard refresh</li>
+                        <li>2. Clear your browser cache</li>
+                        <li>3. Try opening in an incognito/private window</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

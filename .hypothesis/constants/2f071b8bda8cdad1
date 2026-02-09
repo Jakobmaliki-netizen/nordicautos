@@ -1,0 +1,4 @@
+# file: /Users/jakobmaliki/Desktop/nordic-autos-website adam nordic/deployment_system/asset_resolver/__init__.py
+# hypothesis_version: 6.151.4
+
+['AssetResolverImpl', 'PathResolver']

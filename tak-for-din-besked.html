@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html class="dark" lang="da">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Tak for din besked - Nordic Autos</title>
+    <meta name="description" content="Tak for din henvendelse til Nordic Autos. Vi kontakter dig snarest muligt."/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+    <link rel="stylesheet" href="assets/css/main.css"/>
+    <link rel="stylesheet" href="assets/css/custom-theme.css"/>
+    <script src="components/navigation-clean.js?v=4" defer></script>
+    <script src="components/footer.js?v=2" defer></script>
+    <script src="assets/js/responsive.js?v=2" defer></script>
+    <script src="assets/js/main.js?v=2" defer></script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-white transition-colors duration-300">
+    <!-- Navigation will be loaded here -->
+    <div id="navigation-container"></div>
+    
+    <main class="max-w-[1440px] mx-auto w-full px-6 lg:px-10 py-8">
+        <!-- Success Message -->
+        <section class="text-center py-16 lg:py-24">
+            <div class="max-w-2xl mx-auto">
+                <!-- Success Icon -->
+                <div class="w-24 h-24 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-8">
+                    <span class="material-symbols-outlined text-green-600 dark:text-green-400 text-4xl">check_circle</span>
+                </div>
+                
+                <h1 class="text-slate-900 dark:text-white text-4xl md:text-5xl font-black leading-tight tracking-[-0.033em] mb-6">
+                    Tak for din besked!
+                </h1>
+                
+                <p class="text-slate-600 dark:text-slate-400 text-xl font-normal mb-8">
+                    Vi har modtaget din henvendelse og vil kontakte dig snarest muligt. 
+                    Du kan forvente svar inden for 24 timer på hverdage.
+                </p>
+                
+                <!-- Contact Info -->
+                <div class="bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-border-dark p-8 mb-8">
+                    <h2 class="text-slate-900 dark:text-white text-xl font-bold mb-4">
+                        Har du brug for hurtig hjælp?
+                    </h2>
+                    <p class="text-slate-600 dark:text-slate-400 mb-6">
+                        Ring til os direkte, så kan vi hjælpe dig med det samme.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="tel:+4525454563" class="btn-primary flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined">call</span>
+                            Ring nu: +45 25 45 45 63
+                        </a>
+                        <a href="mailto:info@nordicautos.dk" class="btn-secondary flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined">mail</span>
+                            Send email
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Navigation Options -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="lagerbiler.html" class="btn-outline flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined">directions_car</span>
+                        Se vores biler
+                    </a>
+                    <a href="index.html" class="btn-outline flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined">home</span>
+                        Tilbage til forsiden
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer will be loaded here -->
+    <div id="footer-container"></div>
+
+    <script>
+        // Initialize page-specific functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set current page for navigation
+            if (window.Navigation) {
+                window.navigation = new Navigation('kontakt');
+            }
+            
+            // Auto-redirect after 30 seconds
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 30000);
+        });
+    </script>
+</body>
+</html>

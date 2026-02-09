@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html class="dark" lang="da">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Simple Contact Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-white p-8">
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-3xl font-bold mb-8">🧪 Simple Contact Form Test</h1>
+        
+        <div class="bg-slate-800 rounded-lg p-6 mb-6">
+            <h2 class="text-xl font-bold mb-4">Test Form</h2>
+            <form id="test-form" class="space-y-4">
+                <input type="text" id="name" placeholder="Navn" class="w-full p-2 rounded bg-slate-700" value="Test Bruger" required>
+                <input type="email" id="email" placeholder="Email" class="w-full p-2 rounded bg-slate-700" value="test@example.com" required>
+                <textarea id="message" placeholder="Besked" class="w-full p-2 rounded bg-slate-700" rows="3" required>Test besked</textarea>
+                <label class="flex items-center gap-2">
+                    <input type="checkbox" id="consent" checked required>
+                    <span>Jeg accepterer</span>
+                </label>
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 p-3 rounded font-bold">
+                    Send Test
+                </button>
+            </form>
+        </div>
+        
+        <div id="result" class="bg-slate-800 rounded-lg p-6">
+            <h2 class="text-xl font-bold mb-4">Result</h2>
+            <div id="output" class="text-sm font-mono">
+                <div class="text-green-400">Klar til test...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function log(msg, type = 'info') {
+            const output = document.getElementById('output');
+            const colors = {
+                info: 'text-blue-400',
+                success: 'text-green-400',
+                error: 'text-red-400'
+            };
+            const div = document.createElement('div');
+            div.className = colors[type] || colors.info;
+            div.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+            output.appendChild(div);
+        }
+
+        document.getElementById('test-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            log('Sending request...', 'info');
+            
+            const data = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: '',
+                subject: 'general',
+                message: document.getElementById('message').value,
+                consent: document.getElementById('consent').checked
+            };
+            
+            log('Data: ' + JSON.stringify(data), 'info');
+            
+            try {
+                const response = await fetch('/api/send-email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                log(`Status: ${response.status}`, 'info');
+                
+                const result = await response.json();
+                log('Response: ' + JSON.stringify(result), result.success ? 'success' : 'error');
+                
+                if (result.success) {
+                    log('✅ SUCCESS!', 'success');
+                } else {
+                    log('❌ FAILED: ' + result.message, 'error');
+                }
+            } catch (error) {
+                log('❌ ERROR: ' + error.message, 'error');
+            }
+        });
+        
+        log('Test page loaded', 'success');
+        log('API endpoint: ' + window.location.origin + '/api/send-email', 'info');
+    </script>
+</body>
+</html>

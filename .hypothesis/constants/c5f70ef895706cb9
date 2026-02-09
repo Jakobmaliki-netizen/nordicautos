@@ -1,0 +1,4 @@
+# file: /Users/jakobmaliki/Desktop/nordic-autos-website adam nordic/deployment_system/production_builder/production_builder_impl.py
+# hypothesis_version: 6.151.4
+
+['.htaccess', 'asset_references', 'assets', 'broken_link', 'css', 'directives', 'images', 'internal_links', 'js', 'missing_target', 'original_link', 'production_builder', 'root', 'size', 'source', 'target', 'target_filename', 'updated_link', 'utf-8', 'w']

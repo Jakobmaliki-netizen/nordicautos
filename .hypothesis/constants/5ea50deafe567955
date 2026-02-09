@@ -1,0 +1,4 @@
+# file: /Users/jakobmaliki/Desktop/nordic-autos-website adam nordic/deployment_system/core/config.py
+# hypothesis_version: 6.151.4
+
+[8080, '*', '*.', '*.cache', '*.log', '*.md', '*.spec.js', '*.spec.ts', '*.temp', '*.test.js', '*.test.ts', '*.tmp', '.DS_Store', '.bmp', '.css', '.env*', '.gif', '.git/', '.gitignore', '.ico', '.idea/', '.jpeg', '.jpg', '.js', '.mjs', '.png', '.svg', '.vscode/', '.webp', '/', '/dist/', '/src/', '127.0.0.1', '</Files>', '<Files "*.log">', '<Files "*.php">', 'CHANGELOG*', 'DEPLOY_SIMPLY', 'DeploymentConfig', 'ExpiresActive On', 'INFO', 'LICENSE*', 'README*', 'Thumbs.db', '__tests__/', 'access', 'cache', 'compression', 'css', 'deployment.log', 'file://', 'http://localhost', 'https://localhost', 'images', 'js', 'localhost', 'netlify.toml', 'node_modules', 'package-lock.json', 'package.json', 'rollup.config.js', 'security', 'test*', 'tests/', 'vite.config.js', 'webpack.config.js', 'yarn.lock']

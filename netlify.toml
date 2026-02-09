@@ -1,0 +1,45 @@
+[build]
+  publish = "."
+
+# Form handling
+[[forms]]
+  name = "contact"
+  
+[forms.settings]
+  # Send form submissions to this email
+  to = "info@nordicautos.dk"
+  
+  # Custom subject line
+  subject = "Ny henvendelse fra Nordic Autos hjemmeside"
+  
+  # Template for email notifications
+  template = """
+  Du har modtaget en ny henvendelse fra Nordic Autos hjemmesiden:
+  
+  Navn: {{ name }}
+  Email: {{ email }}
+  Telefon: {{ phone }}
+  Emne: {{ subject }}
+  
+  Besked:
+  {{ message }}
+  
+  ---
+  Sendt fra: Nordic Autos kontaktformular
+  Tidspunkt: {{ _timestamp }}
+  """
+
+# Redirect rules
+[[redirects]]
+  from = "/tak"
+  to = "/tak-for-din-besked.html"
+  status = 200
+
+# Security headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Supabase Connection</title>
+</head>
+<body>
+    <h1>Testing Supabase Connection</h1>
+    <div id="status">Loading...</div>
+    <div id="cars-count"></div>
+    <div id="cars-list"></div>
+
+    <script src="supabase-config.js"></script>
+    <script>
+        async function testConnection() {
+            const statusDiv = document.getElementById('status');
+            const carsCountDiv = document.getElementById('cars-count');
+            const carsListDiv = document.getElementById('cars-list');
+            
+            try {
+                statusDiv.innerHTML = '🔄 Initializing Supabase...';
+                
+                // Initialize Supabase Car Manager
+                await window.supabaseCarManager.initialize();
+                
+                statusDiv.innerHTML = '✅ Supabase connected successfully!';
+                
+                // Load cars
+                const cars = await window.supabaseCarManager.getCars();
+                carsCountDiv.innerHTML = `📊 Found ${cars.length} cars in database`;
+                
+                // Display cars
+                if (cars.length > 0) {
+                    const carsList = cars.map(car => 
+                        `<div style="border: 1px solid #ccc; margin: 10px; padding: 10px;">
+                            <h3>${car.brand} ${car.model}</h3>
+                            <p>Year: ${car.year} | Price: ${car.price.toLocaleString('da-DK')} DKK</p>
+                            <p>Fuel: ${car.fuelType} | Status: ${car.status}</p>
+                        </div>`
+                    ).join('');
+                    carsListDiv.innerHTML = `<h2>Cars in Database:</h2>${carsList}`;
+                } else {
+                    carsListDiv.innerHTML = '<p>No cars found in database</p>';
+                }
+                
+            } catch (error) {
+                statusDiv.innerHTML = `❌ Error: ${error.message}`;
+                console.error('Supabase connection error:', error);
+            }
+        }
+        
+        // Test connection when page loads
+        document.addEventListener('DOMContentLoaded', testConnection);
+    </script>
+</body>
+</html>

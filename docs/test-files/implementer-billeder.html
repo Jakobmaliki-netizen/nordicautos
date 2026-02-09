@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nordic Autos - Billede Implementering Tool</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8fafc;
+            color: #1e293b;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #007cba;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+        }
+        .section h2 {
+            color: #374151;
+            margin-top: 0;
+        }
+        input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px dashed #cbd5e1;
+            border-radius: 8px;
+            background: #f8fafc;
+            cursor: pointer;
+        }
+        input[type="file"]:hover {
+            border-color: #007cba;
+            background: #f0f9ff;
+        }
+        .preview {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .preview img {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .code-output {
+            background: #1e293b;
+            color: #f1f5f9;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            word-break: break-all;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+        .copy-btn {
+            background: #007cba;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        .copy-btn:hover {
+            background: #0369a1;
+        }
+        .instructions {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        .success {
+            background: #d1fae5;
+            border: 1px solid #10b981;
+            color: #065f46;
+        }
+        .warning {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            color: #92400e;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🖼️ Nordic Autos - Billede Implementering Tool</h1>
+        <p style="text-align: center; color: #64748b; margin-bottom: 40px;">
+            Upload dine billeder og få HTML kode til permanent implementering
+        </p>
+
+        <!-- Om Os Showroom Billede -->
+        <div class="section">
+            <h2>🏢 Billede 1: Om Os Showroom</h2>
+            <p>Upload billedet til Om Os siden (anbefalet størrelse: 1200x800px)</p>
+            
+            <input type="file" id="showroomImage" accept="image/*" onchange="processShowroomImage(this)">
+            
+            <div id="showroomPreview" class="preview" style="display: none;">
+                <h3>Preview:</h3>
+                <img id="showroomImg" alt="Showroom preview">
+            </div>
+            
+            <div id="showroomCode" style="display: none;">
+                <h3>HTML Kode til om-os.html:</h3>
+                <div class="instructions">
+                    <strong>📝 Instruktioner:</strong><br>
+                    1. Åbn <code>om-os.html</code><br>
+                    2. Find linjen med: <code>&lt;img src="https://images.unsplash.com/photo-1562141961-d0a6b5b5a2b5</code><br>
+                    3. Erstat hele <code>src="..."</code> delen med koden nedenfor<br>
+                    4. Gem filen og upload til Netlify
+                </div>
+                <div class="code-output" id="showroomCodeText"></div>
+                <button class="copy-btn" onclick="copyToClipboard('showroomCodeText')">📋 Kopier Kode</button>
+            </div>
+        </div>
+
+        <!-- Import Hero Billede -->
+        <div class="section">
+            <h2>🚚 Billede 2: Import Hero</h2>
+            <p>Upload billedet til Import siden (anbefalet størrelse: 1600x900px)</p>
+            
+            <input type="file" id="importImage" accept="image/*" onchange="processImportImage(this)">
+            
+            <div id="importPreview" class="preview" style="display: none;">
+                <h3>Preview:</h3>
+                <img id="importImg" alt="Import preview">
+            </div>
+            
+            <div id="importCode" style="display: none;">
+                <h3>HTML Kode til import.html:</h3>
+                <div class="instructions">
+                    <strong>📝 Instruktioner:</strong><br>
+                    1. Åbn <code>import.html</code><br>
+                    2. Find linjen med: <code>&lt;div class="aspect-[16/9] bg-cover bg-center bg-no-repeat"</code><br>
+                    3. Erstat hele <code>style='...'</code> delen med koden nedenfor<br>
+                    4. Gem filen og upload til Netlify
+                </div>
+                <div class="code-output" id="importCodeText"></div>
+                <button class="copy-btn" onclick="copyToClipboard('importCodeText')">📋 Kopier Kode</button>
+            </div>
+        </div>
+
+        <!-- Final Instructions -->
+        <div class="section success" style="display: none;" id="finalInstructions">
+            <h2>✅ Næste Skridt</h2>
+            <p><strong>Når du har kopieret begge koder:</strong></p>
+            <ol>
+                <li>Åbn <code>om-os.html</code> og <code>import.html</code> filerne</li>
+                <li>Indsæt koderne som beskrevet ovenfor</li>
+                <li>Gem begge filer</li>
+                <li>Upload hele <code>nordic-autos-website</code> mappen til Netlify</li>
+                <li>🎉 Dine billeder er nu permanente og forsvinder ikke mere!</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        function processShowroomImage(input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            // Validate file
+            if (file.size > 15 * 1024 * 1024) {
+                alert('Billedet er for stort. Maksimal størrelse er 15MB.');
+                return;
+            }
+
+            if (!file.type.startsWith('image/')) {
+                alert('Kun billedfiler er tilladt (JPG, PNG, WebP, etc.)');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    // Create canvas for optimization
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    
+                    // Target dimensions for showroom image
+                    const targetWidth = 1200;
+                    const targetHeight = 800;
+                    
+                    canvas.width = targetWidth;
+                    canvas.height = targetHeight;
+                    
+                    // Enable high-quality scaling
+                    ctx.imageSmoothingEnabled = true;
+                    ctx.imageSmoothingQuality = 'high';
+                    
+                    // Calculate scaling to cover the area
+                    const scale = Math.max(targetWidth / img.width, targetHeight / img.height);
+                    const scaledWidth = img.width * scale;
+                    const scaledHeight = img.height * scale;
+                    
+                    // Center the image
+                    const x = (targetWidth - scaledWidth) / 2;
+                    const y = (targetHeight - scaledHeight) / 2;
+                    
+                    // Draw with perfect quality
+                    ctx.drawImage(img, x, y, scaledWidth, scaledHeight);
+                    
+                    // Convert to high-quality base64
+                    const base64 = canvas.toDataURL('image/jpeg', 0.98);
+                    
+                    // Show preview
+                    document.getElementById('showroomImg').src = base64;
+                    document.getElementById('showroomPreview').style.display = 'block';
+                    
+                    // Generate HTML code
+                    const htmlCode = `src="${base64}"`;
+                    document.getElementById('showroomCodeText').textContent = htmlCode;
+                    document.getElementById('showroomCode').style.display = 'block';
+                    
+                    checkBothImagesProcessed();
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function processImportImage(input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            // Validate file
+            if (file.size > 15 * 1024 * 1024) {
+                alert('Billedet er for stort. Maksimal størrelse er 15MB.');
+                return;
+            }
+
+            if (!file.type.startsWith('image/')) {
+                alert('Kun billedfiler er tilladt (JPG, PNG, WebP, etc.)');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    // Create canvas for optimization
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    
+                    // Target dimensions for import hero image
+                    const targetWidth = 1600;
+                    const targetHeight = 900;
+                    
+                    canvas.width = targetWidth;
+                    canvas.height = targetHeight;
+                    
+                    // Enable high-quality scaling
+                    ctx.imageSmoothingEnabled = true;
+                    ctx.imageSmoothingQuality = 'high';
+                    
+                    // Calculate scaling to cover the area
+                    const scale = Math.max(targetWidth / img.width, targetHeight / img.height);
+                    const scaledWidth = img.width * scale;
+                    const scaledHeight = img.height * scale;
+                    
+                    // Center the image
+                    const x = (targetWidth - scaledWidth) / 2;
+                    const y = (targetHeight - scaledHeight) / 2;
+                    
+                    // Draw with perfect quality
+                    ctx.drawImage(img, x, y, scaledWidth, scaledHeight);
+                    
+                    // Convert to high-quality base64
+                    const base64 = canvas.toDataURL('image/jpeg', 0.98);
+                    
+                    // Show preview
+                    document.getElementById('importImg').src = base64;
+                    document.getElementById('importPreview').style.display = 'block';
+                    
+                    // Generate HTML code with gradient overlay
+                    const htmlCode = `style='background-image: linear-gradient(to right, rgba(10, 12, 16, 0.7) 0%, rgba(10, 12, 16, 0.3) 100%), url("${base64}");'`;
+                    document.getElementById('importCodeText').textContent = htmlCode;
+                    document.getElementById('importCode').style.display = 'block';
+                    
+                    checkBothImagesProcessed();
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function checkBothImagesProcessed() {
+            const showroomProcessed = document.getElementById('showroomCode').style.display !== 'none';
+            const importProcessed = document.getElementById('importCode').style.display !== 'none';
+            
+            if (showroomProcessed && importProcessed) {
+                document.getElementById('finalInstructions').style.display = 'block';
+            }
+        }
+
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).textContent;
+            
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('✅ Koden er kopieret til clipboard!');
+                }).catch(() => {
+                    fallbackCopy(text);
+                });
+            } else {
+                fallbackCopy(text);
+            }
+        }
+
+        function fallbackCopy(text) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                alert('✅ Koden er kopieret!');
+            } catch (err) {
+                alert('❌ Kunne ikke kopiere automatisk. Marker og kopier teksten manuelt.');
+            }
+            document.body.removeChild(textArea);
+        }
+    </script>
+</body>
+</html>

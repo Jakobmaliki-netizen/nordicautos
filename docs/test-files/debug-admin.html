@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Admin System</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .debug-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; border-radius: 5px; }
+        .debug-section h3 { margin-top: 0; }
+        pre { background: #f5f5f5; padding: 10px; border-radius: 3px; overflow-x: auto; }
+        button { padding: 10px 15px; margin: 5px; background: #007cba; color: white; border: none; border-radius: 3px; cursor: pointer; }
+        button:hover { background: #005a87; }
+    </style>
+</head>
+<body>
+    <h1>Nordic Autos Admin Debug</h1>
+    
+    <div class="debug-section">
+        <h3>Current Car Data</h3>
+        <button onclick="showCarData()">Show Car Data</button>
+        <button onclick="clearCarData()">Clear Car Data</button>
+        <pre id="carData">Click "Show Car Data" to see current data</pre>
+    </div>
+    
+    <div class="debug-section">
+        <h3>Actions</h3>
+        <button onclick="resetToDefault()">Reset to Default Cars</button>
+        <button onclick="goToHomepage()">Go to Homepage</button>
+        <button onclick="goToAdmin()">Go to Admin</button>
+    </div>
+
+    <script>
+        function showCarData() {
+            const carData = localStorage.getItem('nordic-autos-cars');
+            document.getElementById('carData').textContent = carData || 'No car data found';
+        }
+        
+        function clearCarData() {
+            localStorage.removeItem('nordic-autos-cars');
+            alert('Car data cleared!');
+            showCarData();
+        }
+        
+        function resetToDefault() {
+            const defaultCars = [
+                {
+                    id: 2,
+                    brand: "Mercedes-Benz",
+                    model: "EQA 250",
+                    year: 2023,
+                    mileage: 12000,
+                    price: 485000,
+                    fuelType: "El",
+                    status: "available"
+                }
+            ];
+            
+            localStorage.setItem('nordic-autos-cars', JSON.stringify(defaultCars));
+            alert('Reset to default cars');
+            showCarData();
+        }
+        
+        function goToHomepage() {
+            window.location.href = 'index.html';
+        }
+        
+        function goToAdmin() {
+            window.location.href = 'admin/dashboard.html';
+        }
+        
+        showCarData();
+    </script>
+</body>
+</html>

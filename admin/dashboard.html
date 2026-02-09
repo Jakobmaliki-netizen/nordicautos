@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html class="dark" lang="da">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Admin Dashboard - Nordic Autos</title>
+    <meta name="robots" content="noindex, nofollow"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+    <link rel="stylesheet" href="../assets/css/main.css"/>
+    <script src="../supabase-config.js?v=3" defer></script>
+    <script src="../assets/js/supabase-admin.js" defer></script>
+    <script src="admin-auth.js?v=2" defer></script>
+    <script src="admin-dashboard.js?v=7" defer></script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-white">
+    <!-- Admin Header -->
+    <header class="bg-white dark:bg-card-dark border-b border-slate-200 dark:border-border-dark">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <div class="size-8 text-primary">
+                    <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13.8261 30.5736C16.7203 29.8826 20.2244 29.4783 24 29.4783C27.7756 29.4783 31.2797 29.8826 34.1739 30.5736C36.9144 31.2278 39.9967 32.7669 41.3563 33.8352L24.8486 7.36089C24.4571 6.73303 23.5429 6.73303 23.1514 7.36089L6.64374 33.8352C8.00331 32.7669 11.0856 31.2278 13.8261 30.5736Z" fill="currentColor"></path>
+                        <path clip-rule="evenodd" d="M39.998 35.764C39.9944 35.7463 39.9875 35.7155 39.9748 35.6706C39.9436 35.5601 39.8949 35.4259 39.8346 35.2825C39.8168 35.2403 39.7989 35.1993 39.7813 35.1602C38.5103 34.2887 35.9788 33.0607 33.7095 32.5189C30.9875 31.8691 27.6413 31.4783 24 31.4783C20.3587 31.4783 17.0125 31.8691 14.2905 32.5189C12.0012 33.0654 9.44505 34.3104 8.18538 35.1832C8.17384 35.2075 8.16216 35.233 8.15052 35.2592C8.09919 35.3751 8.05721 35.4886 8.02977 35.589C8.00356 35.6848 8.00039 35.7333 8.00004 35.7388C8.00004 35.739 8 35.7393 8.00004 35.7388C8.00004 35.7641 8.0104 36.0767 8.68485 36.6314C9.34546 37.1746 10.4222 37.7531 11.9291 38.2772C14.9242 39.319 19.1919 40 24 40C28.8081 40 33.0758 39.319 36.0709 38.2772C37.5778 37.7531 38.6545 37.1746 39.3151 36.6314C39.9006 36.1499 39.9857 35.8511 39.998 35.764Z" fill="currentColor" fill-rule="evenodd"></path>
+                    </svg>
+                </div>
+                <h1 class="text-xl font-bold">Nordic Autos Admin</h1>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <span id="current-user" class="text-sm text-slate-600 dark:text-slate-400"></span>
+                <button id="logout-btn" class="btn-outline flex items-center gap-2">
+                    <span class="material-symbols-outlined text-sm">logout</span>
+                    Log ud
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-6 py-8">
+        <!-- Dashboard Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-border-dark p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">Totale biler</p>
+                        <p id="total-cars" class="text-2xl font-bold text-slate-900 dark:text-white">-</p>
+                    </div>
+                    <div class="size-12 bg-primary/10 rounded-full flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary">directions_car</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-border-dark p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">Tilgængelige</p>
+                        <p id="available-cars" class="text-2xl font-bold text-green-600">-</p>
+                    </div>
+                    <div class="size-12 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center">
+                        <span class="material-symbols-outlined text-green-600">check_circle</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-border-dark p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">Reserverede</p>
+                        <p id="reserved-cars" class="text-2xl font-bold text-yellow-600">-</p>
+                    </div>
+                    <div class="size-12 bg-yellow-100 dark:bg-yellow-900/20 rounded-full flex items-center justify-center">
+                        <span class="material-symbols-outlined text-yellow-600">schedule</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-border-dark p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">Solgte</p>
+                        <p id="sold-cars" class="text-2xl font-bold text-red-600">-</p>
+                    </div>
+                    <div class="size-12 bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center">
+                        <span class="material-symbols-outlined text-red-600">sell</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex flex-wrap gap-4 mb-8">
+            <button id="add-car-btn" class="btn-primary flex items-center gap-2">
+                <span class="material-symbols-outlined">add</span>
+                Tilføj ny bil
+            </button>
+            <button id="view-contacts-btn" class="btn-secondary flex items-center gap-2">
+                <span class="material-symbols-outlined">contact_mail</span>
+                Se henvendelser
+            </button>
+            <a href="../index.html" class="btn-outline flex items-center gap-2">
+                <span class="material-symbols-outlined">home</span>
+                Til hjemmeside
+            </a>
+        </div>
+
+        <!-- Car Management Table -->
+        <div class="bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-border-dark overflow-hidden">
+            <div class="p-6 border-b border-slate-200 dark:border-border-dark">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-lg font-bold text-slate-900 dark:text-white">Bil Administration</h2>
+                    <div class="flex items-center gap-4">
+                        <input type="text" id="search-cars" placeholder="Søg biler..." 
+                               class="form-input w-64">
+                        <select id="filter-status" class="form-input">
+                            <option value="">Alle status</option>
+                            <option value="available">Tilgængelig</option>
+                            <option value="reserved">Reserveret</option>
+                            <option value="sold">Solgt</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-slate-50 dark:bg-slate-800">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Bil</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">År</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Km</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Pris</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Status</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Handlinger</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cars-table-body" class="bg-white dark:bg-card-dark divide-y divide-slate-200 dark:divide-border-dark">
+                        <!-- Cars will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Contact Inquiries Section -->
+        <div id="contact-inquiries" class="hidden mt-8 bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-border-dark overflow-hidden">
+            <div class="p-6 border-b border-slate-200 dark:border-border-dark">
+                <h2 class="text-lg font-bold text-slate-900 dark:text-white">Kontakt Henvendelser</h2>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-slate-50 dark:bg-slate-800">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Navn</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Email</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Emne</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Dato</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Handlinger</th>
+                        </tr>
+                    </thead>
+                    <tbody id="contacts-table-body" class="bg-white dark:bg-card-dark divide-y divide-slate-200 dark:divide-border-dark">
+                        <!-- Contacts will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Car Modal -->
+    <div id="car-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+        <div class="bg-white dark:bg-card-dark rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+            <!-- Modal Header -->
+            <div class="sticky top-0 bg-white dark:bg-card-dark border-b border-slate-200 dark:border-border-dark p-6 flex items-center justify-between">
+                <div>
+                    <h3 id="modal-title" class="text-2xl font-bold text-slate-900 dark:text-white">Tilføj ny bil</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 mt-1">Udfyld bilens oplysninger nedenfor</p>
+                </div>
+                <button id="close-modal" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors">
+                    <span class="material-symbols-outlined text-3xl">close</span>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <form id="car-form" class="p-6 space-y-8">
+                <input type="hidden" id="car-id" name="id">
+                
+                <!-- Basic Information -->
+                <div class="space-y-4">
+                    <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">info</span>
+                        Grundlæggende Information
+                    </h4>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="car-brand" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                                Mærke *
+                            </label>
+                            <input type="text" id="car-brand" name="brand" required class="form-input w-full" placeholder="f.eks. Porsche, BMW, Mercedes-Benz">
+                        </div>
+                        
+                        <div>
+                            <label for="car-model" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                                Model *
+                            </label>
+                            <input type="text" id="car-model" name="model" required class="form-input w-full" placeholder="f.eks. 911 Carrera">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="car-variant" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                            Variant
+                        </label>
+                        <input type="text" id="car-variant" name="variant" class="form-input w-full" placeholder="f.eks. 3.0 Turbo PDK">
+                    </div>
+                </div>
+
+                <!-- Technical Specifications -->
+                <div class="space-y-4">
+                    <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">settings</span>
+                        Tekniske Specifikationer
+                    </h4>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label for="car-year" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                                Årgang *
+                            </label>
+                            <input type="number" id="car-year" name="year" required min="2000" max="2026" class="form-input w-full" placeholder="2023">
+                        </div>
+                        
+                        <div>
+                            <label for="car-mileage" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                                Kilometerstand *
+                            </label>
+                            <input type="number" id="car-mileage" name="mileage" required min="0" class="form-input w-full" placeholder="15000">
+                        </div>
+                        
+                        <div>
+                            <label for="car-horsepower" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                                Hestekræfter *
+                            </label>
+                            <input type="number" id="car-horsepower" name="horsepower" required min="0" class="form-input w-full" placeholder="450">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="car-fuel-type" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                                Brændstof *
+                            </label>
+                            <select id="car-fuel-type" name="fuelType" required class="form-input w-full">
+                                <option value="">Vælg brændstof</option>
+                                <option value="Benzin">Benzin</option>
+                                <option value="Diesel">Diesel</option>
+                                <option value="El">El</option>
+                                <option value="Hybrid">Hybrid</option>
+                                <option value="Plug-in Hybrid">Plug-in Hybrid</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="car-body-type" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                                Karrosseri
+                            </label>
+                            <select id="car-body-type" name="bodyType" class="form-input w-full">
+                                <option value="">Vælg type</option>
+                                <option value="Sedan">Sedan</option>
+                                <option value="Coupe">Coupe</option>
+                                <option value="SUV">SUV</option>
+                                <option value="Stationcar">Stationcar</option>
+                                <option value="Hatchback">Hatchback</option>
+                                <option value="Cabriolet">Cabriolet</option>
+                                <option value="Van">Van</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pricing & Status -->
+                <div class="space-y-4">
+                    <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">payments</span>
+                        Pris & Status
+                    </h4>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="car-price" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                                Pris (DKK) *
+                            </label>
+                            <input type="number" id="car-price" name="price" required min="0" class="form-input w-full" placeholder="485000">
+                        </div>
+                        
+                        <div>
+                            <label for="car-status" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                                Status *
+                            </label>
+                            <select id="car-status" name="status" required class="form-input w-full">
+                                <option value="available">Tilgængelig</option>
+                                <option value="reserved">Reserveret</option>
+                                <option value="sold">Solgt</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="space-y-4">
+                    <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">description</span>
+                        Beskrivelse
+                    </h4>
+                    
+                    <div>
+                        <label for="car-description" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                            Beskrivelse
+                        </label>
+                        <textarea id="car-description" name="description" rows="4" class="form-input w-full" placeholder="Beskriv bilen og dens særlige egenskaber..."></textarea>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Denne tekst vises på bilens detaljeside</p>
+                    </div>
+                </div>
+
+                <!-- Features/Equipment -->
+                <div class="space-y-4">
+                    <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">checklist</span>
+                        Udstyr & Features
+                    </h4>
+                    
+                    <div>
+                        <label for="car-features" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                            Udstyr (én per linje)
+                        </label>
+                        <textarea id="car-features" name="features" rows="6" class="form-input w-full" placeholder="Sport Chrono Package&#10;LED Matrix Headlights&#10;Panorama Soltag&#10;Læder interiør&#10;Adaptiv fartpilot"></textarea>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Skriv hvert udstyr på en ny linje</p>
+                    </div>
+                </div>
+
+                <!-- Images -->
+                <div class="space-y-4">
+                    <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">image</span>
+                        Billeder
+                    </h4>
+                    
+                    <div>
+                        <label for="car-images" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                            Billede URL'er (én per linje)
+                        </label>
+                        <textarea id="car-images" name="images" rows="4" class="form-input w-full" placeholder="https://example.com/image1.jpg&#10;https://example.com/image2.jpg"></textarea>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Indsæt URL'er til billederne, én per linje</p>
+                    </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="sticky bottom-0 bg-white dark:bg-card-dark border-t border-slate-200 dark:border-border-dark pt-6 flex justify-end gap-4">
+                    <button type="button" id="cancel-btn" class="px-6 py-3 bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 font-medium transition-colors">
+                        Annuller
+                    </button>
+                    <button type="submit" class="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 font-medium transition-colors flex items-center gap-2">
+                        <span class="material-symbols-outlined">save</span>
+                        Gem bil
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Initialize dashboard when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check authentication
+            if (window.adminAuth && !window.adminAuth.requireAuth()) {
+                return;
+            }
+            
+            // Initialize dashboard
+            if (window.AdminDashboard) {
+                window.adminDashboard = new AdminDashboard();
+            }
+        });
+    </script>
+</body>
+</html>

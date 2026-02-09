@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Test - Nordic Autos</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8fafc;
+            color: #1e293b;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #007cba;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .status {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-weight: 600;
+        }
+        .success {
+            background: #d1fae5;
+            border: 1px solid #10b981;
+            color: #065f46;
+        }
+        .error {
+            background: #fee2e2;
+            border: 1px solid #ef4444;
+            color: #991b1b;
+        }
+        .warning {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            color: #92400e;
+        }
+        .info {
+            background: #dbeafe;
+            border: 1px solid #3b82f6;
+            color: #1e40af;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+        }
+        button {
+            background: #007cba;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0369a1;
+        }
+        button:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+        }
+        .log {
+            background: #1e293b;
+            color: #f1f5f9;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔥 Firebase Test - Nordic Autos</h1>
+        <p style="text-align: center; color: #64748b; margin-bottom: 30px;">
+            Test Firebase integration før du går live
+        </p>
+
+        <!-- Firebase Status -->
+        <div class="test-section">
+            <h2>📡 Firebase Forbindelse</h2>
+            <div id="firebase-status" class="status info">
+                🔄 Tester Firebase forbindelse...
+            </div>
+            <button onclick="testFirebaseConnection()">Test Forbindelse</button>
+        </div>
+
+        <!-- Database Test -->
+        <div class="test-section">
+            <h2>💾 Database Test</h2>
+            <div id="database-status" class="status info">
+                ⏳ Venter på Firebase forbindelse...
+            </div>
+            <button id="test-database-btn" onclick="testDatabase()" disabled>Test Database</button>
+            <button id="test-read-btn" onclick="testReadCars()" disabled>Læs Biler</button>
+        </div>
+
+        <!-- Storage Test -->
+        <div class="test-section">
+            <h2>📸 Billede Storage Test</h2>
+            <div id="storage-status" class="status info">
+                ⏳ Venter på Firebase forbindelse...
+            </div>
+            <input type="file" id="test-image" accept="image/*" style="margin: 10px 0;">
+            <button id="test-storage-btn" onclick="testStorage()" disabled>Test Billede Upload</button>
+        </div>
+
+        <!-- Admin System Test -->
+        <div class="test-section">
+            <h2>🔧 Admin System Test</h2>
+            <div id="admin-status" class="status info">
+                ⏳ Venter på Firebase forbindelse...
+            </div>
+            <button id="test-admin-btn" onclick="testAdminSystem()" disabled>Test Admin System</button>
+        </div>
+
+        <!-- Console Log -->
+        <div class="test-section">
+            <h2>📋 Test Log</h2>
+            <div id="test-log" class="log">Starter Firebase test...\n</div>
+            <button onclick="clearLog()">Ryd Log</button>
+        </div>
+    </div>
+
+    <!-- Load Firebase -->
+    <script src="firebase-config.js"></script>
+    <script src="assets/js/firebase-admin.js"></script>
+
+    <script>
+        let testLog = '';
+
+        function log(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            testLog += `[${timestamp}] ${message}\n`;
+            document.getElementById('test-log').textContent = testLog;
+            console.log(message);
+        }
+
+        function updateStatus(elementId, message, type) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.className = `status ${type}`;
+        }
+
+        function clearLog() {
+            testLog = '';
+            document.getElementById('test-log').textContent = '';
+        }
+
+        async function testFirebaseConnection() {
+            log('🔄 Testing Firebase connection...');
+            
+            try {
+                if (window.firebaseCarManager) {
+                    const isReady = await window.firebaseCarManager.initialize();
+                    
+                    if (isReady) {
+                        updateStatus('firebase-status', '✅ Firebase forbindelse OK!', 'success');
+                        log('✅ Firebase initialized successfully');
+                        
+                        // Enable other test buttons
+                        document.getElementById('test-database-btn').disabled = false;
+                        document.getElementById('test-read-btn').disabled = false;
+                        document.getElementById('test-storage-btn').disabled = false;
+                        document.getElementById('test-admin-btn').disabled = false;
+                        
+                        updateStatus('database-status', '✅ Klar til database test', 'success');
+                        updateStatus('storage-status', '✅ Klar til storage test', 'success');
+                        updateStatus('admin-status', '✅ Klar til admin test', 'success');
+                    } else {
+                        updateStatus('firebase-status', '⚠️ Firebase fallback mode (localStorage)', 'warning');
+                        log('⚠️ Firebase not configured, using localStorage fallback');
+                    }
+                } else {
+                    throw new Error('Firebase Car Manager not found');
+                }
+            } catch (error) {
+                updateStatus('firebase-status', '❌ Firebase fejl: ' + error.message, 'error');
+                log('❌ Firebase connection failed: ' + error.message);
+            }
+        }
+
+        async function testDatabase() {
+            log('🔄 Testing database operations...');
+            
+            try {
+                // Test write
+                const testCar = {
+                    id: 999,
+                    brand: 'Test',
+                    model: 'Firebase Test',
+                    year: 2024,
+                    mileage: 0,
+                    price: 100000,
+                    fuelType: 'Test',
+                    status: 'available',
+                    icon: '🧪',
+                    images: [],
+                    createdAt: new Date().toISOString()
+                };
+
+                const saveResult = await window.firebaseCarManager.saveCar(testCar);
+                if (saveResult) {
+                    log('✅ Database write test OK');
+                    
+                    // Test read
+                    const cars = await window.firebaseCarManager.getCars();
+                    log(`✅ Database read test OK - found ${cars.length} cars`);
+                    
+                    // Clean up test car
+                    await window.firebaseCarManager.deleteCar(999);
+                    log('✅ Database delete test OK');
+                    
+                    updateStatus('database-status', '✅ Database test gennemført!', 'success');
+                } else {
+                    throw new Error('Failed to save test car');
+                }
+            } catch (error) {
+                updateStatus('database-status', '❌ Database fejl: ' + error.message, 'error');
+                log('❌ Database test failed: ' + error.message);
+            }
+        }
+
+        async function testReadCars() {
+            log('🔄 Reading cars from database...');
+            
+            try {
+                const cars = await window.firebaseCarManager.getCars();
+                log(`✅ Found ${cars.length} cars in database:`);
+                
+                cars.forEach(car => {
+                    log(`  - ${car.brand} ${car.model} (${car.year})`);
+                });
+                
+                updateStatus('database-status', `✅ Læst ${cars.length} biler fra database`, 'success');
+            } catch (error) {
+                updateStatus('database-status', '❌ Læse fejl: ' + error.message, 'error');
+                log('❌ Read cars failed: ' + error.message);
+            }
+        }
+
+        async function testStorage() {
+            const fileInput = document.getElementById('test-image');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert('Vælg et billede først');
+                return;
+            }
+            
+            log('🔄 Testing image upload...');
+            
+            try {
+                const imageUrl = await window.firebaseCarManager.uploadImage(file, 'test', 0);
+                log('✅ Image upload test OK');
+                log(`📸 Image URL: ${imageUrl.substring(0, 50)}...`);
+                
+                updateStatus('storage-status', '✅ Billede upload test gennemført!', 'success');
+            } catch (error) {
+                updateStatus('storage-status', '❌ Storage fejl: ' + error.message, 'error');
+                log('❌ Storage test failed: ' + error.message);
+            }
+        }
+
+        async function testAdminSystem() {
+            log('🔄 Testing admin system...');
+            
+            try {
+                if (window.firebaseAdmin) {
+                    await window.firebaseAdmin.initialize();
+                    
+                    const cars = await window.firebaseAdmin.loadCars();
+                    log(`✅ Admin system loaded ${cars.length} cars`);
+                    
+                    updateStatus('admin-status', '✅ Admin system test gennemført!', 'success');
+                } else {
+                    throw new Error('Firebase Admin not found');
+                }
+            } catch (error) {
+                updateStatus('admin-status', '❌ Admin fejl: ' + error.message, 'error');
+                log('❌ Admin system test failed: ' + error.message);
+            }
+        }
+
+        // Auto-start test when page loads
+        window.addEventListener('DOMContentLoaded', () => {
+            log('🚀 Firebase test page loaded');
+            log('📋 Follow these steps:');
+            log('1. Click "Test Forbindelse" to test Firebase');
+            log('2. If successful, test Database and Storage');
+            log('3. Check that all tests pass');
+            log('4. If any fail, check Firebase setup guide');
+            
+            // Auto-test connection after a short delay
+            setTimeout(() => {
+                testFirebaseConnection();
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

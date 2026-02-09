@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Test Featured Cars</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0a0f0b;
+            color: #f5f5f5;
+            padding: 20px;
+        }
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Test Featured Cars</h1>
+        <div id="featured-cars" class="grid">
+            <!-- Cars will be loaded here -->
+        </div>
+    </div>
+
+    <script>
+        // Test the loadFeaturedCars function directly
+        function loadFeaturedCars() {
+            const featuredCarsContainer = document.getElementById('featured-cars');
+            if (!featuredCarsContainer) return;
+
+            console.log('Loading featured cars...');
+
+            // Clear any existing content first
+            featuredCarsContainer.innerHTML = '';
+
+            // Sample featured cars data
+            const featuredCars = [
+                {
+                    id: 1,
+                    brand: "Porsche",
+                    model: "911 Carrera S",
+                    year: 2022,
+                    mileage: 15000,
+                    price: 1895000,
+                    image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                    isNew: true
+                },
+                {
+                    id: 2,
+                    brand: "Audi",
+                    model: "RS6 Avant",
+                    year: 2021,
+                    mileage: 28000,
+                    price: 1450000,
+                    image: "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                    isNew: false
+                },
+                {
+                    id: 3,
+                    brand: "Mercedes-Benz",
+                    model: "G63 AMG",
+                    year: 2023,
+                    mileage: 5000,
+                    price: 3200000,
+                    image: "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                    status: "reserved"
+                }
+            ];
+
+            // Create car cards HTML directly
+            const carCardsHTML = featuredCars.map(car => {
+                const badge = car.isNew ? 
+                    '<div style="position: absolute; top: 16px; left: 16px; background-color: rgba(15, 61, 46, 0.9); color: white; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; padding: 4px 12px; border-radius: 20px;">Nyhed</div>' : 
+                    car.status === 'reserved' ? 
+                    '<div style="position: absolute; top: 16px; left: 16px; background-color: #f59e0b; color: white; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; padding: 4px 12px; border-radius: 20px;">Reserveret</div>' : '';
+                
+                return `
+                    <div style="display: flex; flex-direction: column; background-color: #151a16; border-radius: 16px; overflow: hidden; border: 1px solid #374151; cursor: pointer; transition: all 0.3s ease;" onclick="alert('Car clicked: ${car.brand} ${car.model}')">
+                        <div style="position: relative; aspect-ratio: 16/10; overflow: hidden;">
+                            <div style="position: absolute; inset: 0; background-image: url('${car.image}'); background-size: cover; background-position: center; transition: transform 0.5s ease;"></div>
+                            ${badge}
+                        </div>
+                        <div style="padding: 24px; display: flex; flex-direction: column; gap: 12px;">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                <h3 style="font-size: 18px; font-weight: bold; color: #f5f5f5; margin: 0;">${car.brand} ${car.model}</h3>
+                                <span class="material-symbols-outlined" style="color: #9ca3af;">favorite</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 16px; color: #9ca3af; font-size: 14px;">
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <span class="material-symbols-outlined" style="font-size: 16px;">calendar_today</span>
+                                    ${car.year}
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <span class="material-symbols-outlined" style="font-size: 16px;">speed</span>
+                                    ${car.mileage?.toLocaleString('da-DK') || 'N/A'} km
+                                </div>
+                            </div>
+                            <p style="font-size: 24px; font-weight: 900; color: #f5f5f5; margin: 0; padding-top: 8px;">${car.price?.toLocaleString('da-DK') || 'Pris på forespørgsel'} DKK</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            featuredCarsContainer.innerHTML = carCardsHTML;
+            console.log('Featured cars loaded successfully');
+        }
+
+        // Load cars when page loads
+        document.addEventListener('DOMContentLoaded', loadFeaturedCars);
+    </script>
+</body>
+</html>

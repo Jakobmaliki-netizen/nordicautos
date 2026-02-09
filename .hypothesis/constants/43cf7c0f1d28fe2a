@@ -1,0 +1,4 @@
+# file: /Users/jakobmaliki/Desktop/nordic-autos-website adam nordic/deployment_system/asset_resolver/path_resolver.py
+# hypothesis_version: 6.151.4
+
+['../', './', '.css', '.js', '.mjs', '/', '^/dist/', '^/src/', '^[A-Za-z]:', 'css', 'file://', 'file:///', 'fixed_path', 'images', 'invalid_patterns', 'js', 'original_path', 'other', 'path_resolver']

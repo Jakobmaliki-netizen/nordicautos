@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html class="dark" lang="da">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Debug Contact API - Nordic Autos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+</head>
+<body class="font-display bg-slate-900 text-white p-8">
+    <div class="max-w-6xl mx-auto">
+        <h1 class="text-4xl font-black mb-8">🔍 Debug Contact API</h1>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Test Controls -->
+            <div class="space-y-4">
+                <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                    <h2 class="text-2xl font-bold mb-4">Quick Tests</h2>
+                    
+                    <div class="space-y-3">
+                        <button onclick="testAPIEndpoint()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded">
+                            1. Test API Endpoint (GET)
+                        </button>
+                        
+                        <button onclick="testValidSubmission()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded">
+                            2. Test Valid Submission
+                        </button>
+                        
+                        <button onclick="testInvalidSubmission()" class="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-3 px-4 rounded">
+                            3. Test Invalid Submission
+                        </button>
+                        
+                        <button onclick="testMissingFields()" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-4 rounded">
+                            4. Test Missing Fields
+                        </button>
+                        
+                        <button onclick="clearLog()" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded">
+                            Clear Log
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                    <h2 class="text-xl font-bold mb-4">Environment Info</h2>
+                    <div class="space-y-2 text-sm font-mono">
+                        <div><span class="text-slate-400">URL:</span> <span id="current-url" class="text-green-400"></span></div>
+                        <div><span class="text-slate-400">API Endpoint:</span> <span id="api-endpoint" class="text-green-400"></span></div>
+                        <div><span class="text-slate-400">Protocol:</span> <span id="protocol" class="text-green-400"></span></div>
+                        <div><span class="text-slate-400">Host:</span> <span id="host" class="text-green-400"></span></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Console Log -->
+            <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                <h2 class="text-xl font-bold mb-4">Console Log</h2>
+                <div id="console-log" class="space-y-1 text-xs font-mono max-h-[600px] overflow-y-auto">
+                    <div class="text-green-400">Ready to test...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Display environment info
+        document.getElementById('current-url').textContent = window.location.href;
+        document.getElementById('api-endpoint').textContent = window.location.origin + '/api/send-email';
+        document.getElementById('protocol').textContent = window.location.protocol;
+        document.getElementById('host').textContent = window.location.host;
+        
+        // Logging functions
+        function log(message, type = 'info') {
+            const consoleLog = document.getElementById('console-log');
+            const timestamp = new Date().toLocaleTimeString();
+            
+            let color, icon;
+            switch(type) {
+                case 'success':
+                    color = 'text-green-400';
+                    icon = '✅';
+                    break;
+                case 'error':
+                    color = 'text-red-400';
+                    icon = '❌';
+                    break;
+                case 'warning':
+                    color = 'text-yellow-400';
+                    icon = '⚠️';
+                    break;
+                case 'info':
+                default:
+                    color = 'text-blue-400';
+                    icon = 'ℹ️';
+                    break;
+            }
+            
+            const logEntry = document.createElement('div');
+            logEntry.className = color;
+            logEntry.textContent = `[${timestamp}] ${icon} ${message}`;
+            consoleLog.appendChild(logEntry);
+            consoleLog.scrollTop = consoleLog.scrollHeight;
+        }
+        
+        function logObject(label, obj) {
+            log(`${label}:`, 'info');
+            const consoleLog = document.getElementById('console-log');
+            const pre = document.createElement('pre');
+            pre.className = 'text-slate-300 text-xs ml-4 mb-2';
+            pre.textContent = JSON.stringify(obj, null, 2);
+            consoleLog.appendChild(pre);
+            consoleLog.scrollTop = consoleLog.scrollHeight;
+        }
+        
+        function clearLog() {
+            document.getElementById('console-log').innerHTML = '<div class="text-green-400">Log cleared...</div>';
+        }
+        
+        // Test 1: Check if API endpoint exists
+        async function testAPIEndpoint() {
+            log('Testing API endpoint availability...', 'info');
+            
+            try {
+                const response = await fetch('/api/send-email', {
+                    method: 'GET'
+                });
+                
+                log(`Response status: ${response.status} ${response.statusText}`, 'info');
+                
+                if (response.status === 405) {
+                    log('API endpoint exists! (405 = Method Not Allowed for GET)', 'success');
+                } else {
+                    log(`Unexpected status: ${response.status}`, 'warning');
+                }
+                
+                const text = await response.text();
+                logObject('Response body', text);
+                
+            } catch (error) {
+                log(`Error: ${error.message}`, 'error');
+                console.error(error);
+            }
+        }
+        
+        // Test 2: Valid submission
+        async function testValidSubmission() {
+            log('Testing valid form submission...', 'info');
+            
+            const formData = {
+                name: 'Test Bruger',
+                email: 'test@example.com',
+                phone: '+45 12 34 56 78',
+                subject: 'general',
+                message: 'Dette er en test besked fra debug siden.',
+                consent: true
+            };
+            
+            logObject('Sending data', formData);
+            
+            try {
+                log('Sending POST request...', 'info');
+                
+                const response = await fetch('/api/send-email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                log(`Response status: ${response.status} ${response.statusText}`, 'info');
+                
+                const result = await response.json();
+                logObject('Response data', result);
+                
+                if (result.success) {
+                    log('SUCCESS! Form submission worked!', 'success');
+                } else {
+                    log(`Failed: ${result.message}`, 'error');
+                }
+                
+            } catch (error) {
+                log(`Error: ${error.message}`, 'error');
+                console.error(error);
+            }
+        }
+        
+        // Test 3: Invalid email
+        async function testInvalidSubmission() {
+            log('Testing invalid email submission...', 'info');
+            
+            const formData = {
+                name: 'Test Bruger',
+                email: 'invalid-email',
+                phone: '+45 12 34 56 78',
+                subject: 'general',
+                message: 'Test besked',
+                consent: true
+            };
+            
+            logObject('Sending data', formData);
+            
+            try {
+                const response = await fetch('/api/send-email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                log(`Response status: ${response.status} ${response.statusText}`, 'info');
+                
+                const result = await response.json();
+                logObject('Response data', result);
+                
+                if (!result.success && result.message.includes('Ugyldig email')) {
+                    log('Validation working correctly!', 'success');
+                } else {
+                    log('Unexpected response', 'warning');
+                }
+                
+            } catch (error) {
+                log(`Error: ${error.message}`, 'error');
+                console.error(error);
+            }
+        }
+        
+        // Test 4: Missing required fields
+        async function testMissingFields() {
+            log('Testing missing required fields...', 'info');
+            
+            const formData = {
+                name: '',
+                email: '',
+                message: '',
+                consent: false
+            };
+            
+            logObject('Sending data', formData);
+            
+            try {
+                const response = await fetch('/api/send-email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                log(`Response status: ${response.status} ${response.statusText}`, 'info');
+                
+                const result = await response.json();
+                logObject('Response data', result);
+                
+                if (!result.success && response.status === 400) {
+                    log('Validation working correctly!', 'success');
+                } else {
+                    log('Unexpected response', 'warning');
+                }
+                
+            } catch (error) {
+                log(`Error: ${error.message}`, 'error');
+                console.error(error);
+            }
+        }
+        
+        log('Debug page loaded successfully', 'success');
+    </script>
+</body>
+</html>

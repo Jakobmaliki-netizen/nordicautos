@@ -1,0 +1,4 @@
+# file: /Users/jakobmaliki/Desktop/nordic-autos-website adam nordic/deployment_system/utils/path_utils.py
+# hypothesis_version: 6.151.4
+
+['#', '/', '//', '/dist/', '/src/', '127.0.0.1', 'C:', '\\', 'file://', 'ftp', 'http', 'http://', 'http://localhost', 'https', 'https://', 'https://localhost', 'localhost', 'mailto:', 'path_utils']

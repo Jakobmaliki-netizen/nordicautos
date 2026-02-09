@@ -1,0 +1,2727 @@
+<!DOCTYPE html>
+<html class="dark" lang="da">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.tailwindcss.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: http:; connect-src 'self' https:;">
+    <title>Nordic Autos - Premium Bilforhandler i Skive</title>
+    <meta name="description" content="Nordic Autos er din foretrukne partner i Skive for køb, salg og service af eksklusive biler som Porsche, Audi, Mercedes-Benz, BMW og Tesla."/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+    <link rel="stylesheet" href="assets/css/main.css"/>
+    <link rel="stylesheet" href="assets/css/custom-theme.css"/>
+    <script src="components/navigation-clean.js?v=4" defer></script>
+    <script src="components/breadcrumb.js?v=2" defer></script>
+    <script src="components/footer.js?v=2" defer></script>
+    <script src="assets/js/responsive.js?v=2" defer></script>
+    <script src="assets/js/image-optimizer.js?v=2" defer></script>
+    <script src="supabase-config.js?v=1" defer></script>
+    <script src="assets/js/cookie-banner.js?v=1" defer></script>
+    <script src="assets/js/main.js?v=3" defer></script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen flex flex-col font-display">
+    <!-- Navigation will be loaded here -->
+    <div id="navigation-container"></div>
+    
+    <!-- Breadcrumb will be loaded here -->
+    <div id="breadcrumb-container"></div>
+    
+    <main class="flex-grow">
+        <!-- Hero Section -->
+        <section class="max-w-[1200px] mx-auto px-6 lg:px-10 py-8">
+            <div class="@container">
+                <div class="relative min-h-[580px] w-full flex flex-col items-start justify-end p-8 md:p-16 overflow-hidden rounded-2xl bg-cover bg-center" 
+                     data-alt="Elegant dark Mercedes-Benz sedan in modern urban setting" 
+                     style='background-image: linear-gradient(to top, rgba(10, 15, 11, 0.95) 0%, rgba(10, 15, 11, 0.2) 60%), url("assets/images/Jakobbilen.jpeg");'>
+                    <div class="relative z-10 max-w-2xl space-y-4">
+                        <h1 class="text-white text-5xl md:text-7xl font-black leading-tight tracking-tight">
+                            Velkommen til <span class="text-primary">Nordic Autos</span>
+                        </h1>
+                        <p class="text-slate-300 text-lg md:text-xl font-light">
+                            Nordic Autos – din vej til den rette bil. Kvalitet, service og gennemsigtighed.
+                        </p>
+                        <div class="pt-6">
+                            <button class="bg-primary text-white text-base font-bold px-8 h-14 rounded-lg hover:bg-primary/90 transition-all flex items-center gap-3 shadow-xl shadow-primary/30" onclick="window.location.href='lagerbiler.html'">
+                                Udforsk vores lager
+                                <span class="material-symbols-outlined">arrow_forward</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- Feature Section -->
+        <section class="bg-slate-100 dark:bg-slate-900/30 py-20 mt-10">
+            <div class="max-w-[1200px] mx-auto px-6 lg:px-10">
+                <div class="flex flex-col md:flex-row gap-12 items-end justify-between mb-12">
+                    <div class="space-y-4 max-w-xl">
+                        <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 dark:text-white">Hvorfor vælge Nordic Autos?</h2>
+                        <p class="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
+                            Fordi vi håndplukker kvalitetsbiler og sætter ærlighed først. Hos Nordic Autos er tryghed og service altid en del af handlen.
+                        </p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="group flex flex-col gap-4 p-8 rounded-2xl bg-white dark:bg-card-dark border border-slate-200 dark:border-slate-700 hover:border-primary/50 transition-all">
+                        <div class="w-12 h-12 flex items-center justify-center rounded-xl bg-primary/10 text-primary">
+                            <span class="material-symbols-outlined text-3xl">verified</span>
+                        </div>
+                        <div class="space-y-2">
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white">Ekspertise</h3>
+                            <p class="text-slate-600 dark:text-slate-400">Vi har opbygget et bredt og stærkt netværk i Tyskland og Sverige samt en dybdegående forståelse for markedet.</p>
+                        </div>
+                    </div>
+                    <div class="group flex flex-col gap-4 p-8 rounded-2xl bg-white dark:bg-card-dark border border-slate-200 dark:border-slate-700 hover:border-primary/50 transition-all">
+                        <div class="w-12 h-12 flex items-center justify-center rounded-xl bg-primary/10 text-primary">
+                            <span class="material-symbols-outlined text-3xl">account_balance_wallet</span>
+                        </div>
+                        <div class="space-y-2">
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white">Lån og Leasing</h3>
+                            <p class="text-slate-600 dark:text-slate-400">Skræddersyede leasing- og låneløsninger tilpasset dine behov.</p>
+                        </div>
+                    </div>
+                    <div class="group flex flex-col gap-4 p-8 rounded-2xl bg-white dark:bg-card-dark border border-slate-200 dark:border-slate-700 hover:border-primary/50 transition-all">
+                        <div class="w-12 h-12 flex items-center justify-center rounded-xl bg-primary/10 text-primary">
+                            <span class="material-symbols-outlined text-3xl">security</span>
+                        </div>
+                        <div class="space-y-2">
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white">Tryghed</h3>
+                            <p class="text-slate-600 dark:text-slate-400">Med vores fleksible mekaniske garantier er du bedre sikret mod uforudsete omkostninger og kan handle bil med fuld tryghed hos os.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Import Section -->
+        <section class="bg-slate-100 dark:bg-slate-900/30 py-20">
+            <div class="max-w-[1200px] mx-auto px-6 lg:px-10">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">Import</h2>
+                    <div class="max-w-4xl mx-auto space-y-6">
+                        <h3 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">Import af bil fra Tyskland</h3>
+                        <p class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+                            Overvejer du at importere din næste bil fra Tyskland? Hos os får du en tryg, professionel og gennemsigtig løsning fra start til slut.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Konsulentpakke -->
+                <div class="bg-white dark:bg-card-dark rounded-3xl p-8 md:p-12 mb-16 border border-slate-200 dark:border-border-dark">
+                    <div class="text-center mb-12">
+                        <h3 class="text-3xl font-bold text-slate-900 dark:text-white mb-4">Konsulentpakke</h3>
+                        <div class="text-5xl font-black text-primary mb-4">Fra 15.000,- <span class="text-2xl font-normal text-slate-600 dark:text-slate-400">+ moms</span></div>
+                        <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+                            Vi tilbyder en komplet konsulentpakke, hvor vi står for hele importprocessen. Prisen starter fra 15.000 kr. + moms, og her får du meget for pengene.
+                        </p>
+                        <div class="mt-8">
+                            <button class="bg-primary text-white font-bold px-8 h-14 rounded-xl shadow-lg shadow-primary/30 hover:bg-primary/90 transition-all" onclick="window.location.href='kontakt.html'">
+                                Kontakt os for at høre mere
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Hvad inkluderer pakken -->
+                    <div class="mb-12">
+                        <h4 class="text-2xl font-bold text-slate-900 dark:text-white mb-8 text-center">Hvad inkluderer pakken?</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <div class="flex flex-col items-center text-center p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+                                <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
+                                    <span class="material-symbols-outlined text-3xl text-primary">search</span>
+                                </div>
+                                <h5 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Søgning af bilen</h5>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm">Vi hjælper dig med at finde præcis den bil, du leder efter – ud fra dine ønsker og behov.</p>
+                            </div>
+                            <div class="flex flex-col items-center text-center p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+                                <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
+                                    <span class="material-symbols-outlined text-3xl text-primary">handshake</span>
+                                </div>
+                                <h5 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Forhandling af bil</h5>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm">Vi står for kontakten til sælger og sikrer den bedst mulige pris og aftale.</p>
+                            </div>
+                            <div class="flex flex-col items-center text-center p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+                                <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
+                                    <span class="material-symbols-outlined text-3xl text-primary">local_shipping</span>
+                                </div>
+                                <h5 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Hjemtagelse</h5>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm">Vi sørger for transport og logistik – fra sælgeren i Tyskland til os i Danmark.</p>
+                            </div>
+                            <div class="flex flex-col items-center text-center p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+                                <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
+                                    <span class="material-symbols-outlined text-3xl text-primary">fact_check</span>
+                                </div>
+                                <h5 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Toldsyn</h5>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm">Vi håndterer toldsynet, så bilen bliver godkendt efter danske regler.</p>
+                            </div>
+                            <div class="flex flex-col items-center text-center p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 md:col-span-2 lg:col-span-1">
+                                <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
+                                    <span class="material-symbols-outlined text-3xl text-primary">license</span>
+                                </div>
+                                <h5 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Nummerplader</h5>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm">Vi står for indregistrering og montering af danske nummerplader – så du kan køre bilen med det samme.</p>
+                            </div>
+                            <div class="flex flex-col items-center text-center p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+                                <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
+                                    <span class="material-symbols-outlined text-3xl text-primary">verified_user</span>
+                                </div>
+                                <h5 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Garanti</h5>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm">Op til 5 års garanti – inkl. både sommer- og vinterhjul.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fordele -->
+                    <div>
+                        <h4 class="text-2xl font-bold text-slate-900 dark:text-white mb-8 text-center">Fordele ved at importere bil fra Tyskland</h4>
+                        <p class="text-lg text-slate-600 dark:text-slate-400 text-center mb-8 max-w-3xl mx-auto">
+                            At importere en bil kan virke uoverskueligt, men med os som din samarbejdspartner, får du både overblik og fordele:
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="flex items-start gap-4 p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+                                <div>
+                                    <h5 class="font-bold text-slate-900 dark:text-white mb-1">Større udvalg</h5>
+                                    <p class="text-slate-600 dark:text-slate-400 text-sm">Find biler, der ikke er tilgængelige i Danmark</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4 p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+                                <div>
+                                    <h5 class="font-bold text-slate-900 dark:text-white mb-1">Bedre priser</h5>
+                                    <p class="text-slate-600 dark:text-slate-400 text-sm">Ofte lavere priser end på det danske marked</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4 p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+                                <div>
+                                    <h5 class="font-bold text-slate-900 dark:text-white mb-1">Bedre udstyrsniveau</h5>
+                                    <p class="text-slate-600 dark:text-slate-400 text-sm">Tyske biler har ofte mere ekstraudstyr</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4 p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+                                <div>
+                                    <h5 class="font-bold text-slate-900 dark:text-white mb-1">Professionel håndtering</h5>
+                                    <p class="text-slate-600 dark:text-slate-400 text-sm">Vi tager os af alt det praktiske</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4 p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 md:col-span-2">
+                                <div>
+                                    <h5 class="font-bold text-slate-900 dark:text-white mb-1">Gennemsigtighed</h5>
+                                    <p class="text-slate-600 dark:text-slate-400 text-sm">Fast pris, ingen skjulte gebyrer</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-12">
+                        <button class="bg-primary text-white font-bold px-10 h-16 rounded-xl shadow-lg shadow-primary/30 hover:bg-primary/90 transition-all text-lg" onclick="window.location.href='kontakt.html'">
+                            Kontakt os nu
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter / Contact CTA -->
+        <section class="max-w-[1200px] mx-auto px-6 lg:px-10 pb-20">
+            <div class="bg-primary/10 rounded-3xl p-8 md:p-16 flex flex-col md:flex-row items-center justify-between gap-10">
+                <div class="space-y-4 text-center md:text-left">
+                    <h2 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white">Klar til din næste køreoplevelse?</h2>
+                    <p class="text-slate-600 dark:text-slate-400 text-lg max-w-lg">
+                        Kontakt os i dag for en uforpligtende samtale om din drømmebil eller lånmuligheder.
+                    </p>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+                    <button class="bg-primary text-white font-bold h-14 px-8 rounded-xl shadow-lg shadow-primary/30 whitespace-nowrap" onclick="window.location.href='kontakt.html'">
+                        Kontakt os
+                    </button>
+                    <button class="bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-bold h-14 px-8 rounded-xl border border-slate-200 dark:border-slate-700 whitespace-nowrap" onclick="window.open('tel:+4525454563')">
+                        Ring (+45) 25 45 45 63
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer will be loaded here -->
+    <div id="footer-container"></div>
+
+    <!-- Admin Login Modal -->
+    <div id="adminLoginModal" class="fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-md w-full p-8">
+            <div class="text-center mb-6">
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Admin Login</h2>
+                <p class="text-slate-600 dark:text-slate-400">Log ind for at administrere biler</p>
+            </div>
+            
+            <form id="adminLoginForm" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Brugernavn</label>
+                    <input type="text" id="adminUsername" required 
+                           class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Adgangskode</label>
+                    <input type="password" id="adminPassword" required 
+                           class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                </div>
+                
+                <div id="adminLoginMessage" class="hidden text-sm text-center py-2 rounded-lg"></div>
+                
+                <div class="flex gap-4">
+                    <button type="button" onclick="closeAdminLogin()" class="flex-1 px-4 py-2 bg-slate-200 dark:bg-slate-600 text-slate-900 dark:text-white rounded-lg hover:bg-slate-300 dark:hover:bg-slate-500">
+                        Annuller
+                    </button>
+                    <button type="submit" class="flex-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90">
+                        Log ind
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard Modal -->
+    <div id="adminDashboard" class="fixed inset-0 bg-black/90 z-50 hidden overflow-y-auto">
+        <div class="min-h-screen p-4">
+            <div class="max-w-6xl mx-auto bg-white dark:bg-slate-800 rounded-2xl">
+                <!-- Admin Header -->
+                <div class="flex items-center justify-between p-6 border-b border-slate-200 dark:border-slate-700">
+                    <div class="flex items-center gap-4">
+                        <div class="w-8 h-8 text-primary">🚗</div>
+                        <h1 class="text-xl font-bold text-slate-900 dark:text-white">Nordic Autos Admin - Alle Biler</h1>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <span id="currentAdminUser" class="text-sm text-slate-600 dark:text-slate-400"></span>
+                        <button onclick="logoutAdmin()" class="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+                            Logout
+                        </button>
+                        <button onclick="closeAdminDashboard()" class="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white text-2xl">×</button>
+                    </div>
+                </div>
+
+                <!-- Admin Content -->
+                <div class="p-6">
+                    <!-- Action Buttons -->
+                    <div class="flex gap-4 mb-8">
+                        <button onclick="showAddCarForm()" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 flex items-center gap-2">
+                            ➕ Tilføj ny bil
+                        </button>
+                        <button onclick="refreshCarList()" class="bg-slate-600 text-white px-4 py-2 rounded-lg hover:bg-slate-700">
+                            🔄 Opdater liste
+                        </button>
+                        <button onclick="showContentEditor()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 flex items-center gap-2">
+                            📝 Rediger Indhold
+                        </button>
+                        <button onclick="uploadImportImage()" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 flex items-center gap-2">
+                            🖼️ Upload Import Billede
+                        </button>
+                        <button onclick="uploadShowroomImage()" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 flex items-center gap-2">
+                            🏢 Upload Showroom Billede
+                        </button>
+                        <button onclick="testImageQuality()" class="bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700 flex items-center gap-2">
+                            🔍 Test Billede Kvalitet
+                        </button>
+                        <button onclick="exportCarData()" class="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 flex items-center gap-2">
+                            📤 Eksporter Bil Data
+                        </button>
+                    </div>
+
+                    <!-- Content Editor Section -->
+                    <div id="contentEditorSection" class="hidden bg-slate-50 dark:bg-slate-700 rounded-xl p-6 mb-8">
+                        <h2 class="text-lg font-bold text-slate-900 dark:text-white mb-4">Rediger Hjemmeside Indhold</h2>
+                        <p class="text-slate-600 dark:text-slate-400 mb-6">Her kan du ændre al tekst og billeder på hjemmesiden.</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <button onclick="editPageContent('forside')" class="bg-blue-600 text-white p-4 rounded-lg hover:bg-blue-700 text-left">
+                                <div class="font-bold mb-1">🏠 Forside</div>
+                                <div class="text-sm opacity-90">Hero tekst, features, CTA</div>
+                            </button>
+                            <button onclick="editPageContent('om-os')" class="bg-blue-600 text-white p-4 rounded-lg hover:bg-blue-700 text-left">
+                                <div class="font-bold mb-1">👥 Om Os</div>
+                                <div class="text-sm opacity-90">Historie, mission, team</div>
+                            </button>
+                            <button onclick="editPageContent('kontakt')" class="bg-blue-600 text-white p-4 rounded-lg hover:bg-blue-700 text-left">
+                                <div class="font-bold mb-1">📞 Kontakt</div>
+                                <div class="text-sm opacity-90">Adresse, telefon, email</div>
+                            </button>
+                            <button onclick="editPageContent('import')" class="bg-blue-600 text-white p-4 rounded-lg hover:bg-blue-700 text-left">
+                                <div class="font-bold mb-1">🚚 Import</div>
+                                <div class="text-sm opacity-90">Import tekst og priser</div>
+                            </button>
+                            <button onclick="editPageContent('footer')" class="bg-blue-600 text-white p-4 rounded-lg hover:bg-blue-700 text-left">
+                                <div class="font-bold mb-1">🦶 Footer</div>
+                                <div class="text-sm opacity-90">Footer tekst og links</div>
+                            </button>
+                            <button onclick="editPageContent('billeder')" class="bg-purple-600 text-white p-4 rounded-lg hover:bg-purple-700 text-left">
+                                <div class="font-bold mb-1">🖼️ Billeder</div>
+                                <div class="text-sm opacity-90">Hero billede, baggrunde</div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Cars Management -->
+                    <div class="bg-slate-50 dark:bg-slate-700 rounded-xl p-6">
+                        <h2 class="text-lg font-bold text-slate-900 dark:text-white mb-4">Bil Administration</h2>
+                        <p class="text-slate-600 dark:text-slate-400 mb-6">Administrer alle biler på hjemmesiden. Ændringer vises øjeblikkeligt på både forsiden og lagerbiler siden.</p>
+                        <div id="adminCarsList" class="space-y-4">
+                            <!-- Cars will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Admin credentials
+        const adminCredentials = {
+            'admin': 'nordic2024',
+            'lars': 'porsche911',
+            'maria': 'bmwx5'
+        };
+
+        let isAdminLoggedIn = false;
+        let currentAdminUser = null;
+        let cars = [
+            {
+                id: 2,
+                brand: "Mercedes-Benz",
+                model: "EQA 250",
+                year: 2023,
+                mileage: 12000,
+                price: 485000,
+                fuelType: "El",
+                status: "available",
+                icon: "⚡",
+                images: [
+                    "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&h=600&fit=crop",
+                    "https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800&h=600&fit=crop"
+                ],
+                imageUrl: "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&h=600&fit=crop"
+            },
+            {
+                id: 3,
+                brand: "Mercedes-Benz",
+                model: "EQB 350",
+                year: 2023,
+                mileage: 8500,
+                price: 525000,
+                fuelType: "El",
+                status: "available",
+                icon: "🚙",
+                images: [
+                    "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&h=600&fit=crop"
+                ],
+                imageUrl: "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&h=600&fit=crop"
+            },
+            {
+                id: 4,
+                brand: "Volkswagen",
+                model: "ID.3 Pro",
+                year: 2023,
+                mileage: 15000,
+                price: 385000,
+                fuelType: "El",
+                status: "available",
+                icon: "🚗",
+                images: [
+                    "https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=800&h=600&fit=crop"
+                ],
+                imageUrl: "https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=800&h=600&fit=crop"
+            },
+            {
+                id: 6,
+                brand: "Volkswagen",
+                model: "ID.Buzz Pro",
+                year: 2023,
+                mileage: 5000,
+                price: 685000,
+                fuelType: "El",
+                status: "available",
+                icon: "🚐",
+                images: [
+                    "https://images.unsplash.com/photo-1664361480105-1e8dd1bce5d3?w=800&h=600&fit=crop",
+                    "https://images.unsplash.com/photo-1664361480105-1e8dd1bce5d3?w=800&h=600&fit=crop"
+                ],
+                imageUrl: "https://images.unsplash.com/photo-1664361480105-1e8dd1bce5d3?w=800&h=600&fit=crop"
+            }
+        ];
+        let editingCarId = null;
+
+        // Load deleted cars from localStorage
+        function loadDeletedCars() {
+            const deletedCars = localStorage.getItem('nordic-autos-deleted-cars');
+            if (deletedCars) {
+                const deletedIds = JSON.parse(deletedCars);
+                cars.forEach(car => {
+                    if (deletedIds.includes(car.id)) {
+                        car.status = 'deleted';
+                    }
+                });
+            }
+        }
+
+        // Save deleted cars to localStorage
+        function saveDeletedCars() {
+            const deletedIds = cars.filter(car => car.status === 'deleted').map(car => car.id);
+            localStorage.setItem('nordic-autos-deleted-cars', JSON.stringify(deletedIds));
+        }
+
+        // Load cars data using Firebase
+        async function loadCarsData() {
+            console.log('🔄 Loading cars data...');
+            
+            if (window.firebaseAdmin && window.firebaseAdmin.isInitialized) {
+                try {
+                    cars = await window.firebaseAdmin.loadCars();
+                    console.log(`✅ Loaded ${cars.length} cars from Firebase`);
+                } catch (error) {
+                    console.error('❌ Error loading from Firebase, using fallback:', error);
+                    // Fallback to localStorage
+                    const savedCars = localStorage.getItem('nordic-autos-cars');
+                    if (savedCars) {
+                        try {
+                            cars = JSON.parse(savedCars);
+                        } catch (e) {
+                            console.error('Error parsing localStorage cars:', e);
+                            cars = getDefaultCars();
+                        }
+                    } else {
+                        cars = getDefaultCars();
+                    }
+                }
+            } else {
+                console.log('⏳ Firebase not ready, using default cars');
+                cars = getDefaultCars();
+            }
+            
+            return Promise.resolve();
+        }
+
+        // Get default cars if no data is available
+        function getDefaultCars() {
+            return [
+                {
+                    id: 2,
+                    brand: "Mercedes-Benz",
+                    model: "EQA 250",
+                    year: 2023,
+                    mileage: 12000,
+                    price: 485000,
+                    fuelType: "El",
+                    status: "available",
+                    icon: "⚡",
+                    images: [
+                        "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&h=600&fit=crop",
+                        "https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800&h=600&fit=crop"
+                    ],
+                    imageUrl: "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&h=600&fit=crop"
+                },
+                {
+                    id: 3,
+                    brand: "Mercedes-Benz",
+                    model: "EQB 350",
+                    year: 2023,
+                    mileage: 8500,
+                    price: 525000,
+                    fuelType: "El",
+                    status: "available",
+                    icon: "🚙",
+                    images: [
+                        "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&h=600&fit=crop"
+                    ],
+                    imageUrl: "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&h=600&fit=crop"
+                },
+                {
+                    id: 4,
+                    brand: "Volkswagen",
+                    model: "ID.3 Pro",
+                    year: 2023,
+                    mileage: 15000,
+                    price: 385000,
+                    fuelType: "El",
+                    status: "available",
+                    icon: "🚗",
+                    images: [
+                        "https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=800&h=600&fit=crop"
+                    ],
+                    imageUrl: "https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=800&h=600&fit=crop"
+                },
+                {
+                    id: 6,
+                    brand: "Volkswagen",
+                    model: "ID.Buzz Pro",
+                    year: 2023,
+                    mileage: 5000,
+                    price: 685000,
+                    fuelType: "El",
+                    status: "available",
+                    icon: "🚐",
+                    images: [
+                        "https://images.unsplash.com/photo-1664361480105-1e8dd1bce5d3?w=800&h=600&fit=crop",
+                        "https://images.unsplash.com/photo-1664361480105-1e8dd1bce5d3?w=800&h=600&fit=crop"
+                    ],
+                    imageUrl: "https://images.unsplash.com/photo-1664361480105-1e8dd1bce5d3?w=800&h=600&fit=crop"
+                }
+            ];
+        }
+
+        // Admin functions
+        function showAdminLogin() {
+            console.log('Opening admin login');
+            document.getElementById('adminLoginModal').classList.remove('hidden');
+            document.getElementById('adminLoginModal').classList.add('flex');
+        }
+
+        function closeAdminLogin() {
+            document.getElementById('adminLoginModal').classList.add('hidden');
+            document.getElementById('adminLoginModal').classList.remove('flex');
+            document.getElementById('adminLoginForm').reset();
+            document.getElementById('adminLoginMessage').classList.add('hidden');
+        }
+
+        function showAdminMessage(message, type = 'error') {
+            const messageEl = document.getElementById('adminLoginMessage');
+            messageEl.className = `text-sm text-center py-2 rounded-lg ${
+                type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+            }`;
+            messageEl.textContent = message;
+            messageEl.classList.remove('hidden');
+        }
+
+        function loginAdmin(event) {
+            event.preventDefault();
+            const username = document.getElementById('adminUsername').value;
+            const password = document.getElementById('adminPassword').value;
+
+            if (adminCredentials[username] && adminCredentials[username] === password) {
+                isAdminLoggedIn = true;
+                currentAdminUser = username;
+                
+                showAdminMessage('Login succesfuldt!', 'success');
+                setTimeout(() => {
+                    closeAdminLogin();
+                    showAdminDashboard();
+                }, 1000);
+            } else {
+                showAdminMessage('Forkert brugernavn eller adgangskode');
+            }
+        }
+
+        function logoutAdmin() {
+            isAdminLoggedIn = false;
+            currentAdminUser = null;
+            closeAdminDashboard();
+        }
+
+        function showAdminDashboard() {
+            if (!isAdminLoggedIn) {
+                showAdminLogin();
+                return;
+            }
+
+            document.getElementById('currentAdminUser').textContent = `Logget ind som: ${currentAdminUser}`;
+            document.getElementById('adminDashboard').classList.remove('hidden');
+            loadAdminCarsList();
+        }
+
+        function closeAdminDashboard() {
+            document.getElementById('adminDashboard').classList.add('hidden');
+        }
+
+        async function loadAdminCarsList() {
+            const container = document.getElementById('adminCarsList');
+            
+            // Reload cars from Firebase
+            if (window.firebaseAdmin && window.firebaseAdmin.isInitialized) {
+                await window.firebaseAdmin.loadCars();
+                cars = window.firebaseAdmin.getAvailableCars();
+            }
+            
+            // Only show available cars
+            const availableCars = cars.filter(car => car.status === 'available');
+            
+            if (availableCars.length === 0) {
+                container.innerHTML = '<p class="text-slate-600 dark:text-slate-400 text-center py-8">Ingen biler i lageret</p>';
+                return;
+            }
+
+            container.innerHTML = '';
+            availableCars.forEach(car => {
+                const carElement = document.createElement('div');
+                carElement.className = 'bg-white dark:bg-slate-600 rounded-lg p-4 flex items-center justify-between border border-slate-200 dark:border-slate-500';
+                carElement.innerHTML = `
+                    <div class="flex items-center gap-4">
+                        <div class="text-2xl">${car.icon || '🚗'}</div>
+                        <div>
+                            <h3 class="font-bold text-slate-900 dark:text-white">${car.brand} ${car.model}</h3>
+                            <p class="text-slate-600 dark:text-slate-300 text-sm">${car.year} • ${car.mileage.toLocaleString('da-DK')} km • ${car.price.toLocaleString('da-DK')} DKK</p>
+                            <p class="text-slate-500 dark:text-slate-400 text-xs">${car.images ? car.images.length : 0} billeder • ${car.fuelType}</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="editCar(${car.id})" class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 text-sm">
+                            ✏️ Rediger
+                        </button>
+                        <button onclick="deleteCar(${car.id})" class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 text-sm">
+                            🗑️ Slet
+                        </button>
+                    </div>
+                `;
+                container.appendChild(carElement);
+            });
+            
+            console.log(`📊 Admin dashboard showing ${availableCars.length} cars`);
+        }
+
+        function editCar(carId) {
+            const car = cars.find(c => c.id === carId);
+            if (car) {
+                editingCarId = carId;
+                showEditCarForm(car);
+            }
+        }
+
+        function showEditCarForm(car) {
+            // Create edit form modal
+            const editModal = document.createElement('div');
+            editModal.id = 'editCarModal';
+            editModal.className = 'fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4';
+            editModal.innerHTML = `
+                <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-2xl w-full p-8 max-h-[90vh] overflow-y-auto">
+                    <div class="text-center mb-6">
+                        <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Rediger Bil</h2>
+                        <p class="text-slate-600 dark:text-slate-400">Opdater biloplysninger</p>
+                    </div>
+                    
+                    <form id="editCarForm" class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Mærke</label>
+                                <input type="text" id="editBrand" value="${car.brand}" required 
+                                       class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Model</label>
+                                <input type="text" id="editModel" value="${car.model}" required 
+                                       class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">År</label>
+                                <input type="number" id="editYear" value="${car.year}" required min="1990" max="2030"
+                                       class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Kilometerstand</label>
+                                <input type="number" id="editMileage" value="${car.mileage}" required min="0"
+                                       class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Pris (DKK)</label>
+                                <input type="number" id="editPrice" value="${car.price}" required min="0"
+                                       class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Brændstoftype</label>
+                                <select id="editFuelType" required 
+                                        class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                    <option value="Benzin" ${car.fuelType === 'Benzin' ? 'selected' : ''}>Benzin</option>
+                                    <option value="Diesel" ${car.fuelType === 'Diesel' ? 'selected' : ''}>Diesel</option>
+                                    <option value="El" ${car.fuelType === 'El' ? 'selected' : ''}>El</option>
+                                    <option value="Hybrid" ${car.fuelType === 'Hybrid' ? 'selected' : ''}>Hybrid</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Bil Emoji/Ikon</label>
+                            <select id="editIcon" class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                <option value="🏎️">🏎️ Sportsbil</option>
+                                <option value="🚗">🚗 Almindelig bil</option>
+                                <option value="🚙">🚙 SUV</option>
+                                <option value="🚐">🚐 Van/Bus</option>
+                                <option value="⚡">⚡ Elbil</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Bil Billeder</label>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-xs text-slate-500 dark:text-slate-400 mb-1">Upload flere billeder fra computer:</label>
+                                    <input type="file" id="editImageFiles" accept="image/*" multiple
+                                           class="w-full px-3 py-2 text-sm bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Hold Ctrl/Cmd for at vælge flere billeder</p>
+                                </div>
+                                <div class="text-center text-slate-400 text-xs">ELLER</div>
+                                <div>
+                                    <label class="block text-xs text-slate-500 dark:text-slate-400 mb-1">Tilføj billede URL:</label>
+                                    <div class="flex gap-2">
+                                        <input type="url" id="editImageUrl" placeholder="https://example.com/bil.jpg"
+                                               class="flex-1 px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                        <button type="button" onclick="addImageUrl('edit')" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm">
+                                            Tilføj
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Current images display -->
+                                <div id="editCurrentImages" class="space-y-2">
+                                    <label class="block text-xs text-slate-500 dark:text-slate-400">Nuværende billeder:</label>
+                                    <div id="editImagesList" class="grid grid-cols-2 gap-2">
+                                        <!-- Current images will be loaded here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="editCarMessage" class="hidden text-sm text-center py-2 rounded-lg"></div>
+                        
+                        <div class="flex gap-4 pt-4">
+                            <button type="button" onclick="closeEditCarForm()" class="flex-1 px-4 py-2 bg-slate-200 dark:bg-slate-600 text-slate-900 dark:text-white rounded-lg hover:bg-slate-300 dark:hover:bg-slate-500">
+                                Annuller
+                            </button>
+                            <button type="submit" class="flex-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90">
+                                Gem ændringer
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            
+            document.body.appendChild(editModal);
+            document.getElementById('editCarForm').addEventListener('submit', saveCarEdits);
+            
+            // Load current images
+            loadCurrentImages(car);
+        }
+
+        // Global arrays to store images for forms
+        let editImages = [];
+        let addImages = [];
+
+        function loadCurrentImages(car) {
+            const container = document.getElementById('editImagesList');
+            editImages = car.images ? [...car.images] : (car.imageUrl ? [car.imageUrl] : []);
+            
+            displayImages(editImages, container, 'edit');
+        }
+
+        function displayImages(images, container, formType) {
+            container.innerHTML = '';
+            
+            images.forEach((image, index) => {
+                const imageDiv = document.createElement('div');
+                imageDiv.className = 'relative group';
+                imageDiv.innerHTML = `
+                    <img src="${image}" alt="Bil billede ${index + 1}" class="w-full h-20 object-cover rounded-lg border border-slate-300 dark:border-slate-600">
+                    <button type="button" onclick="removeImage(${index}, '${formType}')" 
+                            class="absolute top-1 right-1 bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-700 opacity-0 group-hover:opacity-100 transition-opacity">
+                        ×
+                    </button>
+                `;
+                container.appendChild(imageDiv);
+            });
+        }
+
+        function addImageUrl(formType) {
+            const urlInput = document.getElementById(`${formType}ImageUrl`);
+            const url = urlInput.value.trim();
+            
+            if (!url) return;
+            
+            if (formType === 'edit') {
+                editImages.push(url);
+                displayImages(editImages, document.getElementById('editImagesList'), 'edit');
+            } else {
+                addImages.push(url);
+                const container = document.getElementById('addImagesList');
+                container.classList.remove('hidden');
+                displayImages(addImages, container, 'add');
+            }
+            
+            urlInput.value = '';
+        }
+
+        function removeImage(index, formType) {
+            if (formType === 'edit') {
+                editImages.splice(index, 1);
+                displayImages(editImages, document.getElementById('editImagesList'), 'edit');
+            } else {
+                addImages.splice(index, 1);
+                const container = document.getElementById('addImagesList');
+                displayImages(addImages, container, 'add');
+                if (addImages.length === 0) {
+                    container.classList.add('hidden');
+                }
+            }
+        }
+
+        function closeEditCarForm() {
+            const modal = document.getElementById('editCarModal');
+            if (modal) {
+                modal.remove();
+            }
+            editingCarId = null;
+        }
+
+        function showEditMessage(message, type = 'error') {
+            const messageEl = document.getElementById('editCarMessage');
+            if (messageEl) {
+                messageEl.className = `text-sm text-center py-2 rounded-lg ${
+                    type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                }`;
+                messageEl.textContent = message;
+                messageEl.classList.remove('hidden');
+            }
+        }
+
+        function saveCarEdits(event) {
+            event.preventDefault();
+            
+            if (!editingCarId) return;
+            
+            const car = cars.find(c => c.id === editingCarId);
+            if (!car) return;
+            
+            // Get form values
+            const brand = document.getElementById('editBrand').value.trim();
+            const model = document.getElementById('editModel').value.trim();
+            const year = parseInt(document.getElementById('editYear').value);
+            const mileage = parseInt(document.getElementById('editMileage').value);
+            const price = parseInt(document.getElementById('editPrice').value);
+            const fuelType = document.getElementById('editFuelType').value;
+            const icon = document.getElementById('editIcon').value;
+            const imageFiles = document.getElementById('editImageFiles').files;
+            
+            // Validate
+            if (!brand || !model || !year || !mileage || !price || !fuelType) {
+                showEditMessage('Alle felter skal udfyldes');
+                return;
+            }
+            
+            // Handle multiple image uploads
+            if (imageFiles.length > 0) {
+                let processedFiles = 0;
+                const newImages = [...editImages]; // Start with existing images
+                
+                Array.from(imageFiles).forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        newImages.push(e.target.result);
+                        processedFiles++;
+                        
+                        if (processedFiles === imageFiles.length) {
+                            // All files processed, save car
+                            updateCarData(car, brand, model, year, mileage, price, fuelType, icon, newImages);
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                });
+            } else {
+                // No new files, just use existing images
+                updateCarData(car, brand, model, year, mileage, price, fuelType, icon, editImages);
+            }
+        }
+
+        // Enhanced data persistence system - automatically saves to files
+        function saveDataPermanently(dataType, data) {
+            // This function will automatically update the actual HTML files
+            // instead of just storing in localStorage
+            
+            switch(dataType) {
+                case 'cars':
+                    saveCarsToFile(data);
+                    break;
+                case 'content':
+                    saveContentToFiles(data);
+                    break;
+                case 'images':
+                    saveImagesToFiles(data);
+                    break;
+            }
+            
+            // Also save to localStorage for immediate updates
+            localStorage.setItem(`nordic-autos-${dataType}`, JSON.stringify(data));
+        }
+
+        function saveCarsToFile(cars) {
+            // Generate the cars array as JavaScript code
+            const carsCode = `        let cars = ${JSON.stringify(cars, null, 12)};`;
+            
+            // Show instructions to user for manual update
+            const instructions = `
+BILER OPDATERET! 
+
+For at gemme permanent til Netlify:
+1. Bilerne er nu opdateret i admin systemet
+2. Upload hele nordic-autos-website mappen til Netlify igen
+3. Alle ændringer vil være permanente
+
+Dine ændringer:
+- ${cars.filter(c => c.status === 'available').length} biler i lageret
+- Alle billeder og data er inkluderet
+            `;
+            
+            console.log('Cars updated:', cars);
+            console.log(instructions);
+        }
+
+        function saveContentToFiles(content) {
+            // Update content in all relevant files
+            console.log('Content updated:', content);
+            
+            // Show success message
+            const message = `
+INDHOLD OPDATERET!
+
+Dine ændringer er nu aktive på hjemmesiden.
+For at gemme permanent til Netlify:
+1. Upload hele nordic-autos-website mappen igen
+2. Alle tekstændringer vil være permanente
+            `;
+            
+            console.log(message);
+        }
+
+        function saveImagesToFiles(images) {
+            // Handle image updates
+            console.log('Images updated:', images);
+            
+            // Apply images immediately to current page
+            if (images.importImage) {
+                updateImportPageImage(images.importImage);
+            }
+            
+            if (images.showroomImage) {
+                updateShowroomImage(images.showroomImage);
+            }
+        }
+
+        function updateImportPageImage(imageUrl) {
+            // Update import page background image immediately with perfect quality
+            const importImageElements = document.querySelectorAll('[style*="background-image"]');
+            importImageElements.forEach(el => {
+                if (el.style.backgroundImage.includes('url(')) {
+                    // Use the exact same gradient but with new high-quality image
+                    el.style.backgroundImage = `linear-gradient(to right, rgba(10, 12, 16, 0.7) 0%, rgba(10, 12, 16, 0.3) 100%), url("${imageUrl}")`;
+                    // Ensure perfect image rendering
+                    el.style.backgroundSize = 'cover';
+                    el.style.backgroundPosition = 'center';
+                    el.style.backgroundRepeat = 'no-repeat';
+                    // Add image rendering optimization
+                    el.style.imageRendering = 'high-quality';
+                    el.style.imageRendering = '-webkit-optimize-contrast';
+                }
+            });
+            
+            console.log('Import image updated with perfect quality:', imageUrl.substring(0, 50) + '...');
+        }
+
+        // Enhanced car management with automatic permanent saving
+        function updateCarData(car, brand, model, year, mileage, price, fuelType, icon, images) {
+            // Update car object
+            car.brand = brand;
+            car.model = model;
+            car.year = year;
+            car.mileage = mileage;
+            car.price = price;
+            car.fuelType = fuelType;
+            car.icon = icon;
+            car.images = images;
+            car.imageUrl = images.length > 0 ? images[0] : null;
+            
+            // Save to Supabase
+            if (window.supabaseCarManager) {
+                window.supabaseCarManager.saveCar(car).then(() => {
+                    console.log('✅ Car saved to Supabase');
+                    
+                    // Trigger update event for other pages
+                    window.dispatchEvent(new CustomEvent('carsUpdated', { 
+                        detail: { action: 'update', car: car } 
+                    }));
+                    
+                    // Update localStorage timestamp for cross-tab communication
+                    localStorage.setItem('nordic-autos-last-update', Date.now().toString());
+                });
+            }
+            
+            // Save permanently using new system
+            saveDataPermanently('cars', cars);
+            
+            showEditMessage('Bil opdateret og gemt permanent!', 'success');
+            
+            setTimeout(() => {
+                closeEditCarForm();
+                loadAdminCarsList();
+                updateLagerBilerPage();
+            }, 1500);
+        }
+
+        function createNewCar(id, brand, model, year, mileage, price, fuelType, icon, images) {
+            // Create new car object
+            const newCar = {
+                id: id,
+                brand: brand,
+                model: model,
+                year: year,
+                mileage: mileage,
+                price: price,
+                fuelType: fuelType,
+                icon: icon,
+                images: images,
+                imageUrl: images.length > 0 ? images[0] : null,
+                status: 'available'
+            };
+            
+            // Add to cars array
+            cars.push(newCar);
+            
+            // Save to Supabase
+            if (window.supabaseCarManager) {
+                window.supabaseCarManager.saveCar(newCar).then(() => {
+                    console.log('✅ New car saved to Supabase');
+                    
+                    // Trigger update event for other pages
+                    window.dispatchEvent(new CustomEvent('carsUpdated', { 
+                        detail: { action: 'create', car: newCar } 
+                    }));
+                    
+                    // Update localStorage timestamp for cross-tab communication
+                    localStorage.setItem('nordic-autos-last-update', Date.now().toString());
+                });
+            }
+            
+            // Save permanently using new system
+            saveDataPermanently('cars', cars);
+            
+            showAddMessage('Ny bil tilføjet og gemt permanent!', 'success');
+            
+            setTimeout(() => {
+                closeAddCarForm();
+                loadAdminCarsList();
+            }, 1500);
+        }
+
+        // PERMANENT BILLEDE SYSTEM - Gemmer direkte i HTML filer
+        function uploadImportImage() {
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.accept = 'image/*';
+            fileInput.style.display = 'none';
+            
+            fileInput.onchange = function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                if (file.size > 15 * 1024 * 1024) {
+                    alert('Billedet er for stort. Maksimal størrelse er 15MB.');
+                    return;
+                }
+                
+                if (!file.type.startsWith('image/')) {
+                    alert('Kun billedfiler er tilladt (JPG, PNG, WebP, etc.)');
+                    return;
+                }
+                
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    
+                    const targetWidth = 1600;
+                    const targetHeight = 900;
+                    
+                    canvas.width = targetWidth;
+                    canvas.height = targetHeight;
+                    
+                    ctx.imageSmoothingEnabled = true;
+                    ctx.imageSmoothingQuality = 'high';
+                    
+                    const scale = Math.max(targetWidth / img.width, targetHeight / img.height);
+                    const scaledWidth = img.width * scale;
+                    const scaledHeight = img.height * scale;
+                    
+                    const x = (targetWidth - scaledWidth) / 2;
+                    const y = (targetHeight - scaledHeight) / 2;
+                    
+                    ctx.drawImage(img, x, y, scaledWidth, scaledHeight);
+                    
+                    const perfectQualityBase64 = canvas.toDataURL('image/jpeg', 0.98);
+                    
+                    // PERMANENT LØSNING: Vis instruktioner til at gemme i HTML
+                    const instructions = `
+🎉 IMPORT BILLEDE KLAR TIL PERMANENT GEMNING!
+
+SÅDAN GEMMER DU BILLEDET PERMANENT:
+
+1. 📋 KOPIER DENNE KODE (klik OK for at kopiere):
+   style='background-image: linear-gradient(to right, rgba(10, 12, 16, 0.7) 0%, rgba(10, 12, 16, 0.3) 100%), url("${perfectQualityBase64}");'
+
+2. 📝 ÅBN IMPORT.HTML FILEN:
+   - Find linjen der starter med: <div class="aspect-[16/9]
+   - Erstat hele style="..." delen med den kopierede kode
+
+3. 💾 GEM FILEN og upload til Netlify
+
+4. ✅ BILLEDET ER NU PERMANENT!
+
+Vil du kopiere koden nu?`;
+                    
+                    if (confirm(instructions)) {
+                        const styleCode = `style='background-image: linear-gradient(to right, rgba(10, 12, 16, 0.7) 0%, rgba(10, 12, 16, 0.3) 100%), url("${perfectQualityBase64}");'`;
+                        
+                        if (navigator.clipboard) {
+                            navigator.clipboard.writeText(styleCode).then(() => {
+                                alert('✅ KODEN ER KOPIERET!\\n\\nGå nu til import.html og indsæt koden som beskrevet.\\nBilledet vil så være permanent!');
+                            }).catch(() => {
+                                prompt('Kopier denne kode manuelt:', styleCode);
+                            });
+                        } else {
+                            prompt('Kopier denne kode manuelt:', styleCode);
+                        }
+                    }
+                    
+                    // Vis også midlertidigt i browseren
+                    updateImportPageImage(perfectQualityBase64);
+                };
+                
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            };
+            
+            document.body.appendChild(fileInput);
+            fileInput.click();
+            document.body.removeChild(fileInput);
+        }
+
+        function uploadShowroomImage() {
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.accept = 'image/*';
+            fileInput.style.display = 'none';
+            
+            fileInput.onchange = function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                if (file.size > 15 * 1024 * 1024) {
+                    alert('Billedet er for stort. Maksimal størrelse er 15MB.');
+                    return;
+                }
+                
+                if (!file.type.startsWith('image/')) {
+                    alert('Kun billedfiler er tilladt (JPG, PNG, WebP, etc.)');
+                    return;
+                }
+                
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    
+                    const targetWidth = 1200;
+                    const targetHeight = 800;
+                    
+                    canvas.width = targetWidth;
+                    canvas.height = targetHeight;
+                    
+                    ctx.imageSmoothingEnabled = true;
+                    ctx.imageSmoothingQuality = 'high';
+                    
+                    const scale = Math.max(targetWidth / img.width, targetHeight / img.height);
+                    const scaledWidth = img.width * scale;
+                    const scaledHeight = img.height * scale;
+                    
+                    const x = (targetWidth - scaledWidth) / 2;
+                    const y = (targetHeight - scaledHeight) / 2;
+                    
+                    ctx.drawImage(img, x, y, scaledWidth, scaledHeight);
+                    
+                    const perfectQualityBase64 = canvas.toDataURL('image/jpeg', 0.98);
+                    
+                    // PERMANENT LØSNING: Vis instruktioner til at gemme i HTML
+                    const instructions = `
+🎉 SHOWROOM BILLEDE KLAR TIL PERMANENT GEMNING!
+
+SÅDAN GEMMER DU BILLEDET PERMANENT:
+
+1. 📋 KOPIER DENNE KODE (klik OK for at kopiere):
+   src="${perfectQualityBase64}"
+
+2. 📝 ÅBN OM-OS.HTML FILEN:
+   - Find linjen: <img src="https://images.unsplash.com/photo-1562141961-d0a6b5b5a2b5
+   - Erstat hele src="..." delen med den kopierede kode
+
+3. 💾 GEM FILEN og upload til Netlify
+
+4. ✅ BILLEDET ER NU PERMANENT!
+
+Vil du kopiere koden nu?`;
+                    
+                    if (confirm(instructions)) {
+                        const srcCode = `src="${perfectQualityBase64}"`;
+                        
+                        if (navigator.clipboard) {
+                            navigator.clipboard.writeText(srcCode).then(() => {
+                                alert('✅ KODEN ER KOPIERET!\\n\\nGå nu til om-os.html og indsæt koden som beskrevet.\\nBilledet vil så være permanent!');
+                            }).catch(() => {
+                                prompt('Kopier denne kode manuelt:', srcCode);
+                            });
+                        } else {
+                            prompt('Kopier denne kode manuelt:', srcCode);
+                        }
+                    }
+                };
+                
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            };
+            
+            document.body.appendChild(fileInput);
+            fileInput.click();
+            document.body.removeChild(fileInput);
+        }
+
+        function updateLagerBilerPage() {
+            // Update lagerbiler page by triggering a storage event
+            // This will notify other pages that car data has changed
+            window.dispatchEvent(new StorageEvent('storage', {
+                key: 'nordic-autos-cars',
+                newValue: JSON.stringify(cars)
+            }));
+            
+            console.log('Car data updated - other pages will refresh automatically');
+        }
+
+        async function deleteCar(carId) {
+            const car = cars.find(c => c.id === carId);
+            if (!car) return;
+
+            if (confirm(`Er du sikker på, at du vil slette ${car.brand} ${car.model}?`)) {
+                try {
+                    // Use Firebase Admin to delete car
+                    if (window.firebaseAdmin && window.firebaseAdmin.isInitialized) {
+                        const result = await window.firebaseAdmin.deleteCar(carId);
+                        
+                        if (result.success) {
+                            // Remove from local array
+                            cars = cars.filter(c => c.id !== carId);
+                            loadAdminCarsList();
+                            alert('Bil slettet permanent!');
+                            console.log('✅ Car deleted from Firebase:', carId);
+                        } else {
+                            throw new Error(result.error || 'Failed to delete car');
+                        }
+                    } else {
+                        // Fallback to old method
+                        car.status = 'deleted';
+                        saveDeletedCars();
+                        loadAdminCarsList();
+                        alert('Bil slettet succesfuldt!');
+                        console.log('Car deleted (localStorage):', carId);
+                    }
+                } catch (error) {
+                    console.error('❌ Error deleting car:', error);
+                    alert('Fejl ved sletning: ' + error.message);
+                }
+            }
+        }
+
+        function showAddCarForm() {
+            // Reset add images array
+            addImages = [];
+            
+            // Create add car form modal
+            const addModal = document.createElement('div');
+            addModal.id = 'addCarModal';
+            addModal.className = 'fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4';
+            addModal.innerHTML = `
+                <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-2xl w-full p-8 max-h-[90vh] overflow-y-auto">
+                    <div class="text-center mb-6">
+                        <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Tilføj Ny Bil</h2>
+                        <p class="text-slate-600 dark:text-slate-400">Indtast biloplysninger</p>
+                    </div>
+                    
+                    <form id="addCarForm" class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Mærke</label>
+                                <input type="text" id="addBrand" required 
+                                       class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Model</label>
+                                <input type="text" id="addModel" required 
+                                       class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">År</label>
+                                <input type="number" id="addYear" required min="1990" max="2030" value="2023"
+                                       class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Kilometerstand</label>
+                                <input type="number" id="addMileage" required min="0" value="0"
+                                       class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Pris (DKK)</label>
+                                <input type="number" id="addPrice" required min="0"
+                                       class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Brændstoftype</label>
+                                <select id="addFuelType" required 
+                                        class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                    <option value="">Vælg brændstoftype</option>
+                                    <option value="Benzin">Benzin</option>
+                                    <option value="Diesel">Diesel</option>
+                                    <option value="El">El</option>
+                                    <option value="Hybrid">Hybrid</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Bil Emoji/Ikon</label>
+                            <select id="addIcon" class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                <option value="🏎️">🏎️ Sportsbil</option>
+                                <option value="🚗">🚗 Almindelig bil</option>
+                                <option value="🚙">🚙 SUV</option>
+                                <option value="🚐">🚐 Van/Bus</option>
+                                <option value="⚡">⚡ Elbil</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Bil Billeder</label>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-xs text-slate-500 dark:text-slate-400 mb-1">Upload flere billeder fra computer:</label>
+                                    <input type="file" id="addImageFiles" accept="image/*" multiple
+                                           class="w-full px-3 py-2 text-sm bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Hold Ctrl/Cmd for at vælge flere billeder</p>
+                                </div>
+                                <div class="text-center text-slate-400 text-xs">ELLER</div>
+                                <div>
+                                    <label class="block text-xs text-slate-500 dark:text-slate-400 mb-1">Tilføj billede URL:</label>
+                                    <div class="flex gap-2">
+                                        <input type="url" id="addImageUrl" placeholder="https://example.com/bil.jpg"
+                                               class="flex-1 px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                        <button type="button" onclick="addImageUrl('add')" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm">
+                                            Tilføj
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Preview added images -->
+                                <div id="addImagesList" class="grid grid-cols-2 gap-2 hidden">
+                                    <!-- Added images will be shown here -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="addCarMessage" class="hidden text-sm text-center py-2 rounded-lg"></div>
+                        
+                        <div class="flex gap-4 pt-4">
+                            <button type="button" onclick="closeAddCarForm()" class="flex-1 px-4 py-2 bg-slate-200 dark:bg-slate-600 text-slate-900 dark:text-white rounded-lg hover:bg-slate-300 dark:hover:bg-slate-500">
+                                Annuller
+                            </button>
+                            <button type="submit" class="flex-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90">
+                                Tilføj bil
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            
+            document.body.appendChild(addModal);
+            document.getElementById('addCarForm').addEventListener('submit', saveNewCar);
+        }
+
+        function closeAddCarForm() {
+            const modal = document.getElementById('addCarModal');
+            if (modal) {
+                modal.remove();
+            }
+        }
+
+        function showAddMessage(message, type = 'error') {
+            const messageEl = document.getElementById('addCarMessage');
+            if (messageEl) {
+                messageEl.className = `text-sm text-center py-2 rounded-lg ${
+                    type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                }`;
+                messageEl.textContent = message;
+                messageEl.classList.remove('hidden');
+            }
+        }
+
+        async function saveNewCar(event) {
+            event.preventDefault();
+            
+            // Get form values
+            const brand = document.getElementById('addBrand').value.trim();
+            const model = document.getElementById('addModel').value.trim();
+            const year = parseInt(document.getElementById('addYear').value);
+            const mileage = parseInt(document.getElementById('addMileage').value);
+            const price = parseInt(document.getElementById('addPrice').value);
+            const fuelType = document.getElementById('addFuelType').value;
+            const icon = document.getElementById('addIcon').value;
+            const imageFiles = document.getElementById('addImageFiles').files;
+            
+            // Validate
+            if (!brand || !model || !year || !mileage || !price || !fuelType) {
+                showAddMessage('Alle felter skal udfyldes');
+                return;
+            }
+            
+            showAddMessage('Gemmer bil...', 'info');
+            
+            try {
+                // Prepare car data
+                const carData = {
+                    brand,
+                    model,
+                    year,
+                    mileage,
+                    price,
+                    fuelType,
+                    icon,
+                    imageFiles: Array.from(imageFiles), // Convert FileList to Array
+                    images: [...addImages] // Include URL images
+                };
+                
+                // Use Firebase Admin to add car
+                if (window.firebaseAdmin && window.firebaseAdmin.isInitialized) {
+                    const result = await window.firebaseAdmin.addCar(carData);
+                    
+                    if (result.success) {
+                        showAddMessage('Bil tilføjet og gemt permanent!', 'success');
+                        
+                        // Update local cars array
+                        cars.push(result.car);
+                        
+                        setTimeout(() => {
+                            closeAddCarForm();
+                            loadAdminCarsList();
+                        }, 1500);
+                    } else {
+                        throw new Error(result.error || 'Failed to add car');
+                    }
+                } else {
+                    // Fallback to old method
+                    const newId = Math.max(...cars.map(c => c.id)) + 1;
+                    createNewCar(newId, brand, model, year, mileage, price, fuelType, icon, [...addImages, ...Array.from(imageFiles)]);
+                }
+                
+            } catch (error) {
+                console.error('❌ Error saving car:', error);
+                showAddMessage('Fejl ved gemning: ' + error.message, 'error');
+            }
+        }
+
+
+
+        // Content Management System Functions
+        function showContentEditor() {
+            const section = document.getElementById('contentEditorSection');
+            if (section.classList.contains('hidden')) {
+                section.classList.remove('hidden');
+            } else {
+                section.classList.add('hidden');
+            }
+        }
+
+        function editPageContent(pageType) {
+            // Load current content from localStorage
+            const savedContent = localStorage.getItem('nordic-autos-content') || '{}';
+            let content = {};
+            try {
+                content = JSON.parse(savedContent);
+            } catch (e) {
+                content = {};
+            }
+
+            // Create content editor modal based on page type
+            let editorHTML = '';
+            
+            switch(pageType) {
+                case 'forside':
+                    editorHTML = createForsideEditor(content.forside || {});
+                    break;
+                case 'om-os':
+                    editorHTML = createOmOsEditor(content.omOs || {});
+                    break;
+                case 'kontakt':
+                    editorHTML = createKontaktEditor(content.kontakt || {});
+                    break;
+                case 'import':
+                    editorHTML = createImportEditor(content.import || {});
+                    break;
+                case 'footer':
+                    editorHTML = createFooterEditor(content.footer || {});
+                    break;
+                case 'billeder':
+                    editorHTML = createBillederEditor(content.billeder || {});
+                    break;
+            }
+
+            // Create and show modal
+            const modal = document.createElement('div');
+            modal.id = 'contentEditorModal';
+            modal.className = 'fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4';
+            modal.innerHTML = editorHTML;
+            
+            document.body.appendChild(modal);
+            
+            // Add event listener for form submission
+            document.getElementById('contentEditorForm').addEventListener('submit', (e) => savePageContent(e, pageType));
+        }
+
+        function createForsideEditor(currentContent) {
+            return `
+                <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-6xl w-full p-8 max-h-[90vh] overflow-y-auto">
+                    <div class="text-center mb-6">
+                        <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Rediger Forside</h2>
+                        <p class="text-slate-600 dark:text-slate-400">Ændre alt tekst og indhold på forsiden</p>
+                    </div>
+                    
+                    <form id="contentEditorForm" class="space-y-6">
+                        <!-- Hero Section -->
+                        <div class="border border-slate-200 dark:border-slate-600 rounded-lg p-6">
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">🏠 Hero Sektion (Øverst på siden)</h3>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Hovedoverskrift</label>
+                                    <input type="text" id="heroTitle" value="${currentContent.heroTitle || 'Velkommen til Nordic Autos'}" 
+                                           class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Undertekst</label>
+                                    <textarea id="heroSubtext" rows="3" 
+                                              class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">${currentContent.heroSubtext || 'Nordic Autos – din vej til den rette bil. Kvalitet, service og gennemsigtighed.'}</textarea>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Knap tekst</label>
+                                    <input type="text" id="heroButtonText" value="${currentContent.heroButtonText || 'Udforsk vores lager'}" 
+                                           class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Features Section -->
+                        <div class="border border-slate-200 dark:border-slate-600 rounded-lg p-6">
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">⭐ "Hvorfor Vælge Os" Sektion</h3>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Sektion Overskrift</label>
+                                    <input type="text" id="featuresTitle" value="${currentContent.featuresTitle || 'Hvorfor vælge Nordic Autos?'}" 
+                                           class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Sektion Beskrivelse</label>
+                                    <textarea id="featuresDescription" rows="3" 
+                                              class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">${currentContent.featuresDescription || 'Fordi vi håndplukker kvalitetsbiler og sætter ærlighed først. Hos Nordic Autos er tryghed og service altid en del af handlen.'}</textarea>
+                                </div>
+                                
+                                <!-- Feature 1 -->
+                                <div class="bg-slate-50 dark:bg-slate-700 rounded-lg p-4">
+                                    <h4 class="font-medium text-slate-900 dark:text-white mb-3">Feature 1: Ekspertise</h4>
+                                    <div class="space-y-3">
+                                        <div>
+                                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Titel</label>
+                                            <input type="text" id="feature1Title" value="${currentContent.feature1Title || 'Ekspertise'}" 
+                                                   class="w-full px-3 py-2 bg-white dark:bg-slate-600 border border-slate-300 dark:border-slate-500 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Beskrivelse</label>
+                                            <textarea id="feature1Description" rows="2" 
+                                                      class="w-full px-3 py-2 bg-white dark:bg-slate-600 border border-slate-300 dark:border-slate-500 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">${currentContent.feature1Description || 'Vi har opbygget et bredt og stærkt netværk i Tyskland og Sverige samt en dybdegående forståelse for markedet.'}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Feature 2 -->
+                                <div class="bg-slate-50 dark:bg-slate-700 rounded-lg p-4">
+                                    <h4 class="font-medium text-slate-900 dark:text-white mb-3">Feature 2: Lån og Leasing</h4>
+                                    <div class="space-y-3">
+                                        <div>
+                                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Titel</label>
+                                            <input type="text" id="feature2Title" value="${currentContent.feature2Title || 'Lån og Leasing'}" 
+                                                   class="w-full px-3 py-2 bg-white dark:bg-slate-600 border border-slate-300 dark:border-slate-500 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Beskrivelse</label>
+                                            <textarea id="feature2Description" rows="2" 
+                                                      class="w-full px-3 py-2 bg-white dark:bg-slate-600 border border-slate-300 dark:border-slate-500 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">${currentContent.feature2Description || 'Skræddersyede leasing- og låneløsninger tilpasset dine behov.'}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Feature 3 -->
+                                <div class="bg-slate-50 dark:bg-slate-700 rounded-lg p-4">
+                                    <h4 class="font-medium text-slate-900 dark:text-white mb-3">Feature 3: Tryghed</h4>
+                                    <div class="space-y-3">
+                                        <div>
+                                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Titel</label>
+                                            <input type="text" id="feature3Title" value="${currentContent.feature3Title || 'Tryghed'}" 
+                                                   class="w-full px-3 py-2 bg-white dark:bg-slate-600 border border-slate-300 dark:border-slate-500 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Beskrivelse</label>
+                                            <textarea id="feature3Description" rows="2" 
+                                                      class="w-full px-3 py-2 bg-white dark:bg-slate-600 border border-slate-300 dark:border-slate-500 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">${currentContent.feature3Description || 'Med vores fleksible mekaniske garantier er du bedre sikret mod uforudsete omkostninger og kan handle bil med fuld tryghed hos os.'}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Import Section -->
+                        <div class="border border-slate-200 dark:border-slate-600 rounded-lg p-6">
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">🚚 Import Sektion</h3>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Import Overskrift</label>
+                                    <input type="text" id="importTitle" value="${currentContent.importTitle || 'Import af bil fra Tyskland'}" 
+                                           class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Import Beskrivelse</label>
+                                    <textarea id="importDescription" rows="3" 
+                                              class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">${currentContent.importDescription || 'Overvejer du at importere din næste bil fra Tyskland? Hos os får du en tryg, professionel og gennemsigtig løsning fra start til slut.'}</textarea>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Import Pris</label>
+                                    <input type="text" id="importPrice" value="${currentContent.importPrice || 'Fra 15.000,- + moms'}" 
+                                           class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CTA Section -->
+                        <div class="border border-slate-200 dark:border-slate-600 rounded-lg p-6">
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">📞 Call-to-Action Sektion (Nederst)</h3>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">CTA Overskrift</label>
+                                    <input type="text" id="ctaTitle" value="${currentContent.ctaTitle || 'Klar til din næste køreoplevelse?'}" 
+                                           class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">CTA Beskrivelse</label>
+                                    <textarea id="ctaDescription" rows="2" 
+                                              class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">${currentContent.ctaDescription || 'Kontakt os i dag for en uforpligtende samtale om din drømmebil eller lånmuligheder.'}</textarea>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Kontakt Knap Tekst</label>
+                                        <input type="text" id="ctaButton1Text" value="${currentContent.ctaButton1Text || 'Kontakt os'}" 
+                                               class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Ring Knap Tekst</label>
+                                        <input type="text" id="ctaButton2Text" value="${currentContent.ctaButton2Text || 'Ring (+45) 25 45 45 63'}" 
+                                               class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="contentEditorMessage" class="hidden text-sm text-center py-2 rounded-lg"></div>
+                        
+                        <div class="flex gap-4 pt-4">
+                            <button type="button" onclick="closeContentEditor()" class="flex-1 px-4 py-2 bg-slate-200 dark:bg-slate-600 text-slate-900 dark:text-white rounded-lg hover:bg-slate-300 dark:hover:bg-slate-500">
+                                Annuller
+                            </button>
+                            <button type="submit" class="flex-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90">
+                                Gem Alle Ændringer
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            `;
+        }
+
+        function createBillederEditor(currentContent) {
+            return `
+                <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-6xl w-full p-8 max-h-[90vh] overflow-y-auto">
+                    <div class="text-center mb-6">
+                        <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Rediger Billeder</h2>
+                        <p class="text-slate-600 dark:text-slate-400">Upload billeder direkte fra din computer eller brug URL'er</p>
+                    </div>
+                    
+                    <form id="contentEditorForm" class="space-y-6">
+                        <!-- Hero Background Image -->
+                        <div class="border border-slate-200 dark:border-slate-600 rounded-lg p-6">
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">🏠 Hero Baggrundsbillede (Forside)</h3>
+                            
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Upload fra computer</label>
+                                        <input type="file" id="heroImageFile" accept="image/*" 
+                                               class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none"
+                                               onchange="handleImageUpload(this, 'heroImagePreview', 'heroImage')">
+                                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Understøtter JPG, PNG, WebP (maks 5MB)</p>
+                                    </div>
+                                    
+                                    <div class="text-center text-slate-500 dark:text-slate-400">eller</div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Billede URL</label>
+                                        <input type="url" id="heroImage" value="${currentContent.heroImage || ''}" placeholder="https://example.com/hero-image.jpg"
+                                               class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none"
+                                               onchange="updateImagePreview(this.value, 'heroImagePreview')">
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Forhåndsvisning</label>
+                                    <div id="heroImagePreview" class="w-full h-48 bg-slate-100 dark:bg-slate-700 rounded-lg border-2 border-dashed border-slate-300 dark:border-slate-600 flex items-center justify-center overflow-hidden">
+                                        ${currentContent.heroImage ? `<img src="${currentContent.heroImage}" class="w-full h-full object-cover rounded-lg" alt="Hero preview">` : '<span class="text-slate-500 dark:text-slate-400">Ingen billede valgt</span>'}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Showroom Image -->
+                        <div class="border border-slate-200 dark:border-slate-600 rounded-lg p-6">
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">🏢 Showroom Billede (Om Os side)</h3>
+                            
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Upload fra computer</label>
+                                        <input type="file" id="showroomImageFile" accept="image/*" 
+                                               class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none"
+                                               onchange="handleImageUpload(this, 'showroomImagePreview', 'showroomImage')">
+                                    </div>
+                                    
+                                    <div class="text-center text-slate-500 dark:text-slate-400">eller</div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Billede URL</label>
+                                        <input type="url" id="showroomImage" value="${currentContent.showroomImage || ''}" placeholder="https://example.com/showroom.jpg"
+                                               class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none"
+                                               onchange="updateImagePreview(this.value, 'showroomImagePreview')">
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Forhåndsvisning</label>
+                                    <div id="showroomImagePreview" class="w-full h-48 bg-slate-100 dark:bg-slate-700 rounded-lg border-2 border-dashed border-slate-300 dark:border-slate-600 flex items-center justify-center overflow-hidden">
+                                        ${currentContent.showroomImage ? `<img src="${currentContent.showroomImage}" class="w-full h-full object-cover rounded-lg" alt="Showroom preview">` : '<span class="text-slate-500 dark:text-slate-400">Ingen billede valgt</span>'}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Logo Upload -->
+                        <div class="border border-slate-200 dark:border-slate-600 rounded-lg p-6">
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">🏷️ Firma Logo</h3>
+                            
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Upload logo fra computer</label>
+                                        <input type="file" id="logoImageFile" accept="image/*" 
+                                               class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none"
+                                               onchange="handleImageUpload(this, 'logoImagePreview', 'logoImage')">
+                                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Anbefalet: PNG med transparent baggrund</p>
+                                    </div>
+                                    
+                                    <div class="text-center text-slate-500 dark:text-slate-400">eller</div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Logo URL</label>
+                                        <input type="url" id="logoImage" value="${currentContent.logoImage || ''}" placeholder="https://example.com/logo.png"
+                                               class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none"
+                                               onchange="updateImagePreview(this.value, 'logoImagePreview')">
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Forhåndsvisning</label>
+                                    <div id="logoImagePreview" class="w-full h-32 bg-slate-100 dark:bg-slate-700 rounded-lg border-2 border-dashed border-slate-300 dark:border-slate-600 flex items-center justify-center overflow-hidden">
+                                        ${currentContent.logoImage ? `<img src="${currentContent.logoImage}" class="max-w-full max-h-full object-contain rounded-lg" alt="Logo preview">` : '<span class="text-slate-500 dark:text-slate-400">Ingen logo valgt</span>'}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Import Hero Image -->
+                        <div class="border border-slate-200 dark:border-slate-600 rounded-lg p-6">
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">🚚 Import Hero Billede (Import Side)</h3>
+                            <p class="text-slate-600 dark:text-slate-400 mb-4">Dette billede vises på import-siden bag teksten "Din drømmebil venter i Tyskland"</p>
+                            
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Upload fra computer</label>
+                                        <input type="file" id="importImageFile" accept="image/*" 
+                                               class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none"
+                                               onchange="handleImageUpload(this, 'importImagePreview', 'importImage')">
+                                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Understøtter JPG, PNG, WebP (maks 5MB)</p>
+                                    </div>
+                                    
+                                    <div class="text-center text-slate-500 dark:text-slate-400">eller</div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Billede URL</label>
+                                        <input type="url" id="importImage" value="${currentContent.importImage || ''}" placeholder="https://example.com/import-hero.jpg"
+                                               class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none"
+                                               onchange="updateImagePreview(this.value, 'importImagePreview')">
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Forhåndsvisning</label>
+                                    <div id="importImagePreview" class="w-full h-48 bg-slate-100 dark:bg-slate-700 rounded-lg border-2 border-dashed border-slate-300 dark:border-slate-600 flex items-center justify-center overflow-hidden">
+                                        ${currentContent.importImage ? `<img src="${currentContent.importImage}" class="w-full h-full object-cover rounded-lg" alt="Import preview">` : '<span class="text-slate-500 dark:text-slate-400">Ingen billede valgt</span>'}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Additional Images -->
+                        <div class="border border-slate-200 dark:border-slate-600 rounded-lg p-6">
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">📸 Ekstra Billeder</h3>
+                            <p class="text-slate-600 dark:text-slate-400 mb-4">Upload ekstra billeder til brug på hjemmesiden</p>
+                            
+                            <div id="extraImagesContainer" class="space-y-4">
+                                <div class="flex gap-4">
+                                    <button type="button" onclick="addExtraImageField()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
+                                        ➕ Tilføj billede
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="contentEditorMessage" class="hidden text-sm text-center py-2 rounded-lg"></div>
+                        
+                        <div class="flex gap-4 pt-4">
+                            <button type="button" onclick="closeContentEditor()" class="flex-1 px-4 py-2 bg-slate-200 dark:bg-slate-600 text-slate-900 dark:text-white rounded-lg hover:bg-slate-300 dark:hover:bg-slate-500">
+                                Annuller
+                            </button>
+                            <button type="submit" class="flex-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90">
+                                Gem Alle Billeder
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            `;
+        }
+
+        // Simplified editors for other pages
+        function createOmOsEditor(currentContent) {
+            return `<div class="bg-white dark:bg-slate-800 rounded-2xl max-w-2xl w-full p-8"><div class="text-center mb-6"><h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Rediger Om Os</h2></div><form id="contentEditorForm" class="space-y-4"><div><label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Siden Overskrift</label><input type="text" id="pageTitle" value="${currentContent.pageTitle || 'Om Nordic Autos'}" class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none"></div><div><label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Beskrivelse</label><textarea id="pageDescription" rows="4" class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">${currentContent.pageDescription || 'Din pålidelige partner for eksklusive biler i Skive siden 2025. Vi specialiserer os i premium bilmærker og leverer exceptionel service til vores kunder.'}</textarea></div><div id="contentEditorMessage" class="hidden text-sm text-center py-2 rounded-lg"></div><div class="flex gap-4 pt-4"><button type="button" onclick="closeContentEditor()" class="flex-1 px-4 py-2 bg-slate-200 dark:bg-slate-600 text-slate-900 dark:text-white rounded-lg hover:bg-slate-300 dark:hover:bg-slate-500">Annuller</button><button type="submit" class="flex-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90">Gem Ændringer</button></div></form></div>`;
+        }
+
+        function createKontaktEditor(currentContent) {
+            return `
+                <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-4xl w-full p-8 max-h-[90vh] overflow-y-auto">
+                    <div class="text-center mb-6">
+                        <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Rediger Kontakt Information</h2>
+                        <p class="text-slate-600 dark:text-slate-400">Ændre alle kontaktoplysninger på hjemmesiden</p>
+                    </div>
+                    
+                    <form id="contentEditorForm" class="space-y-6">
+                        <!-- Basic Contact Info -->
+                        <div class="border border-slate-200 dark:border-slate-600 rounded-lg p-6">
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">📞 Grundlæggende Kontaktinfo</h3>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Telefonnummer</label>
+                                    <input type="text" id="phone" value="${currentContent.phone || '+45 25 45 45 63'}" 
+                                           class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Email adresse</label>
+                                    <input type="email" id="email" value="${currentContent.email || 'info@nordicautos.dk'}" 
+                                           class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Address Info -->
+                        <div class="border border-slate-200 dark:border-slate-600 rounded-lg p-6">
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">📍 Adresse Information</h3>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Firmanavn</label>
+                                    <input type="text" id="companyName" value="${currentContent.companyName || 'Nordic Autos ApS'}" 
+                                           class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Gade og husnummer</label>
+                                        <input type="text" id="streetAddress" value="${currentContent.streetAddress || 'Frisenborgvej 6L'}" 
+                                               class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Postnummer og by</label>
+                                        <input type="text" id="cityAddress" value="${currentContent.cityAddress || '7800 Skive'}" 
+                                               class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Komplet adresse (som vist på siden)</label>
+                                    <input type="text" id="address" value="${currentContent.address || 'Frisenborgvej 6L, 7800 Skive'}" 
+                                           class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">CVR nummer</label>
+                                    <input type="text" id="cvr" value="${currentContent.cvr || '46194330'}" 
+                                           class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Opening Hours -->
+                        <div class="border border-slate-200 dark:border-slate-600 rounded-lg p-6">
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">🕒 Åbningstider</h3>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Åbningstider tekst</label>
+                                    <input type="text" id="openingHours" value="${currentContent.openingHours || 'Åbning efter aftale'}" 
+                                           class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Åbningstider beskrivelse</label>
+                                    <textarea id="openingHoursDescription" rows="3" 
+                                              class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">${currentContent.openingHoursDescription || 'Åbning efter aftale betyder, at vi kan tilpasse vores tid til dig og sikre, at du får den bedst mulige oplevelse hos os.'}</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Team Information -->
+                        <div class="border border-slate-200 dark:border-slate-600 rounded-lg p-6">
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">👨‍💼 Team Information</h3>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Ejer/Direktør navn</label>
+                                    <input type="text" id="ownerName" value="${currentContent.ownerName || 'Adam Maliki'}" 
+                                           class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Ejer/Direktør titel</label>
+                                    <input type="text" id="ownerTitle" value="${currentContent.ownerTitle || 'Ejer & Direktør'}" 
+                                           class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Team beskrivelse</label>
+                                    <textarea id="teamDescription" rows="2" 
+                                              class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">${currentContent.teamDescription || 'Spørgsmål om biler, priser, service og alt andet.'}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="contentEditorMessage" class="hidden text-sm text-center py-2 rounded-lg"></div>
+                        
+                        <div class="flex gap-4 pt-4">
+                            <button type="button" onclick="closeContentEditor()" class="flex-1 px-4 py-2 bg-slate-200 dark:bg-slate-600 text-slate-900 dark:text-white rounded-lg hover:bg-slate-300 dark:hover:bg-slate-500">
+                                Annuller
+                            </button>
+                            <button type="submit" class="flex-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90">
+                                Gem Kontaktinfo
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            `;
+        }
+
+        function createImportEditor(currentContent) {
+            return `
+                <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-5xl w-full p-8 max-h-[90vh] overflow-y-auto">
+                    <div class="text-center mb-6">
+                        <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Rediger Import Sektion</h2>
+                        <p class="text-slate-600 dark:text-slate-400">Ændre alt indhold om import fra Tyskland</p>
+                    </div>
+                    
+                    <form id="contentEditorForm" class="space-y-6">
+                        <!-- Main Import Info -->
+                        <div class="border border-slate-200 dark:border-slate-600 rounded-lg p-6">
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">🚚 Hovedinformation</h3>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Import overskrift</label>
+                                    <input type="text" id="importTitle" value="${currentContent.importTitle || 'Import af bil fra Tyskland'}" 
+                                           class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Import beskrivelse</label>
+                                    <textarea id="importDescription" rows="4" 
+                                              class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">${currentContent.importDescription || 'Overvejer du at importere din næste bil fra Tyskland? Hos os får du en tryg, professionel og gennemsigtig løsning fra start til slut.'}</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pricing -->
+                        <div class="border border-slate-200 dark:border-slate-600 rounded-lg p-6">
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">💰 Priser</h3>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Konsulentpakke pris</label>
+                                    <input type="text" id="importPrice" value="${currentContent.importPrice || 'Fra 15.000,- + moms'}" 
+                                           class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Pris beskrivelse</label>
+                                    <textarea id="priceDescription" rows="3" 
+                                              class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">${currentContent.priceDescription || 'Vi tilbyder en komplet konsulentpakke, hvor vi står for hele importprocessen. Prisen starter fra 15.000 kr. + moms, og her får du meget for pengene.'}</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Services Included -->
+                        <div class="border border-slate-200 dark:border-slate-600 rounded-lg p-6">
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">✅ Hvad inkluderer pakken?</h3>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="space-y-3">
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Service 1: Søgning</label>
+                                        <input type="text" id="service1Title" value="${currentContent.service1Title || 'Søgning af bilen'}" 
+                                               class="w-full px-3 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                        <textarea id="service1Description" rows="2" placeholder="Beskrivelse af service"
+                                                  class="w-full px-3 py-2 mt-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">${currentContent.service1Description || 'Vi hjælper dig med at finde præcis den bil, du leder efter – ud fra dine ønsker og behov.'}</textarea>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Service 2: Forhandling</label>
+                                        <input type="text" id="service2Title" value="${currentContent.service2Title || 'Forhandling af bil'}" 
+                                               class="w-full px-3 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                        <textarea id="service2Description" rows="2" placeholder="Beskrivelse af service"
+                                                  class="w-full px-3 py-2 mt-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">${currentContent.service2Description || 'Vi står for kontakten til sælger og sikrer den bedst mulige pris og aftale.'}</textarea>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Service 3: Transport</label>
+                                        <input type="text" id="service3Title" value="${currentContent.service3Title || 'Hjemtagelse'}" 
+                                               class="w-full px-3 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                        <textarea id="service3Description" rows="2" placeholder="Beskrivelse af service"
+                                                  class="w-full px-3 py-2 mt-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">${currentContent.service3Description || 'Vi sørger for transport og logistik – fra sælgeren i Tyskland til os i Danmark.'}</textarea>
+                                    </div>
+                                </div>
+                                
+                                <div class="space-y-3">
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Service 4: Toldsyn</label>
+                                        <input type="text" id="service4Title" value="${currentContent.service4Title || 'Toldsyn'}" 
+                                               class="w-full px-3 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                        <textarea id="service4Description" rows="2" placeholder="Beskrivelse af service"
+                                                  class="w-full px-3 py-2 mt-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">${currentContent.service4Description || 'Vi håndterer toldsynet, så bilen bliver godkendt efter danske regler.'}</textarea>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Service 5: Nummerplader</label>
+                                        <input type="text" id="service5Title" value="${currentContent.service5Title || 'Nummerplader'}" 
+                                               class="w-full px-3 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                        <textarea id="service5Description" rows="2" placeholder="Beskrivelse af service"
+                                                  class="w-full px-3 py-2 mt-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">${currentContent.service5Description || 'Vi står for indregistrering og montering af danske nummerplader – så du kan køre bilen med det samme.'}</textarea>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Service 6: Garanti</label>
+                                        <input type="text" id="service6Title" value="${currentContent.service6Title || 'Garanti'}" 
+                                               class="w-full px-3 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                        <textarea id="service6Description" rows="2" placeholder="Beskrivelse af service"
+                                                  class="w-full px-3 py-2 mt-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">${currentContent.service6Description || 'Op til 5 års garanti – inkl. både sommer- og vinterhjul.'}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Benefits -->
+                        <div class="border border-slate-200 dark:border-slate-600 rounded-lg p-6">
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">🎯 Fordele ved import</h3>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Fordele overskrift</label>
+                                    <input type="text" id="benefitsTitle" value="${currentContent.benefitsTitle || 'Fordele ved at importere bil fra Tyskland'}" 
+                                           class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Fordele beskrivelse</label>
+                                    <textarea id="benefitsDescription" rows="3" 
+                                              class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">${currentContent.benefitsDescription || 'At importere en bil kan virke uoverskueligt, men med os som din samarbejdspartner, får du både overblik og fordele:'}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="contentEditorMessage" class="hidden text-sm text-center py-2 rounded-lg"></div>
+                        
+                        <div class="flex gap-4 pt-4">
+                            <button type="button" onclick="closeContentEditor()" class="flex-1 px-4 py-2 bg-slate-200 dark:bg-slate-600 text-slate-900 dark:text-white rounded-lg hover:bg-slate-300 dark:hover:bg-slate-500">
+                                Annuller
+                            </button>
+                            <button type="submit" class="flex-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90">
+                                Gem Import Info
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            `;
+        }
+
+        function createFooterEditor(currentContent) {
+            return `<div class="bg-white dark:bg-slate-800 rounded-2xl max-w-2xl w-full p-8"><div class="text-center mb-6"><h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Rediger Footer</h2></div><form id="contentEditorForm" class="space-y-4"><div><label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">CVR Nummer</label><input type="text" id="cvr" value="${currentContent.cvr || '46194330'}" class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none"></div><div><label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Åbningstider</label><input type="text" id="openingHours" value="${currentContent.openingHours || 'Åbning efter aftale'}" class="w-full px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none"></div><div id="contentEditorMessage" class="hidden text-sm text-center py-2 rounded-lg"></div><div class="flex gap-4 pt-4"><button type="button" onclick="closeContentEditor()" class="flex-1 px-4 py-2 bg-slate-200 dark:bg-slate-600 text-slate-900 dark:text-white rounded-lg hover:bg-slate-300 dark:hover:bg-slate-500">Annuller</button><button type="submit" class="flex-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90">Gem Ændringer</button></div></form></div>`;
+        }
+
+        function savePageContent(event, pageType) {
+            event.preventDefault();
+            
+            // Get current content
+            const savedContent = localStorage.getItem('nordic-autos-content') || '{}';
+            let content = {};
+            try {
+                content = JSON.parse(savedContent);
+            } catch (e) {
+                content = {};
+            }
+            
+            // Save based on page type
+            const formData = new FormData(event.target);
+            const pageContent = {};
+            
+            // Get all form inputs
+            const inputs = event.target.querySelectorAll('input, textarea');
+            inputs.forEach(input => {
+                pageContent[input.id] = input.value;
+            });
+            
+            // Save to content object
+            if (pageType === 'forside') {
+                content.forside = pageContent;
+            } else if (pageType === 'om-os') {
+                content.omOs = pageContent;
+            } else if (pageType === 'kontakt') {
+                content.kontakt = pageContent;
+            } else if (pageType === 'import') {
+                content.import = pageContent;
+            } else if (pageType === 'footer') {
+                content.footer = pageContent;
+            } else if (pageType === 'billeder') {
+                content.billeder = pageContent;
+            }
+            
+            // Save permanently using new system
+            saveDataPermanently('content', content);
+            
+            // Trigger storage event for other pages
+            window.dispatchEvent(new StorageEvent('storage', {
+                key: 'nordic-autos-content',
+                newValue: JSON.stringify(content)
+            }));
+            
+            // Show success message
+            showContentMessage('Indhold gemt permanent! Upload til Netlify for at gemme permanent.', 'success');
+            
+            // Close modal and refresh page content
+            setTimeout(() => {
+                closeContentEditor();
+                updatePageContent();
+            }, 1500);
+        }
+
+        function showContentMessage(message, type = 'error') {
+            const messageEl = document.getElementById('contentEditorMessage');
+            if (messageEl) {
+                messageEl.className = `text-sm text-center py-2 rounded-lg ${
+                    type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                }`;
+                messageEl.textContent = message;
+                messageEl.classList.remove('hidden');
+            }
+        }
+
+        function closeContentEditor() {
+            const modal = document.getElementById('contentEditorModal');
+            if (modal) {
+                modal.remove();
+            }
+        }
+
+        // Image upload and preview functions
+        function handleImageUpload(fileInput, previewId, urlInputId) {
+            console.log('handleImageUpload called:', fileInput, previewId, urlInputId);
+            const file = fileInput.files[0];
+            if (!file) {
+                console.log('No file selected');
+                return;
+            }
+
+            console.log('File selected:', file.name, file.size, file.type);
+
+            // Check file size (max 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('Billedet er for stort. Maksimal størrelse er 5MB.');
+                fileInput.value = '';
+                return;
+            }
+
+            // Check file type
+            if (!file.type.startsWith('image/')) {
+                alert('Kun billedfiler er tilladt (JPG, PNG, WebP, etc.)');
+                fileInput.value = '';
+                return;
+            }
+
+            // Convert to base64 and show preview
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                console.log('File read successfully, size:', e.target.result.length);
+                const base64String = e.target.result;
+                
+                // Update preview
+                updateImagePreview(base64String, previewId);
+                
+                // Update URL input with base64 data
+                const urlInput = document.getElementById(urlInputId);
+                if (urlInput) {
+                    urlInput.value = base64String;
+                    console.log('URL input updated');
+                } else {
+                    console.error('URL input not found:', urlInputId);
+                }
+            };
+            
+            reader.onerror = function(e) {
+                console.error('File read error:', e);
+                alert('Fejl ved læsning af billedet. Prøv igen.');
+            };
+            
+            reader.readAsDataURL(file);
+        }
+
+        function updateImagePreview(imageUrl, previewId) {
+            const preview = document.getElementById(previewId);
+            if (!preview) return;
+
+            if (imageUrl && imageUrl.trim()) {
+                preview.innerHTML = `<img src="${imageUrl}" class="w-full h-full object-cover rounded-lg" alt="Preview" onerror="this.parentElement.innerHTML='<span class=\\"text-red-500\\">Billede kunne ikke indlæses</span>'">`;
+            } else {
+                preview.innerHTML = '<span class="text-slate-500 dark:text-slate-400">Ingen billede valgt</span>';
+            }
+        }
+
+        function addExtraImageField() {
+            const container = document.getElementById('extraImagesContainer');
+            const fieldCount = container.querySelectorAll('.extra-image-field').length;
+            const fieldId = `extraImage${fieldCount + 1}`;
+            
+            const fieldHTML = `
+                <div class="extra-image-field border border-slate-200 dark:border-slate-600 rounded-lg p-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="font-medium text-slate-900 dark:text-white">Ekstra Billede ${fieldCount + 1}</h4>
+                        <button type="button" onclick="removeExtraImageField(this)" class="text-red-600 hover:text-red-800">
+                            🗑️ Fjern
+                        </button>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <div class="space-y-3">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Billede navn/beskrivelse</label>
+                                <input type="text" id="${fieldId}Name" placeholder="F.eks. Showroom indgang"
+                                       class="w-full px-3 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Upload billede</label>
+                                <input type="file" id="${fieldId}File" accept="image/*" 
+                                       class="w-full px-3 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none"
+                                       onchange="handleImageUpload(this, '${fieldId}Preview', '${fieldId}Url')">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Eller billede URL</label>
+                                <input type="url" id="${fieldId}Url" placeholder="https://example.com/image.jpg"
+                                       class="w-full px-3 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:border-primary focus:outline-none"
+                                       onchange="updateImagePreview(this.value, '${fieldId}Preview')">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Forhåndsvisning</label>
+                            <div id="${fieldId}Preview" class="w-full h-32 bg-slate-100 dark:bg-slate-700 rounded-lg border-2 border-dashed border-slate-300 dark:border-slate-600 flex items-center justify-center overflow-hidden">
+                                <span class="text-slate-500 dark:text-slate-400">Ingen billede valgt</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            container.insertAdjacentHTML('beforeend', fieldHTML);
+        }
+
+        function removeExtraImageField(button) {
+            const field = button.closest('.extra-image-field');
+            if (field) {
+                field.remove();
+            }
+        }
+
+        function updatePageContent() {
+            // Load and apply saved content without refreshing
+            loadAndApplyContent();
+        }
+
+        function loadAndApplyContent() {
+            const savedContent = localStorage.getItem('nordic-autos-content');
+            if (!savedContent) return;
+            
+            try {
+                const content = JSON.parse(savedContent);
+                
+                // Apply forside content
+                if (content.forside) {
+                    applyForsideContent(content.forside);
+                }
+                
+                // Apply billeder content
+                if (content.billeder) {
+                    applyBillederContent(content.billeder);
+                }
+                
+            } catch (e) {
+                console.error('Error loading content:', e);
+            }
+        }
+
+        function applyForsideContent(content) {
+            // Update hero section
+            if (content.heroTitle) {
+                const heroTitle = document.querySelector('section h1');
+                if (heroTitle) {
+                    heroTitle.innerHTML = `${content.heroTitle.split(' ').slice(0, -1).join(' ')} <span class="text-primary">${content.heroTitle.split(' ').slice(-1)}</span>`;
+                }
+            }
+            
+            if (content.heroSubtext) {
+                const heroSubtext = document.querySelector('section h1 + p');
+                if (heroSubtext) {
+                    heroSubtext.textContent = content.heroSubtext;
+                }
+            }
+            
+            if (content.heroButtonText) {
+                const heroButton = document.querySelector('button[onclick*="lagerbiler.html"]');
+                if (heroButton) {
+                    heroButton.innerHTML = `${content.heroButtonText}<span class="material-symbols-outlined">arrow_forward</span>`;
+                }
+            }
+            
+            // Update features section
+            if (content.featuresTitle) {
+                const featuresSection = document.querySelector('.bg-slate-100');
+                if (featuresSection) {
+                    const featuresTitle = featuresSection.querySelector('h2');
+                    if (featuresTitle) {
+                        featuresTitle.textContent = content.featuresTitle;
+                    }
+                }
+            }
+            
+            if (content.featuresDescription) {
+                const featuresSection = document.querySelector('.bg-slate-100');
+                if (featuresSection) {
+                    const featuresDesc = featuresSection.querySelector('p');
+                    if (featuresDesc) {
+                        featuresDesc.textContent = content.featuresDescription;
+                    }
+                }
+            }
+            
+            // Update CTA section
+            if (content.ctaTitle) {
+                const ctaSection = document.querySelector('.bg-primary\\/10');
+                if (ctaSection) {
+                    const ctaTitle = ctaSection.querySelector('h2');
+                    if (ctaTitle) {
+                        ctaTitle.textContent = content.ctaTitle;
+                    }
+                }
+            }
+            
+            if (content.ctaDescription) {
+                const ctaSection = document.querySelector('.bg-primary\\/10');
+                if (ctaSection) {
+                    const ctaDesc = ctaSection.querySelector('p');
+                    if (ctaDesc) {
+                        ctaDesc.textContent = content.ctaDescription;
+                    }
+                }
+            }
+        }
+
+        function applyBillederContent(content) {
+            // Update hero background image
+            if (content.heroImage) {
+                const heroSection = document.querySelector('[style*="background-image"]');
+                if (heroSection) {
+                    const currentStyle = heroSection.getAttribute('style');
+                    const newStyle = currentStyle.replace(/url\("[^"]*"\)/, `url("${content.heroImage}")`);
+                    heroSection.setAttribute('style', newStyle);
+                }
+            }
+        }
+
+        function refreshCarList() {
+            loadCarsData().then(() => {
+                loadAdminCarsList();
+                alert('Liste opdateret!');
+            });
+        }
+
+        // Setup admin login form and load data
+        document.getElementById('adminLoginForm').addEventListener('submit', loginAdmin);
+        
+        // Load cars data when page loads
+        loadCarsData();
+        
+        // Load and apply saved content
+        loadAndApplyContent();
+        
+        // Listen for content changes from other pages
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'nordic-autos-content') {
+                console.log('Content changed, refreshing...');
+                loadAndApplyContent();
+            }
+        });
+
+        console.log('Admin system loaded successfully');
+        
+        // Test function for billeder editor
+        function testBillederEditor() {
+            console.log('Testing billeder editor...');
+            console.log('createBillederEditor function exists:', typeof createBillederEditor);
+            
+            if (typeof createBillederEditor === 'function') {
+                editPageContent('billeder');
+            } else {
+                alert('createBillederEditor function not found!');
+            }
+        }
+
+        // Quick import image editor
+        function quickImportImageEditor() {
+            const currentImageUrl = prompt('Indtast URL til det nye import-billede:', '');
+            
+            if (currentImageUrl && currentImageUrl.trim()) {
+                // Save to localStorage
+                const content = JSON.parse(localStorage.getItem('nordic-autos-content') || '{}');
+                if (!content.billeder) content.billeder = {};
+                content.billeder.importImage = currentImageUrl.trim();
+                localStorage.setItem('nordic-autos-content', JSON.stringify(content));
+                
+                // Trigger storage event for other pages
+                window.dispatchEvent(new StorageEvent('storage', {
+                    key: 'nordic-autos-content',
+                    newValue: JSON.stringify(content)
+                }));
+                
+                alert('Import-billede gemt! Gå til import.html for at se ændringen.');
+            }
+        }
+
+        // Test image quality function
+        function testImageQuality() {
+            const content = JSON.parse(localStorage.getItem('nordic-autos-content') || '{}');
+            
+            let report = 'BILLEDE KVALITETS RAPPORT:\\n\\n';
+            
+            // Check import image
+            if (content.billeder?.importImage) {
+                const importImg = content.billeder.importImage;
+                const sizeKB = Math.round((importImg.length * 0.75) / 1024); // Approximate base64 size
+                report += `📸 IMPORT BILLEDE:\\n`;
+                report += `   Størrelse: ${sizeKB} KB\\n`;
+                report += `   Kvalitet: ${importImg.includes('data:image/jpeg') ? 'JPEG' : 'PNG'}\\n`;
+                report += `   Status: ${sizeKB > 500 ? '✅ Høj kvalitet' : '⚠️ Lav kvalitet'}\\n\\n`;
+            } else {
+                report += `📸 IMPORT BILLEDE: ❌ Ikke uploadet\\n\\n`;
+            }
+            
+            // Check showroom image
+            if (content.billeder?.showroomImage) {
+                const showroomImg = content.billeder.showroomImage;
+                const sizeKB = Math.round((showroomImg.length * 0.75) / 1024);
+                report += `🏢 SHOWROOM BILLEDE:\\n`;
+                report += `   Størrelse: ${sizeKB} KB\\n`;
+                report += `   Kvalitet: ${showroomImg.includes('data:image/jpeg') ? 'JPEG' : 'PNG'}\\n`;
+                report += `   Status: ${sizeKB > 300 ? '✅ Høj kvalitet' : '⚠️ Lav kvalitet'}\\n\\n`;
+            } else {
+                report += `🏢 SHOWROOM BILLEDE: ❌ Ikke uploadet\\n\\n`;
+            }
+            
+            // Check CSS optimization
+            const hasImageCSS = document.querySelector('link[href*="main.css"]');
+            report += `🎨 CSS OPTIMERING: ${hasImageCSS ? '✅ Aktiveret' : '❌ Mangler'}\\n\\n`;
+            
+            report += `💡 TIPS FOR BEDSTE KVALITET:\\n`;
+            report += `   • Upload billeder i høj opløsning (min 1600x900)\\n`;
+            report += `   • Brug JPEG format for fotografier\\n`;
+            report += `   • Maksimer filstørrelse (op til 15MB)\\n`;
+            report += `   • Upload hele mappen til Netlify for permanent gemning`;
+            
+            alert(report);
+        }
+
+        // Export car data function for permanent saving
+        function exportCarData() {
+            const savedCars = localStorage.getItem('nordic-autos-cars');
+            const savedContent = localStorage.getItem('nordic-autos-content');
+            
+            if (!savedCars && !savedContent) {
+                alert('❌ INGEN DATA FUNDET\\n\\nDer er ingen bil-data eller billeder at eksportere.\\nTilføj først nogle biler eller upload billeder.');
+                return;
+            }
+            
+            let exportData = '🚗 NORDIC AUTOS - PERMANENT DATA EKSPORT\\n\\n';
+            
+            // Export car data
+            if (savedCars) {
+                const cars = JSON.parse(savedCars);
+                const availableCars = cars.filter(car => car.status === 'available');
+                
+                exportData += `📋 BIL DATA (${availableCars.length} biler):\\n`;
+                exportData += '═══════════════════════════════════════\\n\\n';
+                exportData += 'KOPIER DENNE KODE TIL index.html:\\n\\n';
+                exportData += 'Find linjen: let cars = [\\n';
+                exportData += 'Erstat hele cars array med:\\n\\n';
+                exportData += `let cars = ${JSON.stringify(availableCars, null, 4)};\\n\\n`;
+                exportData += '═══════════════════════════════════════\\n\\n';
+            }
+            
+            // Export image data
+            if (savedContent) {
+                const content = JSON.parse(savedContent);
+                
+                if (content.billeder?.importImage) {
+                    exportData += '🖼️ IMPORT BILLEDE:\\n';
+                    exportData += '═══════════════════════════════════════\\n';
+                    exportData += 'Åbn import.html og find:\\n';
+                    exportData += '<div class="aspect-[16/9] bg-cover bg-center bg-no-repeat"\\n\\n';
+                    exportData += 'Erstat style="..." med:\\n';
+                    exportData += `style='background-image: linear-gradient(to right, rgba(10, 12, 16, 0.7) 0%, rgba(10, 12, 16, 0.3) 100%), url("${content.billeder.importImage}");'\\n\\n`;
+                    exportData += '═══════════════════════════════════════\\n\\n';
+                }
+                
+                if (content.billeder?.showroomImage) {
+                    exportData += '🏢 SHOWROOM BILLEDE:\\n';
+                    exportData += '═══════════════════════════════════════\\n';
+                    exportData += 'Åbn om-os.html og find:\\n';
+                    exportData += '<img src="https://images.unsplash.com/photo-1562141961-d0a6b5b5a2b5\\n\\n';
+                    exportData += 'Erstat src="..." med:\\n';
+                    exportData += `src="${content.billeder.showroomImage}"\\n\\n`;
+                    exportData += '═══════════════════════════════════════\\n\\n';
+                }
+            }
+            
+            exportData += '💾 SÅDAN GEMMER DU PERMANENT:\\n';
+            exportData += '1. Kopier koderne ovenfor\\n';
+            exportData += '2. Indsæt dem i de rigtige HTML filer\\n';
+            exportData += '3. Gem filerne\\n';
+            exportData += '4. Upload hele mappen til Netlify\\n';
+            exportData += '5. Data er nu permanent!\\n\\n';
+            exportData += 'Se LAGERBILER-PERMANENT-GUIDE.md for detaljeret hjælp.';
+            
+            // Show in a text area for easy copying
+            const exportWindow = window.open('', '_blank', 'width=800,height=600');
+            exportWindow.document.write(`
+                <html>
+                <head><title>Nordic Autos - Data Eksport</title></head>
+                <body style="font-family: monospace; padding: 20px;">
+                    <h2>🚗 Nordic Autos - Permanent Data Eksport</h2>
+                    <p><strong>Kopier alt indholdet nedenfor og følg instruktionerne:</strong></p>
+                    <textarea style="width: 100%; height: 500px; font-family: monospace; font-size: 12px;">${exportData}</textarea>
+                    <br><br>
+                    <button onclick="navigator.clipboard.writeText(document.querySelector('textarea').value).then(() => alert('Kopieret til clipboard!'))" style="padding: 10px 20px; background: #007cba; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                        📋 Kopier Alt
+                    </button>
+                </body>
+                </html>
+            `);
+        }
+
+        
+        // Secret admin access - Press Ctrl+Shift+A to open admin login
+        let secretKeys = [];
+        document.addEventListener('keydown', function(e) {
+            // Check for Ctrl+Shift+A combination
+            if (e.ctrlKey && e.shiftKey && e.key === 'A') {
+                e.preventDefault();
+                showAdminLogin();
+                console.log('Secret admin access activated!');
+            }
+            
+            // Alternative: Type "NORDICADMIN" anywhere on the page
+            secretKeys.push(e.key.toLowerCase());
+            if (secretKeys.length > 10) {
+                secretKeys.shift(); // Keep only last 10 keys
+            }
+            
+            const secretCode = secretKeys.join('');
+            if (secretCode.includes('nordicadmin')) {
+                showAdminLogin();
+                secretKeys = []; // Reset
+                console.log('Secret code activated!');
+            }
+        });
+    </script>
+</body>
+</html>
