@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sådan Fikser Du Vercel - Nordic Autos</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            line-height: 1.6;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #dc2626;
+            font-size: 32px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        .step {
+            background: #f8fafc;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 12px;
+            border-left: 6px solid #2563eb;
+        }
+        .step-number {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 20px;
+            margin-right: 15px;
+        }
+        .step-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #1e293b;
+            margin-bottom: 15px;
+        }
+        .step-content {
+            font-size: 18px;
+            color: #475569;
+            margin-left: 55px;
+        }
+        .important {
+            background: #fef3c7;
+            border: 3px solid #f59e0b;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 25px 0;
+            font-size: 18px;
+        }
+        .link {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+            margin: 10px 0;
+            text-align: center;
+        }
+        .link:hover {
+            background: #1d4ed8;
+        }
+        .warning {
+            background: #fee2e2;
+            border: 2px solid #dc2626;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 18px;
+            color: #991b1b;
+        }
+        .success {
+            background: #dcfce7;
+            border: 2px solid #16a34a;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 18px;
+            color: #166534;
+        }
+        ul {
+            font-size: 18px;
+            margin-left: 55px;
+        }
+        li {
+            margin: 10px 0;
+        }
+        .code {
+            background: #1e293b;
+            color: #10b981;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 16px;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚨 VERCEL OPDATERER IKKE</h1>
+        <div class="subtitle">Simpel guide til at fikse problemet</div>
+
+        <div class="warning">
+            <strong>⚠️ PROBLEMET:</strong><br>
+            Vercel viser gammel kode selvom du har opdateret på GitHub.<br>
+            Alle ændringer virker ikke på nordicautos.vercel.app
+        </div>
+
+        <div class="important">
+            <strong>💡 LØSNINGEN:</strong><br>
+            Du skal manuelt uploade den nye kode til Vercel.<br>
+            Det tager kun 2 minutter!
+        </div>
+
+        <div class="step">
+            <div class="step-title">
+                <span class="step-number">1</span>
+                Download den nye kode
+            </div>
+            <div class="step-content">
+                Filen hedder <strong>nordicautos-latest.zip</strong> og ligger i din mappe.<br>
+                Den indeholder ALLE de seneste ændringer.
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-title">
+                <span class="step-number">2</span>
+                Gå til Vercel
+            </div>
+            <div class="step-content">
+                Klik på dette link:<br>
+                <a href="https://vercel.com/new" target="_blank" class="link">
+                    🚀 Åbn Vercel Upload
+                </a>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-title">
+                <span class="step-number">3</span>
+                Upload zip-filen
+            </div>
+            <div class="step-content">
+                <ul>
+                    <li>Træk <strong>nordicautos-latest.zip</strong> ind på siden</li>
+                    <li>ELLER klik "Browse" og vælg filen</li>
+                    <li>Vent til den uploader (tager 10-30 sekunder)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-title">
+                <span class="step-number">4</span>
+                Konfigurer projektet
+            </div>
+            <div class="step-content">
+                <ul>
+                    <li><strong>Project Name:</strong> nordicautos (eller hvad du vil)</li>
+                    <li><strong>Framework Preset:</strong> Other (eller lad den stå)</li>
+                    <li>Klik <strong>"Deploy"</strong></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-title">
+                <span class="step-number">5</span>
+                Tilføj miljøvariabler (VIGTIGT!)
+            </div>
+            <div class="step-content">
+                Efter deployment, gå til <strong>Settings → Environment Variables</strong><br><br>
+                
+                <strong>Tilføj disse 3 variabler:</strong>
+                
+                <div class="code">
+RESEND_API_KEY<br>
+re_9Zo3hwE4_2MoEyck8kfBufMETFuHzGvYJ
+                </div>
+
+                <div class="code">
+SUPABASE_URL<br>
+https://gfbsuydsquixhrrarjab.supabase.co
+                </div>
+
+                <div class="code">
+SUPABASE_ANON_KEY<br>
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdmYnN1eWRzcXVpeGhycmFyamFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwMjE5NDcsImV4cCI6MjA4NTU5Nzk0N30.M4nA8itsVSpcZb4l1w3cHtl_86KV89BHyt7xNE0hdSY
+                </div>
+
+                <br>
+                Efter du har tilføjet alle 3, klik <strong>"Redeploy"</strong>
+            </div>
+        </div>
+
+        <div class="success">
+            <strong>✅ FÆRDIG!</strong><br>
+            Nu skulle alt virke:<br>
+            • Ingen hardcodede biler<br>
+            • Beskrivelsesfeltet virker<br>
+            • Kontaktformular virker<br>
+            • Ny adresse vises<br>
+            • Admin dashboard virker korrekt
+        </div>
+
+        <div class="important">
+            <strong>📝 EFTER DEPLOYMENT:</strong><br>
+            Gå til din admin menu og tryk F5 (refresh).<br>
+            Åbn konsollen i browseren og skriv:<br>
+            <div class="code">
+localStorage.clear()<br>
+location.reload()
+            </div>
+            Dette fjerner gammel cached data.
+        </div>
+
+        <div class="warning">
+            <strong>🔴 HVIS DET STADIG IKKE VIRKER:</strong><br>
+            Skriv til mig og fortæl:<br>
+            1. Hvilken URL du fik fra Vercel<br>
+            2. Hvad der ikke virker<br>
+            3. Om du tilføjede alle 3 miljøvariabler
+        </div>
+    </div>
+</body>
+</html>

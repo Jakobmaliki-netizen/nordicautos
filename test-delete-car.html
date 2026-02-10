@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Slet Bil - Nordic Autos</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #dc2626;
+            margin-bottom: 20px;
+        }
+        button {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #b91c1c;
+        }
+        button.load {
+            background: #2563eb;
+        }
+        button.load:hover {
+            background: #1d4ed8;
+        }
+        #log {
+            margin-top: 30px;
+            padding: 20px;
+            background: #1e293b;
+            color: #10b981;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 14px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .log-entry {
+            margin: 5px 0;
+            padding: 5px;
+            border-left: 3px solid #10b981;
+            padding-left: 10px;
+        }
+        .log-error {
+            color: #ef4444;
+            border-left-color: #ef4444;
+        }
+        .log-success {
+            color: #10b981;
+            border-left-color: #10b981;
+        }
+        .log-info {
+            color: #3b82f6;
+            border-left-color: #3b82f6;
+        }
+        .cars-list {
+            margin-top: 30px;
+        }
+        .car-item {
+            background: #f8fafc;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #2563eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .car-info {
+            flex: 1;
+        }
+        .delete-btn {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .delete-btn:hover {
+            background: #b91c1c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🗑️ Test Slet Bil</h1>
+        <p>Denne side viser alle biler og lader dig slette dem</p>
+
+        <button onclick="loadCars()" class="load">📋 Hent Alle Biler</button>
+        <button onclick="clearLog()" style="background: #64748b;">🗑️ Ryd Log</button>
+
+        <div id="log"></div>
+
+        <div class="cars-list" id="cars-list" style="display: none;">
+            <h2>Biler i Database:</h2>
+            <div id="cars-container"></div>
+        </div>
+    </div>
+
+    <script src="supabase-config.js"></script>
+    <script src="assets/js/supabase-admin.js"></script>
+    <script>
+        function log(message, type = 'info') {
+            const logDiv = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString('da-DK');
+            const entry = document.createElement('div');
+            entry.className = `log-entry log-${type}`;
+            entry.textContent = `[${timestamp}] ${message}`;
+            logDiv.appendChild(entry);
+            logDiv.scrollTop = logDiv.scrollHeight;
+            console.log(message);
+        }
+
+        function clearLog() {
+            document.getElementById('log').innerHTML = '';
+        }
+
+        async function loadCars() {
+            log('📋 Henter alle biler fra Supabase...', 'info');
+            
+            try {
+                if (!window.supabaseCarManager) {
+                    log('❌ ERROR: supabaseCarManager ikke tilgængelig', 'error');
+                    return;
+                }
+
+                await window.supabaseCarManager.initialize();
+                const cars = await window.supabaseCarManager.getCars();
+                
+                log(`✅ Hentet ${cars.length} biler fra database`, 'success');
+                
+                const carsList = document.getElementById('cars-list');
+                const carsContainer = document.getElementById('cars-container');
+                
+                if (cars.length === 0) {
+                    carsContainer.innerHTML = '<p style="color: #64748b;">Ingen biler i databasen</p>';
+                } else {
+                    carsContainer.innerHTML = cars.map(car => `
+                        <div class="car-item">
+                            <div class="car-info">
+                                <strong>${car.brand} ${car.model} ${car.variant || ''}</strong><br>
+                                År: ${car.year} | Km: ${car.mileage?.toLocaleString('da-DK')} | Pris: ${car.price?.toLocaleString('da-DK')} DKK<br>
+                                Status: ${car.status} | ID: ${car.id}
+                            </div>
+                            <button class="delete-btn" onclick="deleteCar(${car.id}, '${car.brand} ${car.model}')">
+                                🗑️ Slet
+                            </button>
+                        </div>
+                    `).join('');
+                }
+                
+                carsList.style.display = 'block';
+
+            } catch (error) {
+                log(`❌ FEJL ved hentning: ${error.message}`, 'error');
+            }
+        }
+
+        async function deleteCar(carId, carName) {
+            if (!confirm(`Er du sikker på at du vil slette ${carName}?`)) {
+                return;
+            }
+
+            log(`🗑️ Sletter bil ID ${carId} (${carName})...`, 'info');
+            
+            try {
+                if (!window.supabaseCarManager) {
+                    log('❌ ERROR: supabaseCarManager ikke tilgængelig', 'error');
+                    return;
+                }
+
+                await window.supabaseCarManager.initialize();
+                
+                log('📡 Kalder deleteCar på Supabase...', 'info');
+                const result = await window.supabaseCarManager.deleteCar(carId);
+                
+                if (result) {
+                    log(`✅ SUCCESS! Bil ${carId} slettet fra Supabase`, 'success');
+                    
+                    // Reload cars to verify
+                    setTimeout(() => loadCars(), 1000);
+                } else {
+                    log(`❌ ERROR: deleteCar returnerede false`, 'error');
+                }
+
+            } catch (error) {
+                log(`❌ FEJL ved sletning: ${error.message}`, 'error');
+                log(`Stack: ${error.stack}`, 'error');
+            }
+        }
+
+        // Auto-load cars on page load
+        window.addEventListener('load', () => {
+            log('🌐 Side loaded', 'info');
+            setTimeout(() => loadCars(), 500);
+        });
+    </script>
+</body>
+</html>

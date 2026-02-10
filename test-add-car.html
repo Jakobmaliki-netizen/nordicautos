@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Tilføj Bil - Nordic Autos</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2563eb;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #1e293b;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #1d4ed8;
+        }
+        #log {
+            margin-top: 30px;
+            padding: 20px;
+            background: #1e293b;
+            color: #10b981;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 14px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .log-entry {
+            margin: 5px 0;
+            padding: 5px;
+            border-left: 3px solid #10b981;
+            padding-left: 10px;
+        }
+        .log-error {
+            color: #ef4444;
+            border-left-color: #ef4444;
+        }
+        .log-success {
+            color: #10b981;
+            border-left-color: #10b981;
+        }
+        .log-info {
+            color: #3b82f6;
+            border-left-color: #3b82f6;
+        }
+        .cars-list {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f1f5f9;
+            border-radius: 8px;
+        }
+        .car-item {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #2563eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test Tilføj Bil</h1>
+        <p>Denne side tester om biler kan gemmes til Supabase</p>
+
+        <div class="form-group">
+            <label>Mærke</label>
+            <input type="text" id="brand" value="BMW" placeholder="F.eks. BMW">
+        </div>
+
+        <div class="form-group">
+            <label>Model</label>
+            <input type="text" id="model" value="M3" placeholder="F.eks. M3">
+        </div>
+
+        <div class="form-group">
+            <label>Variant</label>
+            <input type="text" id="variant" value="Competition" placeholder="F.eks. Competition">
+        </div>
+
+        <div class="form-group">
+            <label>År</label>
+            <input type="number" id="year" value="2023" placeholder="2023">
+        </div>
+
+        <div class="form-group">
+            <label>Kilometer</label>
+            <input type="number" id="mileage" value="5000" placeholder="5000">
+        </div>
+
+        <div class="form-group">
+            <label>Pris (DKK)</label>
+            <input type="number" id="price" value="899000" placeholder="899000">
+        </div>
+
+        <div class="form-group">
+            <label>Brændstof</label>
+            <select id="fuelType">
+                <option value="Benzin">Benzin</option>
+                <option value="Diesel">Diesel</option>
+                <option value="El">El</option>
+                <option value="Hybrid">Hybrid</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Status</label>
+            <select id="status">
+                <option value="available">Tilgængelig</option>
+                <option value="reserved">Reserveret</option>
+                <option value="sold">Solgt</option>
+            </select>
+        </div>
+
+        <button onclick="testAddCar()">🚗 Tilføj Test Bil</button>
+        <button onclick="loadCars()" style="background: #16a34a;">📋 Hent Alle Biler</button>
+        <button onclick="clearLog()" style="background: #64748b;">🗑️ Ryd Log</button>
+
+        <div id="log"></div>
+
+        <div class="cars-list" id="cars-list" style="display: none;">
+            <h2>Biler i Database:</h2>
+            <div id="cars-container"></div>
+        </div>
+    </div>
+
+    <script src="supabase-config.js"></script>
+    <script src="assets/js/supabase-admin.js"></script>
+    <script>
+        function log(message, type = 'info') {
+            const logDiv = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString('da-DK');
+            const entry = document.createElement('div');
+            entry.className = `log-entry log-${type}`;
+            entry.textContent = `[${timestamp}] ${message}`;
+            logDiv.appendChild(entry);
+            logDiv.scrollTop = logDiv.scrollHeight;
+            console.log(message);
+        }
+
+        function clearLog() {
+            document.getElementById('log').innerHTML = '';
+        }
+
+        async function testAddCar() {
+            log('🚀 Starter test af tilføj bil...', 'info');
+            
+            try {
+                // Check if Supabase is available
+                if (!window.supabaseCarManager) {
+                    log('❌ ERROR: supabaseCarManager er ikke tilgængelig!', 'error');
+                    log('Tjek om supabase-config.js og supabase-admin.js er loaded', 'error');
+                    return;
+                }
+
+                log('✅ supabaseCarManager fundet', 'success');
+
+                // Initialize
+                log('🔄 Initialiserer Supabase...', 'info');
+                await window.supabaseCarManager.initialize();
+                log('✅ Supabase initialiseret', 'success');
+
+                // Get form data
+                const carData = {
+                    brand: document.getElementById('brand').value,
+                    model: document.getElementById('model').value,
+                    variant: document.getElementById('variant').value,
+                    year: parseInt(document.getElementById('year').value),
+                    mileage: parseInt(document.getElementById('mileage').value),
+                    price: parseInt(document.getElementById('price').value),
+                    fuelType: document.getElementById('fuelType').value,
+                    status: document.getElementById('status').value,
+                    bodyType: 'Sedan',
+                    horsepower: 510,
+                    description: 'Test bil tilføjet via test-side',
+                    features: ['Læder', 'Navigation', 'Parkeringssensor'],
+                    images: ['https://via.placeholder.com/800x600'],
+                    isNew: false,
+                    specifications: {
+                        engine: 'N/A',
+                        transmission: 'N/A',
+                        drivetrain: 'N/A',
+                        acceleration: 'N/A',
+                        topSpeed: 'N/A',
+                        fuelConsumption: 'N/A'
+                    },
+                    history: {
+                        previousOwners: 1,
+                        serviceHistory: true,
+                        accidents: false
+                    }
+                };
+
+                log(`📝 Bil data: ${carData.brand} ${carData.model} ${carData.variant}`, 'info');
+                log(`💰 Pris: ${carData.price.toLocaleString('da-DK')} DKK`, 'info');
+
+                // Save to Supabase
+                log('💾 Gemmer til Supabase...', 'info');
+                const result = await window.supabaseCarManager.saveCar(carData);
+                
+                if (result) {
+                    log('✅ SUCCESS! Bil gemt til Supabase', 'success');
+                    log(`📊 Bil ID: ${result.id}`, 'success');
+                    
+                    // Load all cars to verify
+                    setTimeout(() => loadCars(), 1000);
+                } else {
+                    log('❌ ERROR: saveCar returnerede null/false', 'error');
+                }
+
+            } catch (error) {
+                log(`❌ FEJL: ${error.message}`, 'error');
+                log(`Stack: ${error.stack}`, 'error');
+            }
+        }
+
+        async function loadCars() {
+            log('📋 Henter alle biler fra Supabase...', 'info');
+            
+            try {
+                if (!window.supabaseCarManager) {
+                    log('❌ ERROR: supabaseCarManager ikke tilgængelig', 'error');
+                    return;
+                }
+
+                await window.supabaseCarManager.initialize();
+                const cars = await window.supabaseCarManager.getCars();
+                
+                log(`✅ Hentet ${cars.length} biler fra database`, 'success');
+                
+                const carsList = document.getElementById('cars-list');
+                const carsContainer = document.getElementById('cars-container');
+                
+                if (cars.length === 0) {
+                    carsContainer.innerHTML = '<p style="color: #64748b;">Ingen biler i databasen</p>';
+                } else {
+                    carsContainer.innerHTML = cars.map(car => `
+                        <div class="car-item">
+                            <strong>${car.brand} ${car.model} ${car.variant || ''}</strong><br>
+                            År: ${car.year} | Km: ${car.mileage?.toLocaleString('da-DK')} | Pris: ${car.price?.toLocaleString('da-DK')} DKK<br>
+                            Status: ${car.status} | ID: ${car.id}
+                        </div>
+                    `).join('');
+                }
+                
+                carsList.style.display = 'block';
+
+            } catch (error) {
+                log(`❌ FEJL ved hentning: ${error.message}`, 'error');
+            }
+        }
+
+        // Auto-load cars on page load
+        window.addEventListener('load', () => {
+            log('🌐 Side loaded', 'info');
+            setTimeout(() => loadCars(), 500);
+        });
+    </script>
+</body>
+</html>
