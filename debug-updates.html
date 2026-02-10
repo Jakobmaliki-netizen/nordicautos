@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="utf-8"/>
+    <title>Debug Updates</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-4">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-2xl font-bold mb-4">Debug Car Updates</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Send Updates -->
+            <div class="bg-white rounded-lg shadow p-4">
+                <h2 class="text-lg font-semibold mb-3">Send Update</h2>
+                <div class="space-y-2">
+                    <button id="send-update" class="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                        Send Car Update
+                    </button>
+                    <button id="send-delete" class="w-full bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                        Send Car Delete
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Receive Updates -->
+            <div class="bg-white rounded-lg shadow p-4">
+                <h2 class="text-lg font-semibold mb-3">Receive Updates</h2>
+                <div id="status" class="text-sm text-gray-600 mb-2">Listening for updates...</div>
+                <div id="last-update" class="text-xs text-gray-500">No updates yet</div>
+            </div>
+        </div>
+        
+        <!-- Log -->
+        <div class="bg-white rounded-lg shadow p-4 mt-4">
+            <h2 class="text-lg font-semibold mb-3">Event Log</h2>
+            <div id="log" class="bg-gray-50 p-3 rounded h-64 overflow-y-auto font-mono text-xs">
+                <div>Ready to test...</div>
+            </div>
+            <button id="clear-log" class="mt-2 bg-gray-500 text-white px-3 py-1 rounded text-sm">Clear</button>
+        </div>
+    </div>
+
+    <script>
+        function log(message) {
+            const logDiv = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            const entry = document.createElement('div');
+            entry.textContent = `[${timestamp}] ${message}`;
+            logDiv.appendChild(entry);
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+        
+        function updateStatus(message) {
+            document.getElementById('status').textContent = message;
+            document.getElementById('last-update').textContent = new Date().toLocaleTimeString();
+        }
+        
+        // Listen for storage events (cross-tab)
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'nordic-autos-car-update') {
+                log(`STORAGE: ${e.key} = ${e.newValue}`);
+                updateStatus('Received storage update');
+            } else if (e.key === 'nordic-autos-last-update') {
+                log(`STORAGE: ${e.key} = ${e.newValue}`);
+                updateStatus('Received legacy storage update');
+            }
+        });
+        
+        // Listen for custom events (same tab)
+        window.addEventListener('carUpdated', (e) => {
+            log(`EVENT: carUpdated - ${JSON.stringify(e.detail)}`);
+            updateStatus('Received carUpdated event');
+        });
+        
+        window.addEventListener('carsUpdated', (e) => {
+            log(`EVENT: carsUpdated - ${JSON.stringify(e.detail)}`);
+            updateStatus('Received carsUpdated event');
+        });
+        
+        // Send update
+        document.getElementById('send-update').addEventListener('click', () => {
+            const updateData = {
+                timestamp: Date.now(),
+                action: 'updated',
+                car: {
+                    id: 'debug-car-' + Date.now(),
+                    brand: 'Debug',
+                    model: 'Test Car Updated',
+                    description: 'This is a debug update'
+                }
+            };
+            
+            log(`SENDING: Car update - ${JSON.stringify(updateData)}`);
+            
+            // Set localStorage (triggers storage event in other tabs)
+            localStorage.setItem('nordic-autos-car-update', JSON.stringify(updateData));
+            
+            // Dispatch event for same tab
+            window.dispatchEvent(new CustomEvent('carUpdated', {
+                detail: updateData
+            }));
+            
+            // Legacy
+            localStorage.setItem('nordic-autos-last-update', JSON.stringify(updateData));
+            window.dispatchEvent(new CustomEvent('carsUpdated', {
+                detail: updateData
+            }));
+            
+            updateStatus('Sent car update');
+        });
+        
+        // Send delete
+        document.getElementById('send-delete').addEventListener('click', () => {
+            const deleteData = {
+                timestamp: Date.now(),
+                action: 'deleted',
+                carId: 'debug-car-deleted'
+            };
+            
+            log(`SENDING: Car delete - ${JSON.stringify(deleteData)}`);
+            
+            localStorage.setItem('nordic-autos-car-update', JSON.stringify(deleteData));
+            window.dispatchEvent(new CustomEvent('carUpdated', {
+                detail: deleteData
+            }));
+            
+            updateStatus('Sent car delete');
+        });
+        
+        // Clear log
+        document.getElementById('clear-log').addEventListener('click', () => {
+            document.getElementById('log').innerHTML = '<div>Log cleared...</div>';
+        });
+        
+        log('Debug page loaded and ready');
+    </script>
+</body>
+</html>

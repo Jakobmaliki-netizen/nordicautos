@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html class="dark" lang="da">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Test Contact Form - Nordic Autos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="assets/css/main.css"/>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-white p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-4xl font-black mb-8">🧪 Test Contact Form</h1>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Test Form -->
+            <div class="bg-white dark:bg-card-dark rounded-xl p-6 border border-slate-200 dark:border-border-dark">
+                <h2 class="text-2xl font-bold mb-4">Send Test Email</h2>
+                
+                <form id="test-form" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Navn</label>
+                        <input type="text" id="name" class="form-input w-full" value="Test Bruger" required>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Email</label>
+                        <input type="email" id="email" class="form-input w-full" value="test@example.com" required>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Telefon</label>
+                        <input type="tel" id="phone" class="form-input w-full" value="+45 12 34 56 78">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Emne</label>
+                        <select id="subject" class="form-input w-full">
+                            <option value="general">Generel henvendelse</option>
+                            <option value="car-inquiry">Forespørgsel om bil</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Besked</label>
+                        <textarea id="message" class="form-input w-full" rows="4" required>Dette er en test besked fra kontaktformularen.</textarea>
+                    </div>
+                    
+                    <div class="flex items-center gap-2">
+                        <input type="checkbox" id="consent" checked required>
+                        <label for="consent" class="text-sm">Jeg accepterer at blive kontaktet</label>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary w-full">
+                        Send Test Email
+                    </button>
+                </form>
+                
+                <div id="result" class="mt-4 hidden"></div>
+            </div>
+            
+            <!-- Console Log -->
+            <div class="bg-slate-900 rounded-xl p-6 border border-slate-700">
+                <h2 class="text-xl font-bold mb-4 text-white">Console Log</h2>
+                <div id="console-log" class="space-y-1 text-xs font-mono text-green-400 max-h-96 overflow-y-auto">
+                    <div>Klar til test...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Custom console logging
+        const originalLog = console.log;
+        const originalError = console.error;
+        
+        function addToConsoleLog(message, type = 'log') {
+            const consoleLog = document.getElementById('console-log');
+            const timestamp = new Date().toLocaleTimeString();
+            const color = type === 'error' ? 'text-red-400' : 'text-green-400';
+            const icon = type === 'error' ? '❌' : '✅';
+            
+            const logEntry = document.createElement('div');
+            logEntry.className = color;
+            logEntry.textContent = `[${timestamp}] ${icon} ${message}`;
+            consoleLog.appendChild(logEntry);
+            consoleLog.scrollTop = consoleLog.scrollHeight;
+        }
+        
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            addToConsoleLog(args.join(' '), 'log');
+        };
+        
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            addToConsoleLog(args.join(' '), 'error');
+        };
+        
+        // Test form submission
+        document.getElementById('test-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const resultDiv = document.getElementById('result');
+            resultDiv.classList.add('hidden');
+            
+            console.log('🔄 Sending test email...');
+            
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value,
+                consent: document.getElementById('consent').checked
+            };
+            
+            console.log('📝 Form data:', JSON.stringify(formData, null, 2));
+            
+            try {
+                console.log('📡 Sending POST request to /api/send-email...');
+                
+                const response = await fetch('/api/send-email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                console.log(`📊 Response status: ${response.status} ${response.statusText}`);
+                
+                const result = await response.json();
+                console.log('📦 Response data:', JSON.stringify(result, null, 2));
+                
+                if (result.success) {
+                    resultDiv.className = 'mt-4 p-4 bg-green-100 dark:bg-green-900 rounded text-green-800 dark:text-green-200';
+                    resultDiv.textContent = '✅ ' + result.message;
+                    console.log('✅ SUCCESS: Email sent!');
+                } else {
+                    resultDiv.className = 'mt-4 p-4 bg-red-100 dark:bg-red-900 rounded text-red-800 dark:text-red-200';
+                    resultDiv.textContent = '❌ ' + result.message;
+                    console.error('❌ ERROR: ' + result.message);
+                }
+                
+                resultDiv.classList.remove('hidden');
+                
+            } catch (error) {
+                console.error('❌ FETCH ERROR:', error.message);
+                console.error('Stack:', error.stack);
+                
+                resultDiv.className = 'mt-4 p-4 bg-red-100 dark:bg-red-900 rounded text-red-800 dark:text-red-200';
+                resultDiv.textContent = '❌ Network error: ' + error.message;
+                resultDiv.classList.remove('hidden');
+            }
+        });
+        
+        console.log('✅ Test page loaded');
+        console.log('📍 Current URL:', window.location.href);
+        console.log('🌐 API endpoint:', window.location.origin + '/api/send-email');
+    </script>
+</body>
+</html>

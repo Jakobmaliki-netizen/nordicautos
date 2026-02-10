@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="utf-8"/>
+    <title>Test Simple Updates</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-2xl font-bold mb-6">Test Simple Car Updates</h1>
+        
+        <div class="bg-white rounded-lg shadow p-6 mb-6">
+            <h2 class="text-lg font-semibold mb-4">Simulate Car Update</h2>
+            <button id="trigger-update" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                Trigger Car Update
+            </button>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow p-6">
+            <h2 class="text-lg font-semibold mb-4">Event Log</h2>
+            <div id="log" class="bg-gray-50 p-4 rounded h-48 overflow-y-auto font-mono text-sm">
+                <div>Ready to test...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function log(message) {
+            const logDiv = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            const entry = document.createElement('div');
+            entry.textContent = `[${timestamp}] ${message}`;
+            logDiv.appendChild(entry);
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+        
+        // Listen for storage events
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'nordic-autos-car-update') {
+                log(`Storage event: ${e.key} = ${e.newValue}`);
+            }
+        });
+        
+        // Listen for custom events
+        window.addEventListener('carUpdated', (e) => {
+            log(`Custom event: carUpdated - ${JSON.stringify(e.detail)}`);
+        });
+        
+        document.getElementById('trigger-update').addEventListener('click', () => {
+            // Simulate what admin dashboard does
+            const updateData = {
+                timestamp: Date.now(),
+                action: 'updated',
+                car: {
+                    id: 'test-123',
+                    brand: 'BMW',
+                    model: 'X5 Test Updated',
+                    description: 'This is a test update'
+                }
+            };
+            
+            // Set localStorage (triggers storage event in other tabs)
+            localStorage.setItem('nordic-autos-car-update', JSON.stringify(updateData));
+            log(`Triggered update: ${JSON.stringify(updateData)}`);
+            
+            // Dispatch custom event (for same tab)
+            window.dispatchEvent(new CustomEvent('carUpdated', {
+                detail: updateData
+            }));
+            log('Dispatched carUpdated event');
+        });
+        
+        log('Test page loaded and ready');
+    </script>
+</body>
+</html>

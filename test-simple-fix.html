@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Fix Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #1a1a1a; color: white; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .section { margin: 20px 0; padding: 20px; background: #2a2a2a; border-radius: 8px; }
+        .button { padding: 10px 20px; margin: 10px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        .button:hover { background: #0056b3; }
+        .cars-list { background: #000; padding: 15px; border-radius: 4px; font-family: monospace; }
+        input { padding: 8px; margin: 5px; border-radius: 4px; border: 1px solid #ccc; width: 200px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Simple Fix Test</h1>
+        
+        <div class="section">
+            <h2>Current Cars in Database</h2>
+            <button class="button" onclick="loadAndShowCars()">Load Cars</button>
+            <div id="cars-display" class="cars-list">Click "Load Cars" to see current data...</div>
+        </div>
+
+        <div class="section">
+            <h2>Quick Update Test</h2>
+            <div>
+                <label>Car ID: <input type="text" id="test-car-id" value="1" /></label>
+                <label>New Model: <input type="text" id="test-model" value="911 Carrera TEST" /></label>
+                <button class="button" onclick="quickUpdate()">Update & Reload</button>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Direct Database Query</h2>
+            <button class="button" onclick="directQuery()">Query Database Directly</button>
+            <div id="direct-result" class="cars-list">Results will appear here...</div>
+        </div>
+    </div>
+
+    <script src="supabase-config.js"></script>
+    <script>
+        async function loadAndShowCars() {
+            const display = document.getElementById('cars-display');
+            display.innerHTML = '🔄 Loading...';
+            
+            try {
+                await window.supabaseCarManager.initialize();
+                const cars = await window.supabaseCarManager.getCars();
+                
+                let html = `Found ${cars.length} cars:\n\n`;
+                cars.forEach(car => {
+                    html += `ID: ${car.id} | ${car.brand} ${car.model} | ${car.year}\n`;
+                });
+                
+                display.innerHTML = html;
+            } catch (error) {
+                display.innerHTML = `❌ Error: ${error.message}`;
+            }
+        }
+
+        async function quickUpdate() {
+            const carId = document.getElementById('test-car-id').value;
+            const newModel = document.getElementById('test-model').value;
+            
+            try {
+                // Get current car
+                const cars = await window.supabaseCarManager.getCars();
+                const car = cars.find(c => c.id == carId);
+                
+                if (!car) {
+                    alert(`Car with ID ${carId} not found!`);
+                    return;
+                }
+                
+                // Update it
+                const updatedCar = { ...car, model: newModel };
+                const result = await window.supabaseCarManager.saveCar(updatedCar);
+                
+                if (result) {
+                    alert('✅ Car updated! Reloading...');
+                    setTimeout(() => {
+                        loadAndShowCars();
+                    }, 1000);
+                } else {
+                    alert('❌ Failed to update car');
+                }
+                
+            } catch (error) {
+                alert(`❌ Error: ${error.message}`);
+            }
+        }
+
+        async function directQuery() {
+            const display = document.getElementById('direct-result');
+            display.innerHTML = '🔄 Querying...';
+            
+            try {
+                // Direct Supabase query
+                const { data: cars, error } = await supabase
+                    .from('cars')
+                    .select('*')
+                    .order('id', { ascending: true });
+
+                if (error) {
+                    display.innerHTML = `❌ Error: ${error.message}`;
+                    return;
+                }
+                
+                let html = `Direct query found ${cars.length} cars:\n\n`;
+                cars.forEach(car => {
+                    html += `ID: ${car.id} | ${car.brand} ${car.model} | Updated: ${car.updated_at}\n`;
+                });
+                
+                display.innerHTML = html;
+                
+            } catch (error) {
+                display.innerHTML = `❌ Error: ${error.message}`;
+            }
+        }
+
+        // Auto-load on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(loadAndShowCars, 500);
+        });
+    </script>
+</body>
+</html>

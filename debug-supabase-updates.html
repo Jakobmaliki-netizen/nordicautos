@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Supabase Updates</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #1a1a1a; color: white; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .section { margin: 20px 0; padding: 20px; background: #2a2a2a; border-radius: 8px; }
+        .button { padding: 10px 20px; margin: 10px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        .button:hover { background: #0056b3; }
+        .log { background: #000; padding: 15px; border-radius: 4px; font-family: monospace; white-space: pre-wrap; max-height: 300px; overflow-y: auto; }
+        .success { color: #28a745; }
+        .error { color: #dc3545; }
+        .warning { color: #ffc107; }
+        .info { color: #17a2b8; }
+        input, select { padding: 8px; margin: 5px; border-radius: 4px; border: 1px solid #ccc; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Debug Supabase Real-Time Updates</h1>
+        
+        <div class="section">
+            <h2>1. Test Supabase Connection</h2>
+            <button class="button" onclick="testConnection()">Test Connection</button>
+            <div id="connection-log" class="log"></div>
+        </div>
+
+        <div class="section">
+            <h2>2. Load Current Cars</h2>
+            <button class="button" onclick="loadCars()">Load Cars from Supabase</button>
+            <div id="cars-log" class="log"></div>
+        </div>
+
+        <div class="section">
+            <h2>3. Update Car Test</h2>
+            <div>
+                <label>Car ID: <input type="text" id="car-id" value="1" /></label>
+                <label>New Model: <input type="text" id="new-model" value="911 Carrera UPDATED" /></label>
+                <button class="button" onclick="updateCar()">Update Car</button>
+            </div>
+            <div id="update-log" class="log"></div>
+        </div>
+
+        <div class="section">
+            <h2>4. Real-Time Events Monitor</h2>
+            <button class="button" onclick="startMonitoring()">Start Monitoring</button>
+            <button class="button" onclick="stopMonitoring()">Stop Monitoring</button>
+            <div id="events-log" class="log"></div>
+        </div>
+
+        <div class="section">
+            <h2>5. Force Refresh Test</h2>
+            <button class="button" onclick="forceRefresh()">Force Refresh Cars</button>
+            <div id="refresh-log" class="log"></div>
+        </div>
+    </div>
+
+    <script src="supabase-config.js"></script>
+    <script>
+        let cars = [];
+        let monitoring = false;
+        
+        function log(elementId, message, type = 'info') {
+            const element = document.getElementById(elementId);
+            const timestamp = new Date().toLocaleTimeString();
+            const className = type;
+            element.innerHTML += `<span class="${className}">[${timestamp}] ${message}</span>\n`;
+            element.scrollTop = element.scrollHeight;
+        }
+
+        async function testConnection() {
+            log('connection-log', '🔄 Testing Supabase connection...', 'info');
+            
+            try {
+                if (!window.supabaseCarManager) {
+                    log('connection-log', '❌ SupabaseCarManager not found', 'error');
+                    return;
+                }
+                
+                const initialized = await window.supabaseCarManager.initialize();
+                log('connection-log', `✅ Supabase initialized: ${initialized}`, 'success');
+                
+                // Test basic query
+                const { data, error } = await supabase.from('cars').select('count', { count: 'exact', head: true });
+                if (error) {
+                    log('connection-log', `❌ Query error: ${error.message}`, 'error');
+                } else {
+                    log('connection-log', '✅ Basic query successful', 'success');
+                }
+                
+            } catch (error) {
+                log('connection-log', `❌ Connection error: ${error.message}`, 'error');
+            }
+        }
+
+        async function loadCars() {
+            log('cars-log', '🔄 Loading cars from Supabase...', 'info');
+            
+            try {
+                cars = await window.supabaseCarManager.getCars();
+                log('cars-log', `✅ Loaded ${cars.length} cars`, 'success');
+                
+                cars.forEach((car, index) => {
+                    log('cars-log', `Car ${index + 1}: ${car.brand} ${car.model} (ID: ${car.id})`, 'info');
+                });
+                
+            } catch (error) {
+                log('cars-log', `❌ Error loading cars: ${error.message}`, 'error');
+            }
+        }
+
+        async function updateCar() {
+            const carId = document.getElementById('car-id').value;
+            const newModel = document.getElementById('new-model').value;
+            
+            log('update-log', `🔄 Updating car ${carId} with model: ${newModel}`, 'info');
+            
+            try {
+                // Find the car
+                const car = cars.find(c => c.id == carId);
+                if (!car) {
+                    log('update-log', `❌ Car with ID ${carId} not found`, 'error');
+                    return;
+                }
+                
+                // Update the car
+                const updatedCar = { ...car, model: newModel };
+                log('update-log', `📝 Saving updated car: ${JSON.stringify(updatedCar, null, 2)}`, 'info');
+                
+                const result = await window.supabaseCarManager.saveCar(updatedCar);
+                
+                if (result) {
+                    log('update-log', '✅ Car updated successfully in Supabase', 'success');
+                    
+                    // Trigger the same events as admin dashboard
+                    const updateData = {
+                        timestamp: Date.now(),
+                        action: 'updated',
+                        car: updatedCar
+                    };
+                    
+                    log('update-log', '📡 Sending localStorage event...', 'info');
+                    localStorage.setItem('nordic-autos-car-update', JSON.stringify(updateData));
+                    
+                    log('update-log', '📡 Dispatching custom event...', 'info');
+                    window.dispatchEvent(new CustomEvent('carUpdated', { detail: updateData }));
+                    
+                    log('update-log', '✅ All events sent', 'success');
+                } else {
+                    log('update-log', '❌ Failed to update car in Supabase', 'error');
+                }
+                
+            } catch (error) {
+                log('update-log', `❌ Error updating car: ${error.message}`, 'error');
+            }
+        }
+
+        function startMonitoring() {
+            if (monitoring) return;
+            
+            monitoring = true;
+            log('events-log', '🔄 Starting real-time monitoring...', 'info');
+            
+            // Monitor localStorage events
+            window.addEventListener('storage', (e) => {
+                if (e.key === 'nordic-autos-car-update' || e.key === 'nordic-autos-last-update') {
+                    log('events-log', `📦 Storage event: ${e.key} = ${e.newValue}`, 'warning');
+                }
+            });
+            
+            // Monitor custom events
+            window.addEventListener('carUpdated', (e) => {
+                log('events-log', `🔔 carUpdated event: ${JSON.stringify(e.detail)}`, 'warning');
+            });
+            
+            window.addEventListener('carsUpdated', (e) => {
+                log('events-log', `🔔 carsUpdated event: ${JSON.stringify(e.detail)}`, 'warning');
+            });
+            
+            log('events-log', '✅ Monitoring started', 'success');
+        }
+
+        function stopMonitoring() {
+            monitoring = false;
+            log('events-log', '⏹️ Monitoring stopped', 'info');
+        }
+
+        async function forceRefresh() {
+            log('refresh-log', '🔄 Force refreshing cars...', 'info');
+            
+            try {
+                // Re-initialize Supabase
+                await window.supabaseCarManager.initialize();
+                
+                // Get fresh data
+                const freshCars = await window.supabaseCarManager.getCars();
+                log('refresh-log', `✅ Got ${freshCars.length} fresh cars from Supabase`, 'success');
+                
+                // Compare with current cars
+                if (JSON.stringify(cars) !== JSON.stringify(freshCars)) {
+                    log('refresh-log', '🔄 Cars data has changed!', 'warning');
+                    cars = freshCars;
+                } else {
+                    log('refresh-log', '📊 Cars data is the same', 'info');
+                }
+                
+            } catch (error) {
+                log('refresh-log', `❌ Error force refreshing: ${error.message}`, 'error');
+            }
+        }
+
+        // Auto-start connection test
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                testConnection();
+                setTimeout(() => {
+                    loadCars();
+                }, 1000);
+            }, 500);
+        });
+    </script>
+</body>
+</html>

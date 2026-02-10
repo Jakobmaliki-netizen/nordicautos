@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html class="dark" lang="da">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Test Car Name Update - Nordic Autos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+    <link rel="stylesheet" href="assets/css/main.css"/>
+    <link rel="stylesheet" href="assets/css/custom-theme.css"/>
+    <script src="supabase-config.js" defer></script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-white transition-colors duration-300 p-8">
+    <div class="max-w-6xl mx-auto">
+        <h1 class="text-4xl font-black mb-8">🧪 Test Car Name Update Fix</h1>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <!-- Test Controls -->
+            <div class="bg-white dark:bg-card-dark rounded-xl p-6 border border-slate-200 dark:border-border-dark">
+                <h2 class="text-2xl font-bold mb-4">Test Controls</h2>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Select Car to Update:</label>
+                        <select id="car-select" class="form-select w-full">
+                            <option value="">Loading cars...</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">New Model Name:</label>
+                        <input type="text" id="new-model-name" class="form-input w-full" placeholder="Enter new model name">
+                    </div>
+                    
+                    <button onclick="updateCarName()" class="btn-primary w-full">
+                        Update Car Name in Supabase
+                    </button>
+                    
+                    <button onclick="refreshAllData()" class="btn-outline w-full">
+                        Refresh All Data
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Test Results -->
+            <div class="bg-white dark:bg-card-dark rounded-xl p-6 border border-slate-200 dark:border-border-dark">
+                <h2 class="text-2xl font-bold mb-4">Test Results</h2>
+                <div id="test-results" class="space-y-2 text-sm font-mono">
+                    <div class="text-slate-500">Waiting for test...</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Data Display -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Supabase Data -->
+            <div class="bg-white dark:bg-card-dark rounded-xl p-6 border border-slate-200 dark:border-border-dark">
+                <h3 class="text-xl font-bold mb-4">📡 Supabase Data</h3>
+                <div id="supabase-data" class="space-y-2 text-sm">
+                    <div class="text-slate-500">Loading...</div>
+                </div>
+            </div>
+            
+            <!-- Lagerbiler View -->
+            <div class="bg-white dark:bg-card-dark rounded-xl p-6 border border-slate-200 dark:border-border-dark">
+                <h3 class="text-xl font-bold mb-4">🚗 Lagerbiler View</h3>
+                <div id="lagerbiler-data" class="space-y-2 text-sm">
+                    <div class="text-slate-500">Loading...</div>
+                </div>
+            </div>
+            
+            <!-- Bil-Detaljer View -->
+            <div class="bg-white dark:bg-card-dark rounded-xl p-6 border border-slate-200 dark:border-border-dark">
+                <h3 class="text-xl font-bold mb-4">📄 Bil-Detaljer View</h3>
+                <div id="bil-detaljer-data" class="space-y-2 text-sm">
+                    <div class="text-slate-500">Loading...</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Console Log -->
+        <div class="mt-8 bg-slate-900 rounded-xl p-6 border border-slate-700">
+            <h3 class="text-xl font-bold mb-4 text-white">📋 Console Log</h3>
+            <div id="console-log" class="space-y-1 text-xs font-mono text-green-400 max-h-96 overflow-y-auto">
+                <div>Console initialized...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let allCars = [];
+        let selectedCarId = null;
+        
+        // Custom console logging
+        const originalLog = console.log;
+        const originalError = console.error;
+        const originalWarn = console.warn;
+        
+        function addToConsoleLog(message, type = 'log') {
+            const consoleLog = document.getElementById('console-log');
+            const timestamp = new Date().toLocaleTimeString();
+            const color = type === 'error' ? 'text-red-400' : type === 'warn' ? 'text-yellow-400' : 'text-green-400';
+            const icon = type === 'error' ? '❌' : type === 'warn' ? '⚠️' : '✅';
+            
+            const logEntry = document.createElement('div');
+            logEntry.className = color;
+            logEntry.textContent = `[${timestamp}] ${icon} ${message}`;
+            consoleLog.appendChild(logEntry);
+            consoleLog.scrollTop = consoleLog.scrollHeight;
+        }
+        
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            addToConsoleLog(args.join(' '), 'log');
+        };
+        
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            addToConsoleLog(args.join(' '), 'error');
+        };
+        
+        console.warn = function(...args) {
+            originalWarn.apply(console, args);
+            addToConsoleLog(args.join(' '), 'warn');
+        };
+        
+        // Wait for Supabase to be ready
+        async function waitForSupabase() {
+            return new Promise((resolve) => {
+                const checkSupabase = () => {
+                    if (window.supabaseCarManager) {
+                        resolve();
+                    } else {
+                        setTimeout(checkSupabase, 100);
+                    }
+                };
+                checkSupabase();
+            });
+        }
+        
+        // Load all cars from Supabase
+        async function loadCars() {
+            console.log('🔄 Loading cars from Supabase...');
+            
+            await waitForSupabase();
+            await window.supabaseCarManager.initialize();
+            
+            allCars = await window.supabaseCarManager.getCars();
+            console.log(`✅ Loaded ${allCars.length} cars from Supabase`);
+            
+            // Populate car select
+            const carSelect = document.getElementById('car-select');
+            carSelect.innerHTML = '<option value="">Select a car...</option>' + 
+                allCars.map(car => `<option value="${car.id}">${car.brand} ${car.model}</option>`).join('');
+            
+            // Display data
+            displaySupabaseData();
+            displayLagerBilerData();
+            displayBilDetaljerData();
+        }
+        
+        // Display Supabase data
+        function displaySupabaseData() {
+            const container = document.getElementById('supabase-data');
+            container.innerHTML = allCars.map(car => `
+                <div class="p-2 bg-slate-100 dark:bg-slate-800 rounded">
+                    <div class="font-bold">${car.brand} ${car.model}</div>
+                    <div class="text-xs text-slate-500">ID: ${car.id}</div>
+                </div>
+            `).join('');
+        }
+        
+        // Simulate lagerbiler view
+        function displayLagerBilerData() {
+            const container = document.getElementById('lagerbiler-data');
+            container.innerHTML = allCars.map(car => `
+                <div class="p-2 bg-blue-100 dark:bg-blue-900 rounded">
+                    <div class="font-bold">${car.brand} ${car.model}</div>
+                    <div class="text-xs text-slate-500">Lagerbiler Grid</div>
+                </div>
+            `).join('');
+        }
+        
+        // Simulate bil-detaljer view
+        function displayBilDetaljerData() {
+            const container = document.getElementById('bil-detaljer-data');
+            if (selectedCarId) {
+                const car = allCars.find(c => c.id == selectedCarId);
+                if (car) {
+                    container.innerHTML = `
+                        <div class="p-2 bg-green-100 dark:bg-green-900 rounded">
+                            <div class="font-bold">${car.brand} ${car.model}</div>
+                            <div class="text-xs text-slate-500">Detail Page</div>
+                        </div>
+                    `;
+                }
+            } else {
+                container.innerHTML = '<div class="text-slate-500">Select a car to view details</div>';
+            }
+        }
+        
+        // Update car name
+        async function updateCarName() {
+            const carSelect = document.getElementById('car-select');
+            const newModelName = document.getElementById('new-model-name');
+            
+            selectedCarId = carSelect.value;
+            const newName = newModelName.value.trim();
+            
+            if (!selectedCarId || !newName) {
+                alert('Please select a car and enter a new model name');
+                return;
+            }
+            
+            console.log(`🔄 Updating car ${selectedCarId} with new model name: ${newName}`);
+            
+            const car = allCars.find(c => c.id == selectedCarId);
+            if (!car) {
+                console.error('❌ Car not found');
+                return;
+            }
+            
+            // Update car data
+            const updatedCar = {
+                ...car,
+                model: newName
+            };
+            
+            // Save to Supabase
+            const result = await window.supabaseCarManager.saveCar(updatedCar);
+            
+            if (result) {
+                console.log('✅ Car updated in Supabase successfully');
+                
+                // Add test result
+                const testResults = document.getElementById('test-results');
+                testResults.innerHTML = `
+                    <div class="p-3 bg-green-100 dark:bg-green-900 rounded">
+                        <div class="font-bold text-green-800 dark:text-green-200">✅ Test Step 1: Update Saved</div>
+                        <div class="text-xs mt-1">Car model updated from "${car.model}" to "${newName}"</div>
+                    </div>
+                    <div class="p-3 bg-blue-100 dark:bg-blue-900 rounded">
+                        <div class="font-bold text-blue-800 dark:text-blue-200">⏳ Test Step 2: Waiting for refresh...</div>
+                        <div class="text-xs mt-1">Refreshing data in 2 seconds...</div>
+                    </div>
+                `;
+                
+                // Wait 2 seconds then refresh
+                setTimeout(async () => {
+                    await refreshAllData();
+                    
+                    // Check if update is visible
+                    const refreshedCar = allCars.find(c => c.id == selectedCarId);
+                    const isUpdated = refreshedCar && refreshedCar.model === newName;
+                    
+                    testResults.innerHTML += `
+                        <div class="p-3 ${isUpdated ? 'bg-green-100 dark:bg-green-900' : 'bg-red-100 dark:bg-red-900'} rounded">
+                            <div class="font-bold ${isUpdated ? 'text-green-800 dark:text-green-200' : 'text-red-800 dark:text-red-200'}">
+                                ${isUpdated ? '✅' : '❌'} Test Step 3: Data Refresh
+                            </div>
+                            <div class="text-xs mt-1">
+                                ${isUpdated ? 
+                                    `Success! Car name updated to "${refreshedCar.model}" in all views` : 
+                                    'Failed! Car name not updated after refresh'}
+                            </div>
+                        </div>
+                    `;
+                }, 2000);
+            } else {
+                console.error('❌ Failed to update car in Supabase');
+                
+                const testResults = document.getElementById('test-results');
+                testResults.innerHTML = `
+                    <div class="p-3 bg-red-100 dark:bg-red-900 rounded">
+                        <div class="font-bold text-red-800 dark:text-red-200">❌ Test Failed</div>
+                        <div class="text-xs mt-1">Could not save car to Supabase</div>
+                    </div>
+                `;
+            }
+        }
+        
+        // Refresh all data
+        async function refreshAllData() {
+            console.log('🔄 Refreshing all data...');
+            await loadCars();
+            console.log('✅ All data refreshed');
+        }
+        
+        // Listen for car select changes
+        document.getElementById('car-select').addEventListener('change', (e) => {
+            selectedCarId = e.target.value;
+            displayBilDetaljerData();
+        });
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', async () => {
+            console.log('🚀 Test page initialized');
+            await loadCars();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="utf-8"/>
+    <title>Test Admin Updates - Nordic Autos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold mb-8">Test Admin Car Updates</h1>
+        
+        <div class="bg-white rounded-lg shadow p-6 mb-6">
+            <h2 class="text-xl font-semibold mb-4">Simulate Admin Car Update</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-2">Car ID:</label>
+                    <input type="text" id="test-car-id" value="test-car-123" class="border rounded px-3 py-2 w-full">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Brand:</label>
+                    <input type="text" id="test-brand" value="BMW" class="border rounded px-3 py-2 w-full">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Model:</label>
+                    <input type="text" id="test-model" value="X5 Updated" class="border rounded px-3 py-2 w-full">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Description:</label>
+                    <textarea id="test-description" class="border rounded px-3 py-2 w-full" rows="3">This is a test description for the updated car.</textarea>
+                </div>
+                <button id="send-update" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                    Send Update
+                </button>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow p-6">
+            <h2 class="text-xl font-semibold mb-4">Event Log</h2>
+            <div id="event-log" class="bg-gray-50 p-4 rounded h-64 overflow-y-auto font-mono text-sm">
+                <div class="text-gray-500">Waiting for events...</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="supabase-config.js"></script>
+    <script src="assets/js/cross-tab-bridge.js"></script>
+    <script src="assets/js/real-time-manager.js"></script>
+    
+    <script>
+        let crossTabBridge = null;
+        
+        function log(message) {
+            const logDiv = document.getElementById('event-log');
+            const timestamp = new Date().toLocaleTimeString();
+            
+            const entry = document.createElement('div');
+            entry.textContent = `[${timestamp}] ${message}`;
+            
+            logDiv.appendChild(entry);
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+        
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Wait for dependencies
+            await new Promise(resolve => {
+                const checkDeps = () => {
+                    if (window.CrossTabBridge) {
+                        resolve();
+                    } else {
+                        setTimeout(checkDeps, 100);
+                    }
+                };
+                checkDeps();
+            });
+            
+            crossTabBridge = new CrossTabBridge();
+            log('CrossTabBridge initialized');
+            
+            // Listen for admin car updates
+            crossTabBridge.subscribe('admin_car_updated', (event) => {
+                log(`Received admin_car_updated: ${JSON.stringify(event.data)}`);
+            });
+            
+            document.getElementById('send-update').addEventListener('click', () => {
+                const carData = {
+                    action: 'updated',
+                    car: {
+                        id: document.getElementById('test-car-id').value,
+                        brand: document.getElementById('test-brand').value,
+                        model: document.getElementById('test-model').value,
+                        description: document.getElementById('test-description').value,
+                        year: 2023,
+                        price: 750000,
+                        mileage: 25000,
+                        fuelType: 'Benzin',
+                        status: 'available'
+                    },
+                    timestamp: Date.now(),
+                    source: 'test_admin'
+                };
+                
+                crossTabBridge.broadcast('admin_car_updated', carData);
+                log(`Sent admin_car_updated: ${JSON.stringify(carData)}`);
+            });
+        });
+    </script>
+</body>
+</html>
