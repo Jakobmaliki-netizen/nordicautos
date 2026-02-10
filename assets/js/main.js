@@ -83,7 +83,7 @@ function initializeFooter() {
                     <div class="space-y-4">
                         <h4 class="font-bold text-slate-900 dark:text-white uppercase tracking-widest text-xs">Kontakt</h4>
                         <ul class="space-y-2 text-slate-500 dark:text-slate-400">
-                            <li>Frisenborgvej 6L</li>
+                            <li>Danelykke 3</li>
                             <li>7800 Skive</li>
                             <li>Danmark</li>
                             <li class="pt-2">

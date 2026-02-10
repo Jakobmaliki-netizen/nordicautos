@@ -4,7 +4,7 @@ class Footer {
     constructor() {
         this.contactInfo = {
             address: {
-                street: 'Frisenborgvej 6L',
+                street: 'Danelykke 3',
                 city: '7800 Skive',
                 country: 'Danmark'
             },
