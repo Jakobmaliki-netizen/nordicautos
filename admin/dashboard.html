@@ -215,6 +215,15 @@
                         </label>
                         <input type="text" id="car-variant" name="variant" class="form-input w-full" placeholder="f.eks. 3.0 Turbo PDK">
                     </div>
+
+                    <!-- Beskrivelse - flyttet højere op -->
+                    <div>
+                        <label for="car-description" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                            📝 Beskrivelse af bilen
+                        </label>
+                        <textarea id="car-description" name="description" rows="4" class="form-input w-full" placeholder="Beskriv bilen og dens særlige egenskaber... (f.eks. 'Smuk Porsche 911 i perfekt stand med fuld servicehistorik')"></textarea>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">💡 Denne tekst vises på bilens detaljeside</p>
+                    </div>
                 </div>
 
                 <!-- Technical Specifications -->
@@ -305,22 +314,6 @@
                                 <option value="sold">Solgt</option>
                             </select>
                         </div>
-                    </div>
-                </div>
-
-                <!-- Description -->
-                <div class="space-y-4">
-                    <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                        <span class="material-symbols-outlined text-primary">description</span>
-                        Beskrivelse
-                    </h4>
-                    
-                    <div>
-                        <label for="car-description" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
-                            Beskrivelse
-                        </label>
-                        <textarea id="car-description" name="description" rows="4" class="form-input w-full" placeholder="Beskriv bilen og dens særlige egenskaber..."></textarea>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Denne tekst vises på bilens detaljeside</p>
                     </div>
                 </div>
 
