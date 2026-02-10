@@ -38,8 +38,8 @@ class CarCatalog {
             console.error('Failed to initialize car catalog:', error);
             this.showError('Kunne ikke indlæse bilkataloget. Prøv at genindlæse siden.');
             
-            // Try to show at least the sample data
-            this.cars = this.getSampleCarsData();
+            // No fallback - only show error
+            this.cars = [];
             this.setupFilters();
             this.setupEventListeners();
             this.applyFiltersAndSort();
@@ -47,12 +47,12 @@ class CarCatalog {
     }
 
     /**
-     * Load cars data from Supabase or fallback to JSON
+     * Load cars data from Supabase only - no fallbacks
      */
     async loadCarsData() {
-        console.log('🔄 Loading cars data...');
+        console.log('🔄 Loading cars data from Supabase...');
         
-        // ALWAYS try Supabase first
+        // ONLY load from Supabase - no fallbacks
         if (window.supabaseCarManager) {
             try {
                 console.log('📡 Loading from Supabase...');
@@ -73,62 +73,26 @@ class CarCatalog {
                 
                 window.carsData = this.cars; // Make available globally
                 
-                // If we got cars from Supabase, return immediately - don't fallback
-                if (this.cars.length > 0) {
-                    return;
-                }
+                return;
             } catch (error) {
                 console.error('❌ Supabase load failed:', error);
+                this.cars = [];
+                throw error;
             }
         } else {
-            console.warn('⚠️ SupabaseCarManager not available');
-        }
-        
-        // Only fallback to JSON if Supabase failed or returned no cars
-        try {
-            console.log('📄 Falling back to assets/data/cars.json...');
-            const response = await fetch('assets/data/cars.json');
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            this.cars = await response.json();
-            console.log('📄 Loaded', this.cars.length, 'cars from JSON');
-            window.carsData = this.cars;
-        } catch (error) {
-            console.error('❌ Error loading cars from JSON:', error);
-            console.log('Using fallback sample data...');
-            this.cars = this.getSampleCarsData();
-            window.carsData = this.cars;
-        }
-        
-        // Final check
-        if (!Array.isArray(this.cars)) {
-            console.error('❌ Cars data is still not an array after all fallbacks');
+            console.error('❌ SupabaseCarManager not available');
             this.cars = [];
+            throw new Error('SupabaseCarManager not available');
         }
     }
 
     /**
-     * Get sample cars data as fallback
+     * Get sample cars data as fallback - REMOVED
+     * No fallback data - only load from Supabase database
      */
     getSampleCarsData() {
-        return [
-            {
-                id: 1,
-                brand: "Porsche",
-                model: "911 Carrera S",
-                variant: "3.0 Turbo PDK",
-                year: 2022,
-                mileage: 15000,
-                price: 1895000,
-                fuelType: "Benzin",
-                bodyType: "Coupe",
-                horsepower: 450,
-                images: ["https://lh3.googleusercontent.com/aida-public/AB6AXuDksibLrJ7HkhzUCgofsn55oxY07JdlTjmqKrmAZquxdBnpB8ZUPPYYmzgxG-cd0H04_jPcFixTuFmUaObppFKJseamsrcxUfMNxyyFKyL9MZDFaZ0G1ZdBQDRmteSUe5ab-BaN_XzwJdZ-5mWCyTnNFf984m-S39S3g2GPVgMeM2i5qQOZ7wiDvrm4pez4N0RtmoxdYwtNHl1x_My17U-_OgaR0Hq36EFv5ok8IIKRdIra2Jz5ht8m_POzHlqpaDwNXkse9D1ov8kj"],
-                status: "available",
-                isNew: true
-            }
-        ];
+        console.warn('⚠️ getSampleCarsData() called - returning empty array. Only Supabase data should be used.');
+        return [];
     }
 
     /**
