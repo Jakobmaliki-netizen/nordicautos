@@ -216,13 +216,15 @@
                         <input type="text" id="car-variant" name="variant" class="form-input w-full" placeholder="f.eks. 3.0 Turbo PDK">
                     </div>
 
-                    <!-- Beskrivelse - flyttet højere op -->
-                    <div>
-                        <label for="car-description" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
-                            📝 Beskrivelse af bilen
+                    <!-- Beskrivelse - flyttet højere op og gjort meget synlig -->
+                    <div style="background-color: #fef3c7; padding: 20px; border: 3px solid #f59e0b; border-radius: 8px; margin: 20px 0;">
+                        <label for="car-description" class="block text-lg font-bold text-slate-900 mb-3" style="font-size: 18px;">
+                            📝 BESKRIVELSE AF BILEN
                         </label>
-                        <textarea id="car-description" name="description" rows="4" class="form-input w-full" placeholder="Beskriv bilen og dens særlige egenskaber... (f.eks. 'Smuk Porsche 911 i perfekt stand med fuld servicehistorik')"></textarea>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">💡 Denne tekst vises på bilens detaljeside</p>
+                        <textarea id="car-description" name="description" rows="5" class="form-input w-full" style="font-size: 16px; padding: 12px; border: 2px solid #3b82f6;" placeholder="Skriv en beskrivelse af bilen her... (f.eks. 'Smuk Mercedes-Benz C63 AMG i perfekt stand')"></textarea>
+                        <p class="text-sm text-slate-600 mt-2" style="font-weight: bold;">
+                            💡 Denne beskrivelse vises på bilens detaljeside
+                        </p>
                     </div>
                 </div>
 
