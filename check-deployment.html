@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Deployment - Nordic Autos</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        .test-box {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #2563eb;
+            margin-bottom: 10px;
+        }
+        .version {
+            font-size: 24px;
+            font-weight: bold;
+            color: #16a34a;
+            padding: 20px;
+            background: #f0fdf4;
+            border-radius: 8px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .info {
+            background: #eff6ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .check-item {
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 4px solid #2563eb;
+            background: #f8fafc;
+        }
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #1d4ed8;
+        }
+        #results {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 8px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        .success { color: #16a34a; }
+        .error { color: #dc2626; }
+        .warning { color: #ea580c; }
+    </style>
+</head>
+<body>
+    <div class="test-box">
+        <h1>🔍 Deployment Verification</h1>
+        <p>This page helps verify which version of the code is deployed on Vercel.</p>
+        
+        <div class="version">
+            DEPLOYMENT VERSION: v2.1.0
+            <br>
+            <small style="font-size: 14px; color: #64748b;">Updated: 2026-02-10 - All hardcoded cars removed</small>
+        </div>
+
+        <div class="info">
+            <strong>Expected behavior:</strong>
+            <div class="check-item">✅ cars.json should be empty array: []</div>
+            <div class="check-item">✅ No hardcoded cars in car-catalog.js</div>
+            <div class="check-item">✅ Contact form uses /api/send-email endpoint</div>
+            <div class="check-item">✅ Only loads cars from Supabase database</div>
+        </div>
+
+        <button onclick="checkCarsJson()">Check cars.json</button>
+        <button onclick="checkCarCatalog()">Check car-catalog.js</button>
+        <button onclick="checkContactForm()">Check contact.js</button>
+        <button onclick="checkAPI()">Check API Endpoint</button>
+        <button onclick="checkAll()">Run All Checks</button>
+
+        <div id="results"></div>
+    </div>
+
+    <script>
+        const results = document.getElementById('results');
+
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString('da-DK');
+            const className = type === 'success' ? 'success' : type === 'error' ? 'error' : type === 'warning' ? 'warning' : '';
+            results.innerHTML += `<div class="${className}">[${timestamp}] ${message}</div>`;
+        }
+
+        async function checkCarsJson() {
+            results.innerHTML = '';
+            log('🔍 Checking cars.json...', 'info');
+            
+            try {
+                const response = await fetch('/assets/data/cars.json');
+                const data = await response.json();
+                
+                if (Array.isArray(data) && data.length === 0) {
+                    log('✅ cars.json is correctly empty!', 'success');
+                } else {
+                    log(`❌ cars.json contains ${data.length} cars (should be 0)`, 'error');
+                    log(`Cars found: ${JSON.stringify(data.slice(0, 2), null, 2)}`, 'warning');
+                }
+            } catch (error) {
+                log(`❌ Error loading cars.json: ${error.message}`, 'error');
+            }
+        }
+
+        async function checkCarCatalog() {
+            results.innerHTML = '';
+            log('🔍 Checking car-catalog.js...', 'info');
+            
+            try {
+                const response = await fetch('/assets/js/car-catalog.js');
+                const code = await response.text();
+                
+                // Check for hardcoded cars
+                if (code.includes('getSampleCarsData()') && code.includes('return [];')) {
+                    log('✅ getSampleCarsData() returns empty array', 'success');
+                } else if (code.includes('brand: "Porsche"') || code.includes('brand: "Mercedes"')) {
+                    log('❌ Found hardcoded cars in car-catalog.js!', 'error');
+                } else {
+                    log('✅ No hardcoded cars found', 'success');
+                }
+                
+                // Check for fallback logic
+                if (code.includes('// No fallback - only show error')) {
+                    log('✅ Fallback logic removed correctly', 'success');
+                } else if (code.includes('this.cars = this.getSampleCarsData()')) {
+                    log('❌ Still has fallback to sample data!', 'error');
+                } else {
+                    log('⚠️ Could not verify fallback removal', 'warning');
+                }
+            } catch (error) {
+                log(`❌ Error loading car-catalog.js: ${error.message}`, 'error');
+            }
+        }
+
+        async function checkContactForm() {
+            results.innerHTML = '';
+            log('🔍 Checking contact.js...', 'info');
+            
+            try {
+                const response = await fetch('/assets/js/contact.js');
+                const code = await response.text();
+                
+                if (code.includes('submitWithEmailJS')) {
+                    log('✅ Contact form uses EmailJS', 'success');
+                } else {
+                    log('⚠️ EmailJS integration not found', 'warning');
+                }
+                
+                if (code.includes('window.contactForm = new ContactForm()')) {
+                    log('❌ OLD initialization found (should be removed)', 'error');
+                } else {
+                    log('✅ No auto-initialization in contact.js', 'success');
+                }
+            } catch (error) {
+                log(`❌ Error loading contact.js: ${error.message}`, 'error');
+            }
+        }
+
+        async function checkAPI() {
+            results.innerHTML = '';
+            log('🔍 Checking API endpoint...', 'info');
+            
+            try {
+                const response = await fetch('/api/send-email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: 'Test',
+                        email: 'test@test.com',
+                        message: 'Test message',
+                        consent: true
+                    })
+                });
+                
+                if (response.ok) {
+                    log('✅ API endpoint is working!', 'success');
+                    const data = await response.json();
+                    log(`Response: ${JSON.stringify(data, null, 2)}`, 'info');
+                } else {
+                    log(`⚠️ API returned status ${response.status}`, 'warning');
+                    const text = await response.text();
+                    log(`Response: ${text}`, 'info');
+                }
+            } catch (error) {
+                log(`❌ Error calling API: ${error.message}`, 'error');
+            }
+        }
+
+        async function checkAll() {
+            results.innerHTML = '';
+            log('🚀 Running all checks...', 'info');
+            log('', 'info');
+            
+            await checkCarsJson();
+            log('', 'info');
+            await checkCarCatalog();
+            log('', 'info');
+            await checkContactForm();
+            log('', 'info');
+            await checkAPI();
+            
+            log('', 'info');
+            log('✅ All checks complete!', 'success');
+        }
+    </script>
+</body>
+</html>
