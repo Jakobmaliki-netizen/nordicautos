@@ -79,25 +79,23 @@ class AdminDashboard {
     }
 
     /**
-     * Load car data from Supabase
+     * Load car data from Supabase ONLY - no localStorage fallback
      */
     async loadData() {
         try {
-            // Wait for Supabase to be ready
+            // ONLY load from Supabase - no fallbacks
             if (window.supabaseCarManager) {
                 await window.supabaseCarManager.initialize();
                 this.cars = await window.supabaseCarManager.getCars();
                 console.log(`📊 Loaded ${this.cars.length} cars from Supabase`);
+                
+                // Clear any old localStorage data
+                localStorage.removeItem('nordicAutoCarsData');
+                localStorage.removeItem('nordic-autos-cars');
             } else {
                 console.error('❌ Supabase Car Manager not available');
-                // Fallback to JSON file
-                const response = await fetch('../assets/data/cars.json');
-                if (response.ok) {
-                    this.cars = await response.json();
-                    console.log(`📊 Loaded ${this.cars.length} cars from JSON fallback`);
-                } else {
-                    this.cars = [];
-                }
+                this.cars = [];
+            }
             }
         } catch (error) {
             console.error('❌ Error loading cars data:', error);
@@ -398,8 +396,8 @@ class AdminDashboard {
                 }
             }
 
-            // Save to localStorage as backup
-            this.saveCarsData();
+            // Reload from Supabase to ensure sync
+            await this.loadData();
             
             // Dispatch event to notify other pages about car updates
             const eventDetail = { 
@@ -477,18 +475,20 @@ class AdminDashboard {
         
         if (confirm('Er du sikker på, at du vil slette denne bil?')) {
             try {
-                // Delete from Supabase
+                // Delete from Supabase ONLY
                 if (window.supabaseCarManager) {
                     const result = await window.supabaseCarManager.deleteCar(numericId);
                     if (result) {
-                        this.cars = this.cars.filter(car => car.id !== numericId && car.id !== carId);
+                        console.log(`✅ Car ${carId} deleted from Supabase`);
+                        
+                        // Reload from Supabase to ensure sync
+                        await this.loadData();
+                    } else {
+                        throw new Error('Failed to delete car from Supabase');
                     }
                 } else {
-                    // Fallback to localStorage
-                    this.cars = this.cars.filter(car => car.id !== numericId && car.id !== carId);
+                    throw new Error('Supabase not available');
                 }
-                
-                this.saveCarsData();
                 
                 // Dispatch event to notify other pages about car deletion
                 const eventDetail = { 
@@ -520,14 +520,14 @@ class AdminDashboard {
     }
 
     /**
-     * Save cars data to localStorage
+     * Save cars data - REMOVED localStorage backup
+     * All data is now stored in Supabase only
      */
     saveCarsData() {
-        localStorage.setItem('nordicAutoCarsData', JSON.stringify(this.cars));
-        
-        // Log activity
-        if (window.adminAuth) {
-            window.adminAuth.logActivity('cars_updated', {
+        // No longer saving to localStorage
+        // All data is in Supabase
+        console.log('💾 Data saved to Supabase (localStorage backup disabled)');
+    }
                 timestamp: new Date().toISOString(),
                 totalCars: this.cars.length
             });
