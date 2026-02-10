@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html class="dark" lang="da">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Check Supabase Cars - Debug</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="bg-slate-900 text-white p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold mb-8">🔍 Check Supabase Database</h1>
+        
+        <div class="bg-slate-800 rounded-lg p-6 mb-6">
+            <h2 class="text-xl font-bold mb-4">Database Status</h2>
+            <div id="status" class="space-y-2 text-sm font-mono">
+                <div class="text-yellow-400">Loading...</div>
+            </div>
+        </div>
+        
+        <div class="bg-slate-800 rounded-lg p-6">
+            <h2 class="text-xl font-bold mb-4">Cars in Database</h2>
+            <div id="cars" class="space-y-2 text-sm">
+                <div class="text-yellow-400">Loading...</div>
+            </div>
+        </div>
+        
+        <div class="mt-6 flex gap-4">
+            <button onclick="checkDatabase()" class="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded font-bold">
+                🔄 Refresh
+            </button>
+            <button onclick="deleteAllCars()" class="bg-red-600 hover:bg-red-700 px-6 py-3 rounded font-bold">
+                🗑️ Delete All Cars
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://gfbsuydsquixhrrarjab.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdmYnN1eWRzcXVpeGhycmFyamFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwMjE5NDcsImV4cCI6MjA4NTU5Nzk0N30.M4nA8itsVSpcZb4l1w3cHtl_86KV89BHyt7xNE0hdSY';
+        
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        async function checkDatabase() {
+            const statusDiv = document.getElementById('status');
+            const carsDiv = document.getElementById('cars');
+            
+            statusDiv.innerHTML = '<div class="text-yellow-400">Checking database...</div>';
+            carsDiv.innerHTML = '<div class="text-yellow-400">Loading cars...</div>';
+            
+            try {
+                // Check connection
+                const { data: testData, error: testError } = await supabase
+                    .from('cars')
+                    .select('count')
+                    .limit(1);
+                
+                if (testError) {
+                    statusDiv.innerHTML = `<div class="text-red-400">❌ Connection Error: ${testError.message}</div>`;
+                    return;
+                }
+                
+                statusDiv.innerHTML = '<div class="text-green-400">✅ Connected to Supabase</div>';
+                
+                // Get all cars
+                const { data: cars, error: carsError } = await supabase
+                    .from('cars')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+                
+                if (carsError) {
+                    carsDiv.innerHTML = `<div class="text-red-400">❌ Error loading cars: ${carsError.message}</div>`;
+                    return;
+                }
+                
+                if (!cars || cars.length === 0) {
+                    carsDiv.innerHTML = '<div class="text-green-400">✅ Database is EMPTY (0 cars)</div>';
+                    return;
+                }
+                
+                carsDiv.innerHTML = `
+                    <div class="text-green-400 mb-4">✅ Found ${cars.length} cars in database:</div>
+                    <div class="space-y-4">
+                        ${cars.map(car => `
+                            <div class="bg-slate-700 p-4 rounded">
+                                <div class="font-bold text-white">${car.brand} ${car.model}</div>
+                                <div class="text-sm text-slate-300">ID: ${car.id}</div>
+                                <div class="text-sm text-slate-300">Status: ${car.status || 'available'}</div>
+                                <div class="text-sm text-slate-300">Year: ${car.year}</div>
+                                <div class="text-sm text-slate-300">Price: ${car.price?.toLocaleString('da-DK')} DKK</div>
+                                <button onclick="deleteCar(${car.id})" class="mt-2 bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-xs">
+                                    Delete
+                                </button>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                
+            } catch (error) {
+                statusDiv.innerHTML = `<div class="text-red-400">❌ Error: ${error.message}</div>`;
+                console.error(error);
+            }
+        }
+        
+        async function deleteCar(id) {
+            if (!confirm('Are you sure you want to delete this car?')) return;
+            
+            try {
+                const { error } = await supabase
+                    .from('cars')
+                    .delete()
+                    .eq('id', id);
+                
+                if (error) {
+                    alert('Error: ' + error.message);
+                    return;
+                }
+                
+                alert('Car deleted!');
+                checkDatabase();
+            } catch (error) {
+                alert('Error: ' + error.message);
+                console.error(error);
+            }
+        }
+        
+        async function deleteAllCars() {
+            if (!confirm('Are you SURE you want to delete ALL cars from the database?')) return;
+            if (!confirm('This cannot be undone! Delete ALL cars?')) return;
+            
+            try {
+                const { error } = await supabase
+                    .from('cars')
+                    .delete()
+                    .neq('id', 0); // Delete all rows
+                
+                if (error) {
+                    alert('Error: ' + error.message);
+                    return;
+                }
+                
+                alert('All cars deleted!');
+                checkDatabase();
+            } catch (error) {
+                alert('Error: ' + error.message);
+                console.error(error);
+            }
+        }
+        
+        // Auto-check on load
+        checkDatabase();
+    </script>
+</body>
+</html>

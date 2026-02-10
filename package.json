@@ -47,6 +47,7 @@
     "not dead"
   ],
   "dependencies": {
+    "@supabase/supabase-js": "^2.95.3",
     "resend": "^6.9.1"
   }
 }
