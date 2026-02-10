@@ -395,8 +395,8 @@ class AdminDashboard {
                 }
             }
 
-            // Reload from Supabase to ensure sync
-            await this.loadData();
+            // Don't reload - just update UI with current data
+            // await this.loadData();
             
             // Dispatch event to notify other pages about car updates
             const eventDetail = { 
