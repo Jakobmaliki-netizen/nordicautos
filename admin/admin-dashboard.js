@@ -311,7 +311,7 @@ class AdminDashboard {
         const existingId = formData.get('id');
         const carId = (existingId && existingId !== '') ? 
             (typeof existingId === 'string' ? parseInt(existingId, 10) : existingId) : 
-            this.generateCarId();
+            await this.generateCarId();
         
         // Parse features from textarea (one per line)
         const featuresText = formData.get('features') || '';
@@ -434,16 +434,36 @@ class AdminDashboard {
     }
 
     /**
-     * Generate unique numeric car ID
+     * Generate unique numeric car ID from Supabase
      */
-    generateCarId() {
-        // Find the highest existing ID and add 1
+    async generateCarId() {
+        try {
+            // Get highest ID from Supabase
+            if (window.supabaseCarManager) {
+                await window.supabaseCarManager.initialize();
+                const cars = await window.supabaseCarManager.getCars();
+                
+                if (cars.length === 0) {
+                    return 1;
+                }
+                
+                const maxId = Math.max(...cars.map(car => {
+                    const id = typeof car.id === 'string' ? parseInt(car.id, 10) : car.id;
+                    return isNaN(id) ? 0 : id;
+                }));
+                
+                return maxId + 1;
+            }
+        } catch (error) {
+            console.error('Error generating ID from Supabase:', error);
+        }
+        
+        // Fallback to local array
         if (this.cars.length === 0) {
             return 1;
         }
         
         const maxId = Math.max(...this.cars.map(car => {
-            // Convert string IDs to numbers, default to 0 if invalid
             const id = typeof car.id === 'string' ? parseInt(car.id, 10) : car.id;
             return isNaN(id) ? 0 : id;
         }));
