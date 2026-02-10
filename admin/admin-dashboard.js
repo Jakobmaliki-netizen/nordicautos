@@ -96,7 +96,6 @@ class AdminDashboard {
                 console.error('❌ Supabase Car Manager not available');
                 this.cars = [];
             }
-            }
         } catch (error) {
             console.error('❌ Error loading cars data:', error);
             this.cars = [];
@@ -527,11 +526,6 @@ class AdminDashboard {
         // No longer saving to localStorage
         // All data is in Supabase
         console.log('💾 Data saved to Supabase (localStorage backup disabled)');
-    }
-                timestamp: new Date().toISOString(),
-                totalCars: this.cars.length
-            });
-        }
     }
 
     /**
