@@ -137,6 +137,24 @@
                 <option value="Diesel">Diesel</option>
                 <option value="El">El</option>
                 <option value="Hybrid">Hybrid</option>
+                <option value="Plug-in Hybrid">Plug-in Hybrid</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Hestekræfter</label>
+            <input type="number" id="horsepower" value="510" placeholder="510">
+        </div>
+
+        <div class="form-group">
+            <label>Karrosseri Type</label>
+            <select id="bodyType">
+                <option value="Sedan">Sedan</option>
+                <option value="SUV">SUV</option>
+                <option value="Coupe">Coupe</option>
+                <option value="Hatchback">Hatchback</option>
+                <option value="Van">Van</option>
+                <option value="Cabriolet">Cabriolet</option>
             </select>
         </div>
 
@@ -149,7 +167,28 @@
             </select>
         </div>
 
-        <button onclick="testAddCar()">🚗 Tilføj Test Bil</button>
+        <div class="form-group">
+            <label>📝 Beskrivelse</label>
+            <textarea id="description" rows="4" placeholder="Beskriv bilen...">En fantastisk bil i god stand</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>✨ Ekstraudstyr (én per linje)</label>
+            <textarea id="features" rows="5" placeholder="Læder
+Navigation
+Parkeringssensor
+Klimaanlæg">Læder
+Navigation
+Parkeringssensor</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>🖼️ Billede URLs (én per linje)</label>
+            <textarea id="images" rows="3" placeholder="https://example.com/image1.jpg
+https://example.com/image2.jpg">https://via.placeholder.com/800x600</textarea>
+        </div>
+
+        <button onclick="testAddCar()">🚗 Tilføj Bil</button>
         <button onclick="loadCars()" style="background: #16a34a;">📋 Hent Alle Biler</button>
         <button onclick="clearLog()" style="background: #64748b;">🗑️ Ryd Log</button>
 
@@ -198,6 +237,12 @@
                 log('✅ Supabase initialiseret', 'success');
 
                 // Get form data
+                const featuresText = document.getElementById('features').value;
+                const features = featuresText.split('\n').map(f => f.trim()).filter(f => f.length > 0);
+                
+                const imagesText = document.getElementById('images').value;
+                const images = imagesText.split('\n').map(img => img.trim()).filter(img => img.length > 0);
+
                 const carData = {
                     brand: document.getElementById('brand').value,
                     model: document.getElementById('model').value,
@@ -207,11 +252,11 @@
                     price: parseInt(document.getElementById('price').value),
                     fuelType: document.getElementById('fuelType').value,
                     status: document.getElementById('status').value,
-                    bodyType: 'Sedan',
-                    horsepower: 510,
-                    description: 'Test bil tilføjet via test-side',
-                    features: ['Læder', 'Navigation', 'Parkeringssensor'],
-                    images: ['https://via.placeholder.com/800x600'],
+                    bodyType: document.getElementById('bodyType').value,
+                    horsepower: parseInt(document.getElementById('horsepower').value),
+                    description: document.getElementById('description').value,
+                    features: features,
+                    images: images,
                     isNew: false,
                     specifications: {
                         engine: 'N/A',
@@ -230,6 +275,8 @@
 
                 log(`📝 Bil data: ${carData.brand} ${carData.model} ${carData.variant}`, 'info');
                 log(`💰 Pris: ${carData.price.toLocaleString('da-DK')} DKK`, 'info');
+                log(`📝 Beskrivelse: ${carData.description}`, 'info');
+                log(`✨ Ekstraudstyr: ${carData.features.join(', ')}`, 'info');
 
                 // Save to Supabase
                 log('💾 Gemmer til Supabase...', 'info');

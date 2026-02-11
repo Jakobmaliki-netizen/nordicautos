@@ -130,7 +130,8 @@ class CarDetails {
         // Car description
         const descriptionElement = document.getElementById('car-description');
         if (descriptionElement && this.car.description) {
-            descriptionElement.textContent = this.car.description;
+            // Replace newlines with <br> tags to preserve formatting
+            descriptionElement.innerHTML = this.car.description.replace(/\n/g, '<br>');
         }
 
         // Car price
