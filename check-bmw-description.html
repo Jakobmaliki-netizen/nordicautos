@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tjek BMW Beskrivelse</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 30px;
+        }
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .btn:hover {
+            background: #5568d3;
+        }
+        .btn-fix {
+            background: #28a745;
+        }
+        .btn-fix:hover {
+            background: #218838;
+        }
+        .section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        .raw-text {
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #e9ecef;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            white-space: pre-wrap;
+            word-break: break-all;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .rendered-text {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #e9ecef;
+            white-space: pre-wrap;
+            line-height: 1.8;
+        }
+        .info {
+            background: #d1ecf1;
+            border-left: 4px solid #0c5460;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            color: #0c5460;
+        }
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            display: none;
+        }
+        .success {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            border: 2px solid #dc3545;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Tjek BMW X5 Beskrivelse</h1>
+
+        <div class="info">
+            <strong>ℹ️ Denne side viser:</strong><br>
+            1. Den NUVÆRENDE beskrivelse i databasen (RAW format - viser \n tegn)<br>
+            2. Hvordan beskrivelsen VISES på hjemmesiden (rendered)<br>
+            3. Mulighed for at fixe beskrivelsen hvis den er forkert
+        </div>
+
+        <button class="btn" onclick="checkBMW()">
+            🔍 TJEK BMW X5 BESKRIVELSE
+        </button>
+
+        <div id="current-section" style="display: none;">
+            <div class="section">
+                <h3>📄 RAW Beskrivelse (som den er gemt i databasen)</h3>
+                <div class="raw-text" id="raw-description"></div>
+            </div>
+
+            <div class="section">
+                <h3>🖥️ Rendered Beskrivelse (som den vises på hjemmesiden)</h3>
+                <div class="rendered-text" id="rendered-description"></div>
+            </div>
+
+            <div class="warning" id="warning-section" style="display: none;">
+                <strong>⚠️ PROBLEM FUNDET:</strong><br>
+                <span id="problem-text"></span>
+            </div>
+
+            <button class="btn btn-fix" onclick="fixBMW()" id="fix-button" style="display: none;">
+                ✅ FIX BESKRIVELSEN NU
+            </button>
+        </div>
+
+        <div id="result"></div>
+    </div>
+
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+        const supabaseUrl = 'https://gfbsuydsquixhrrarjab.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdmYnN1eWRzcXVpeGhycmFyamFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwMjE5NDcsImV4cCI6MjA4NTU5Nzk0N30.M4nA8itsVSpcZb4l1w3cHtl_86KV89BHyt7xNE0hdSY';
+        
+        const supabase = createClient(supabaseUrl, supabaseKey);
+
+        let currentBMW = null;
+
+        const correctDescription = `BMW X5 3,0 xDrive45e M-Sport
+
+Leasingtilbud
+Ydelse pr. md.: kr. 3.995 ekskl. moms (4.993,- inkl. moms)
+Udbetaling: kr. 90.000 ekskl. moms (112.500,- inkl. moms)
+Restværdi: kr. 340.000 ex moms + afgift.
+Løbetid: 12 mdr.
+
+⸻
+
+🚘 Køretøjsinformation
+• BMW X5 3,0 xDrive45e M-Sport
+• Årgang: 2023
+• Kilometerstand: 32.000
+• Motor / Effekt: 3.0 xDrive
+• Brændstof: Plug-in Benzin
+• Gearkasse: Aut.
+• Træk: Elektrisk svingbart
+• Farve (udvendig / kabine): Hvid med sort kabine.
+
+⸻
+
+📘 Stand & historik
+• Importeret og udvalgt af Nordic Autos.
+• Fuld servicehistorik ved BMW, næste service om 22.000 km
+• Bilen fremstår i meget flot og velholdt stand
+
+⸻
+
+📑 Leasingvilkår
+• Vi tilbyder Privatleasing, erhvervsleasing samt split-leasing.
+• Leasingaftale kan tilpasses individuelt
+• Mulighed for tilkøb af service- og garantiløsning
+• Forsikring kan evt. formidles
+
+⸻
+
+🏢 Om Nordic Autos
+Nordic Autos er specialiseret i leasing og salg af eksklusive kvalitetsbiler. Vi tilbyder professionel rådgivning, gennemsigtige leasingvilkår og en tryg proces fra start til slut.
+
+📞 Kontakt os for et skræddersyet leasingtilbud eller fremvisning (Fremvisning efter aftale)`;
+
+        function showResult(message, type) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.className = type;
+            resultDiv.innerHTML = message;
+            resultDiv.style.display = 'block';
+        }
+
+        window.checkBMW = async function() {
+            showResult('<div style="text-align: center;">Henter BMW X5 data...</div>', 'info');
+
+            try {
+                const { data: cars, error } = await supabase
+                    .from('cars')
+                    .select('*')
+                    .ilike('brand', '%BMW%')
+                    .ilike('model', '%X5%');
+
+                if (error) throw error;
+
+                if (!cars || cars.length === 0) {
+                    showResult('❌ Ingen BMW X5 fundet i databasen', 'error');
+                    return;
+                }
+
+                currentBMW = cars[0];
+                console.log('BMW X5 data:', currentBMW);
+
+                // Show raw description
+                const rawDesc = currentBMW.description || '(ingen beskrivelse)';
+                document.getElementById('raw-description').textContent = rawDesc;
+
+                // Show rendered description (as it appears on website)
+                const renderedDesc = rawDesc.replace(/\n/g, '<br>');
+                document.getElementById('rendered-description').innerHTML = renderedDesc;
+
+                // Check if description has newlines
+                const hasNewlines = rawDesc.includes('\n');
+                const newlineCount = (rawDesc.match(/\n/g) || []).length;
+
+                document.getElementById('current-section').style.display = 'block';
+                document.getElementById('result').style.display = 'none';
+
+                if (!hasNewlines || newlineCount < 10) {
+                    document.getElementById('warning-section').style.display = 'block';
+                    document.getElementById('problem-text').innerHTML = `
+                        Beskrivelsen indeholder kun ${newlineCount} linjeskift.<br>
+                        Den skal have mindst 10 linjeskift for at se pæn ud.<br>
+                        <strong>Dette er derfor problemet!</strong>
+                    `;
+                    document.getElementById('fix-button').style.display = 'block';
+                } else {
+                    document.getElementById('warning-section').style.display = 'none';
+                    document.getElementById('fix-button').style.display = 'none';
+                    showResult(`✅ Beskrivelsen ser god ud! Den har ${newlineCount} linjeskift.`, 'success');
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                showResult(`❌ Fejl: ${error.message}`, 'error');
+            }
+        };
+
+        window.fixBMW = async function() {
+            if (!currentBMW) {
+                showResult('❌ Ingen BMW data fundet. Klik "TJEK BMW X5 BESKRIVELSE" først.', 'error');
+                return;
+            }
+
+            showResult('<div style="text-align: center;">Opdaterer BMW X5...</div>', 'info');
+
+            try {
+                const { data, error } = await supabase
+                    .from('cars')
+                    .update({ 
+                        description: correctDescription,
+                        price: 340000,
+                        updated_at: new Date().toISOString()
+                    })
+                    .eq('id', currentBMW.id)
+                    .select();
+
+                if (error) throw error;
+
+                console.log('Updated successfully:', data);
+
+                showResult(`
+                    ✅ BMW X5 OPDATERET SUCCESFULDT!<br><br>
+                    <strong>Ændringer:</strong><br>
+                    • Beskrivelse: Nu med KORREKTE linjeskift<br>
+                    • Pris: ${currentBMW.price?.toLocaleString('da-DK')} DKK → 340.000 DKK<br><br>
+                    <strong>🎉 NÆSTE TRIN:</strong><br>
+                    1. Gå til bil-detaljer siden på hjemmesiden<br>
+                    2. Tryk Ctrl + Shift + R (hard refresh)<br>
+                    3. Beskrivelsen vil nu se pæn ud med sektioner!
+                `, 'success');
+
+                // Refresh the check
+                setTimeout(() => {
+                    window.checkBMW();
+                }, 2000);
+
+            } catch (error) {
+                console.error('Error:', error);
+                showResult(`❌ Fejl: ${error.message}`, 'error');
+            }
+        };
+    </script>
+</body>
+</html>

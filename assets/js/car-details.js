@@ -132,6 +132,10 @@ class CarDetails {
         if (descriptionElement && this.car.description) {
             // Replace newlines with <br> tags to preserve formatting
             descriptionElement.innerHTML = this.car.description.replace(/\n/g, '<br>');
+            // Add CSS to ensure proper line spacing and formatting
+            descriptionElement.style.whiteSpace = 'pre-wrap';
+            descriptionElement.style.lineHeight = '1.8';
+            descriptionElement.style.wordBreak = 'break-word';
         }
 
         // Car price

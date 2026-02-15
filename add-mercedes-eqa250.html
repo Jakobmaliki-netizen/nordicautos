@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tilføj Mercedes EQA250+ - Nordic Autos</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 30px;
+        }
+        .btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .btn:hover {
+            background: #218838;
+        }
+        .preview {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            white-space: pre-wrap;
+            line-height: 1.8;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            display: none;
+        }
+        .success {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            border: 2px solid #dc3545;
+            color: #721c24;
+        }
+        .info {
+            background: #d1ecf1;
+            border: 2px solid #0c5460;
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .car-details {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .car-details strong {
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚡ Tilføj Mercedes EQA250+ til Database</h1>
+
+        <div class="info">
+            <strong>📋 Bil Information fra Bilbasen:</strong>
+        </div>
+
+        <div class="car-details">
+            <strong>Mærke:</strong> Mercedes<br>
+            <strong>Model:</strong> EQA250+<br>
+            <strong>Variant:</strong> Progressive Advance 5d<br>
+            <strong>Årgang:</strong> 2024<br>
+            <strong>Kilometerstand:</strong> 24.000 km<br>
+            <strong>Brændstof:</strong> Elektrisk ⚡<br>
+            <strong>Rækkevidde:</strong> 558 km<br>
+            <strong>Karrosseri:</strong> SUV<br>
+            <strong>Hestekræfter:</strong> 190 HK<br>
+            <strong>Pris:</strong> 259.800 kr.<br>
+            <strong>Billeder:</strong> 8 stk
+        </div>
+
+        <h3>📝 Beskrivelse:</h3>
+        <div class="preview" id="preview"></div>
+
+        <button class="btn" onclick="addCar()">
+            ✅ TILFØJ BIL TIL DATABASE
+        </button>
+
+        <div id="result"></div>
+    </div>
+
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+        const supabaseUrl = 'https://gfbsuydsquixhrrarjab.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdmYnN1eWRzcXVpeGhycmFyamFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwMjE5NDcsImV4cCI6MjA4NTU5Nzk0N30.M4nA8itsVSpcZb4l1w3cHtl_86KV89BHyt7xNE0hdSY';
+        
+        const supabase = createClient(supabaseUrl, supabaseKey);
+
+        const description = `Mercedes EQA 250+ Progressive Advance 5d
+
+Bilen hjemtages på bestilling og leveres direkte fra Mercedes i Tyskland.
+Hvis denne model ikke helt rammer dine ønsker, er du meget velkommen til at kontakte os med dine præferencer – så finder vi hurtigt den helt rigtige bil til dig.
+
+⸻
+
+🚘 Køretøjsinformation
+• Mercedes EQA 250+ Progressive Advance 5d
+• Årgang: 11/2024
+• Kilometerstand: 24.000
+• Motor / Effekt: Elektrisk
+• Brændstof: Elektrisk ⚡
+• Gearkasse: Aut.
+• Træk: ja svingbart
+• Farve (udvendig / kabine): Sort med sort kabine.
+• Rækkevidde: 558 km
+
+⸻
+
+✨ Udstyr (udvalgte highlights)
+• Progressive Advance
+• Adaptiv Fartpilot
+• Aktiv vognbane assistent
+• Aktiv styre assistent
+• Apple CarPlay/Android Auto
+• Ambient belysning 64 farvemuligheder
+• Dødvinkel assistent
+• Rat varme
+• Adaptive LED lygter
+• Adaptiv fjernlys assistent
+• Træthedsregistrering
+• Hastighedsbegrænser
+• Parkerings assistent
+
+Aftageligt træk kan monteres til 10.000,- inkl. moms
+
+(Fuld udstyrsliste fremsendes ved henvendelse)
+
+⸻
+
+📘 Stand & historik
+• Importeret og udvalgt af Nordic Autos.
+• Fuld servicehistorik ved Mercedes
+• Bilen fremstår i meget flot og velholdt stand
+
+⸻
+
+📑 Leasingvilkår
+• Vi tilbyder Privatleasing, erhvervsleasing samt split-leasing.
+• Leasingaftale kan tilpasses individuelt
+• Mulighed for tilkøb af service- og garantiløsning
+• Forsikring kan evt. formidles
+
+⸻
+
+🏢 Om Nordic Autos
+Nordic Autos er specialiseret i leasing og salg af eksklusive kvalitetsbiler.
+Vi tilbyder professionel rådgivning, gennemsigtige leasingvilkår og en tryg proces fra start til slut.
+
+📞 Kontakt os for et skræddersyet leasingtilbud eller fremvisning
+(Fremvisning efter aftale)`;
+
+        document.getElementById('preview').textContent = description;
+
+        const features = [
+            "Progressive Advance",
+            "Adaptiv Fartpilot",
+            "Aktiv vognbane assistent",
+            "Aktiv styre assistent",
+            "Apple CarPlay/Android Auto",
+            "Ambient belysning 64 farvemuligheder",
+            "Dødvinkel assistent",
+            "Rat varme",
+            "Adaptive LED lygter",
+            "Adaptiv fjernlys assistent",
+            "Træthedsregistrering",
+            "Hastighedsbegrænser",
+            "Parkerings assistent",
+            "Kørecomputer",
+            "Dobbelt bagagerumsbund",
+            "Multifunktionsrat",
+            "Læderindtræk",
+            "Delkunstlæderindtræk",
+            "Højdejusterbare forsæder",
+            "Splitbagsæde",
+            "Mørk loftbeklædning",
+            "Digitalt cockpit",
+            "Læderrat",
+            "Dellæderindtræk",
+            "Justerbar lændestøtte",
+            "Ambiente belysning",
+            "Bagagerumsdækken",
+            "Alufælge",
+            "El-sidespejle m/varme",
+            "Træk svingbart (elektrisk)",
+            "El-klapbare sidespejle",
+            "Tågelygter",
+            "LED kørelys",
+            "LED baglygter",
+            "Aftageligt træk (option 10.000 kr)",
+            "Fuld LED forlygter",
+            "Automatgear",
+            "Aircondition",
+            "Centrallås",
+            "Adaptiv fartpilot med kø-assistent",
+            "Udvendig temperaturmåler",
+            "Elektrisk parkeringsbremse",
+            "Fuldautomatisk klima",
+            "Fjernbetjent centrallås",
+            "Varme i forrude",
+            "Automatisk start/stop",
+            "El betjent bagklap",
+            "Integreret ladekabel",
+            "Type-2 ladekabel",
+            "Varmepumpe",
+            "Automatisk nedblendeligt bakspejl",
+            "Sædevarme",
+            "El-ruder",
+            "Musikstreaming via Bluetooth",
+            "DAB+ radio",
+            "USB-C tilslutning",
+            "Navigation",
+            "Android Auto",
+            "DAB radio",
+            "Håndfrit til mobil",
+            "Airbag",
+            "ESP",
+            "Blindvinkelsassistent",
+            "Auto hold",
+            "Regnsensor",
+            "Parkeringssensor (bag)",
+            "Automatisk lys",
+            "Dobbelt airbags",
+            "Automatisk nødbremsesystem",
+            "Bakkamera",
+            "Parkeringssensor (for)",
+            "Skiltegenkendelse",
+            "Isofix",
+            "Fjernlysassistent",
+            "Antispin",
+            "Vognbaneassistent"
+        ];
+
+        const images = [
+            "https://billeder.bilbasen.dk/bilinfo/6a7645c0-516b-42c3-9913-bde97b266af9.png?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/6edd1d8e-ab0d-4d27-99b1-265e52d3d160.png?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/3cfe143a-d205-4687-89ba-5140d1b04acb.png?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/b3acb55c-28f3-42f5-aeec-587a78c05630.png?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/641b8a03-f27e-40a9-a554-c535cb437157.png?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/42786f43-38ee-488b-b549-f35c471534c3.png?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/4b779bc6-ee1b-4283-b940-9e37c1f03ac4.png?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/e6a185b4-7753-4759-8f1b-603aa6df6724.png?class=S1600X1600"
+        ];
+
+        function showResult(message, type) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.className = type;
+            resultDiv.innerHTML = message;
+            resultDiv.style.display = 'block';
+        }
+
+        window.addCar = async function() {
+            showResult('<div style="text-align: center;">Tilføjer Mercedes EQA250+...</div>', 'info');
+
+            try {
+                const carData = {
+                    brand: 'Mercedes',
+                    model: 'EQA250+',
+                    variant: 'Progressive Advance 5d',
+                    year: 2024,
+                    mileage: 24000,
+                    price: 259800,
+                    fuelType: 'El',
+                    bodyType: 'SUV',
+                    horsepower: 190,
+                    status: 'available',
+                    description: description,
+                    features: features,
+                    images: images,
+                    isNew: false,
+                    specifications: {
+                        engine: 'Elektrisk motor',
+                        transmission: 'Automatisk',
+                        drivetrain: 'Forhjulstræk',
+                        acceleration: 'N/A',
+                        topSpeed: 'N/A',
+                        fuelConsumption: 'Rækkevidde: 558 km'
+                    },
+                    history: {
+                        previousOwners: 1,
+                        serviceHistory: true,
+                        accidents: false
+                    }
+                };
+
+                console.log('Gemmer Mercedes EQA250+:', carData);
+
+                const { data, error } = await supabase
+                    .from('cars')
+                    .insert([carData])
+                    .select();
+
+                if (error) throw error;
+
+                console.log('Success:', data);
+
+                showResult(`
+                    ✅ MERCEDES EQA250+ TILFØJET SUCCESFULDT!<br><br>
+                    <strong>Bil Information:</strong><br>
+                    • ID: ${data[0].id}<br>
+                    • Mærke: ${data[0].brand}<br>
+                    • Model: ${data[0].model}<br>
+                    • Årgang: ${data[0].year}<br>
+                    • Type: Elektrisk ⚡<br>
+                    • Rækkevidde: 558 km<br>
+                    • Pris: 259.800 kr.<br>
+                    • Ekstraudstyr: ${features.length} features<br>
+                    • Billeder: ${images.length} stk<br><br>
+                    <strong>🎉 Bilen er nu synlig på hjemmesiden!</strong><br>
+                    <a href="lagerbiler.html" style="color: #667eea; text-decoration: underline;">Se lagerbiler</a>
+                `, 'success');
+
+            } catch (error) {
+                console.error('Error:', error);
+                showResult(`❌ Fejl: ${error.message}`, 'error');
+            }
+        };
+    </script>
+</body>
+</html>

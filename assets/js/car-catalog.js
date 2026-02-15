@@ -438,8 +438,8 @@ class CarCatalog {
                     </div>
                     <div class="flex items-center justify-between">
                         <div class="flex flex-col">
-                            <span class="text-slate-500 dark:text-slate-400 text-xs font-medium">Pris inkl. afgift</span>
-                            <span class="text-slate-900 dark:text-white text-xl font-black tracking-tight">${this.formatPrice(car.price)} DKK</span>
+                            <span class="text-slate-500 dark:text-slate-400 text-xs font-medium">${car.monthlyLeasing ? 'Leasingydelse pr. måned' : 'Pris inkl. afgift'}</span>
+                            <span class="text-slate-900 dark:text-white text-xl font-black tracking-tight">${car.monthlyLeasing ? this.formatMonthlyLeasing(car.monthlyLeasing) : this.formatPrice(car.price) + ' DKK'}</span>
                         </div>
                         <button class="size-10 flex items-center justify-center rounded-full bg-slate-100 dark:bg-border-dark text-slate-600 dark:text-white hover:bg-primary hover:text-white transition-all">
                             <span class="material-symbols-outlined">arrow_forward</span>
@@ -658,6 +658,16 @@ class CarCatalog {
 
     formatPrice(price) {
         return price?.toLocaleString('da-DK') || 'Pris på forespørgsel';
+    }
+
+    /**
+     * Format monthly leasing payment
+     */
+    formatMonthlyLeasing(amount) {
+        if (!amount || amount <= 0) {
+            return 'Kontakt os';
+        }
+        return `${amount.toLocaleString('da-DK')} kr./md.`;
     }
 
     debounce(func, wait) {

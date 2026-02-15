@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opdater BMW X5 - Final</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 30px;
+        }
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        .btn:hover {
+            background: #5568d3;
+        }
+        .btn-success {
+            background: #28a745;
+        }
+        .btn-success:hover {
+            background: #218838;
+        }
+        .section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .section h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .preview {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            line-height: 1.8;
+            color: #333;
+            white-space: pre-wrap;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            display: none;
+        }
+        .success {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            border: 2px solid #dc3545;
+            color: #721c24;
+        }
+        .info {
+            background: #d1ecf1;
+            border: 2px solid #17a2b8;
+            color: #0c5460;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚗 Opdater BMW X5 - Pris & Beskrivelse</h1>
+
+        <div class="section">
+            <h3>✨ Forhåndsvisning af Ny Beskrivelse:</h3>
+            <div class="preview" id="preview"></div>
+        </div>
+
+        <button class="btn btn-success" onclick="updateBMW()">
+            💾 Gem: Pris 340.000 DKK + Ny Beskrivelse
+        </button>
+
+        <div id="result"></div>
+    </div>
+
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+        const supabaseUrl = 'https://gfbsuydsquixhrrarjab.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdmYnN1eWRzcXVpeGhycmFyamFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwMjE5NDcsImV4cCI6MjA4NTU5Nzk0N30.M4nA8itsVSpcZb4l1w3cHtl_86KV89BHyt7xNE0hdSY';
+        
+        const supabase = createClient(supabaseUrl, supabaseKey);
+
+        // The formatted description with proper line breaks
+        const newDescription = `BMW X5 3,0 xDrive45e M-Sport
+
+Leasingtilbud
+Ydelse pr. md.: kr. 3.995 ekskl. moms (4.993,- inkl. moms)
+Udbetaling: kr. 90.000 ekskl. moms (112.500,- inkl. moms)
+Restværdi: kr. 340.000 ex moms + afgift.
+Løbetid: 12 mdr.
+
+⸻
+
+🚘 Køretøjsinformation
+• BMW X5 3,0 xDrive45e M-Sport
+• Årgang: 2023
+• Kilometerstand: 32.000
+• Motor / Effekt: 3.0 xDrive
+• Brændstof: Plug-in Benzin
+• Gearkasse: Aut.
+• Træk: Elektrisk svingbart
+• Farve (udvendig / kabine): Hvid med sort kabine.
+
+⸻
+
+📘 Stand & historik
+• Importeret og udvalgt af Nordic Autos.
+• Fuld servicehistorik ved BMW, næste service om 22.000 km
+• Bilen fremstår i meget flot og velholdt stand
+
+⸻
+
+📑 Leasingvilkår
+• Vi tilbyder Privatleasing, erhvervsleasing samt split-leasing.
+• Leasingaftale kan tilpasses individuelt
+• Mulighed for tilkøb af service- og garantiløsning
+• Forsikring kan evt. formidles
+
+⸻
+
+🏢 Om Nordic Autos
+Nordic Autos er specialiseret i leasing og salg af eksklusive kvalitetsbiler. Vi tilbyder professionel rådgivning, gennemsigtige leasingvilkår og en tryg proces fra start til slut.
+
+📞 Kontakt os for et skræddersyet leasingtilbud eller fremvisning (Fremvisning efter aftale)`;
+
+        // Show preview on page load
+        document.getElementById('preview').textContent = newDescription;
+
+        function showResult(message, type) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.className = type;
+            resultDiv.innerHTML = message;
+            resultDiv.style.display = 'block';
+        }
+
+        window.updateBMW = async function() {
+            showResult('<div style="text-align: center;">Opdaterer BMW X5...</div>', 'info');
+
+            try {
+                // Find BMW X5
+                const { data: cars, error: findError } = await supabase
+                    .from('cars')
+                    .select('*')
+                    .ilike('brand', '%BMW%')
+                    .ilike('model', '%X5%');
+
+                if (findError) throw findError;
+
+                if (!cars || cars.length === 0) {
+                    showResult('❌ Ingen BMW X5 fundet i databasen', 'error');
+                    return;
+                }
+
+                const bmw = cars[0];
+
+                // Update with new price and description
+                const { data, error } = await supabase
+                    .from('cars')
+                    .update({ 
+                        price: 340000,
+                        description: newDescription,
+                        updated_at: new Date().toISOString()
+                    })
+                    .eq('id', bmw.id)
+                    .select();
+
+                if (error) throw error;
+
+                console.log('Updated:', data);
+
+                showResult(`
+                    ✅ BMW X5 opdateret succesfuldt!<br><br>
+                    <strong>Ændringer:</strong><br>
+                    • Pris: ${bmw.price?.toLocaleString('da-DK')} DKK → 340.000 DKK<br>
+                    • Beskrivelse: Formateret med linjeskift og sektioner<br><br>
+                    <strong>🎉 Genindlæs hjemmesiden for at se ændringerne!</strong>
+                `, 'success');
+
+            } catch (error) {
+                console.error('Error:', error);
+                showResult(`❌ Fejl: ${error.message}`, 'error');
+            }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tilføj Mercedes GLE350d - Nordic Autos</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 30px;
+        }
+        .btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .btn:hover {
+            background: #218838;
+        }
+        .preview {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            white-space: pre-wrap;
+            line-height: 1.8;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            display: none;
+        }
+        .success {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            border: 2px solid #dc3545;
+            color: #721c24;
+        }
+        .info {
+            background: #d1ecf1;
+            border: 2px solid #0c5460;
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .car-details {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .car-details strong {
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚗 Tilføj Mercedes GLE350d til Database</h1>
+
+        <div class="info">
+            <strong>📋 Bil Information fra Bilbasen:</strong>
+        </div>
+
+        <div class="car-details">
+            <strong>Mærke:</strong> Mercedes<br>
+            <strong>Model:</strong> GLE350d<br>
+            <strong>Variant:</strong> 3,0 AMG Line Coupé aut. 4Matic<br>
+            <strong>Årgang:</strong> 2016<br>
+            <strong>Kilometerstand:</strong> 215.000 km<br>
+            <strong>Pris:</strong> 175.000 DKK (restværdi)<br>
+            <strong>Brændstof:</strong> Diesel<br>
+            <strong>Karrosseri:</strong> SUV Coupé<br>
+            <strong>Hestekræfter:</strong> 258 HK
+        </div>
+
+        <h3>📝 Beskrivelse:</h3>
+        <div class="preview" id="preview"></div>
+
+        <button class="btn" onclick="addCar()">
+            ✅ TILFØJ BIL TIL DATABASE
+        </button>
+
+        <div id="result"></div>
+    </div>
+
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+        const supabaseUrl = 'https://gfbsuydsquixhrrarjab.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdmYnN1eWRzcXVpeGhycmFyamFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwMjE5NDcsImV4cCI6MjA4NTU5Nzk0N30.M4nA8itsVSpcZb4l1w3cHtl_86KV89BHyt7xNE0hdSY';
+        
+        const supabase = createClient(supabaseUrl, supabaseKey);
+
+        const description = `Mercedes GLE350d 3.0 AMG Line Coupé
+
+Leasingtilbud
+Ydelse pr. md.: kr. 1.800 ekskl. moms (2.250,- inkl. moms)
+Udbetaling: kr. 36.000 ekskl. moms (45.000,- inkl. moms)
+Restværdi: kr. 175.000 ex moms + afgift.
+Løbetid: 12 mdr.
+
+⸻
+
+🚘 Køretøjsinformation
+• Mercedes GLE350d 3.0 AMG Line Coupé
+• Årgang: 08/2016
+• Kilometerstand: 215.000
+• Motor / Effekt: 3.0 4Matic
+• Brændstof: Diesel
+• Gearkasse: Aut.
+• Træk: Elektrisk svingbart
+• Farve (udvendig / kabine): Sort med sort kabine.
+
+⸻
+
+✨ Udstyr (udvalgte highlights)
+• AMG Line eksteriør
+• AMG Line interiør
+• Adaptiv Fartpilot
+• Vognbane assistent
+• Adaptive LED lygter med kurvefunktion
+• Luftundervogn (hæve/sænke funktion)
+• Harmon Kardon lydanlæg
+• Elektriske sæder i for med memory funktion
+• Apple CarPlay/Android Auto
+• Panorama glas tag
+• Elektrisk svingbart træk (3.500kg)
+• Ambiente belysning
+• 360 graders kamera
+• Parkerings assistent (kan parkere selv)
+• Night Package
+• KeyLess adgang
+• SoftClose
+
+(Fuld udstyrsliste fremsendes ved henvendelse)
+Sælges for en kunde - obs hattehylde mangler.
+
+⸻
+
+📘 Stand & historik
+• Importeret og udvalgt af Nordic Autos.
+• Fuld servicehistorik, ikke autoriseret.
+• Bilen fremstår i flot og velholdt stand, alm brugspor.
+
+⸻
+
+📑 Leasingvilkår
+• Vi tilbyder Privatleasing, erhvervsleasing samt split-leasing.
+• Leasingaftale kan tilpasses individuelt
+• Mulighed for tilkøb af service- og garantiløsning
+• Forsikring kan evt. formidles
+
+⸻
+
+🏢 Om Nordic Autos
+Nordic Autos er specialiseret i leasing og salg af eksklusive kvalitetsbiler.
+Vi tilbyder professionel rådgivning, gennemsigtige leasingvilkår og en tryg proces fra start til slut.
+
+📞 Kontakt os for et skræddersyet leasingtilbud eller fremvisning
+(Fremvisning efter aftale)`;
+
+        // Show preview
+        document.getElementById('preview').textContent = description;
+
+        const features = [
+            "AMG Line eksteriør",
+            "AMG Line interiør",
+            "Adaptiv Fartpilot",
+            "Vognbane assistent",
+            "Adaptive LED lygter med kurvefunktion",
+            "Luftundervogn (hæve/sænke funktion)",
+            "Harmon Kardon lydanlæg",
+            "Elektriske sæder med memory funktion",
+            "Apple CarPlay/Android Auto",
+            "Panorama glastag",
+            "Elektrisk svingbart træk (3.500kg)",
+            "Ambiente belysning",
+            "360 graders kamera",
+            "Parkerings assistent",
+            "Night Package",
+            "KeyLess adgang",
+            "SoftClose",
+            "21\" alufælge",
+            "Læderindtræk",
+            "Multifunktionsrat",
+            "Bakkamera",
+            "Blindvinkelsassistent",
+            "Regnsensor",
+            "Dæktryksmåler"
+        ];
+
+        const images = [
+            "https://billeder.bilbasen.dk/bilinfo/0dbf8224-0718-4641-b724-843fd67eee4f.jpeg?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/3d4f1659-ab5f-426d-9442-7bef54e46e9c.jpeg?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/5000ec0d-b3dd-405c-9ec7-d623c1cf27de.jpeg?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/73a3e05e-eb33-4106-819f-72a021a89a9e.jpeg?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/6d64ff3c-d814-4fba-91ae-d0133dcc9a1f.jpeg?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/049cb932-9fa4-49c2-8331-980fe99dd6b5.jpeg?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/304f12e5-d0a3-4abc-a5d4-6f5021542036.jpeg?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/2b5b65f9-6f2b-4a05-a92e-f20d13ef911f.jpeg?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/96b17736-45fb-4ab9-9b11-b026963d458d.jpeg?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/5cdf59d8-b7f5-4135-b150-779eda450334.jpeg?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/61f054ec-a3bd-4168-8ee2-6a61370cedd7.jpeg?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/a8abe2c6-351f-4537-a797-eee2f75e9fc8.jpeg?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/047b04b9-5773-415e-aefd-e59a86ea107d.jpeg?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/d9c2a965-7fa1-4412-8670-d746da47ac46.jpeg?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/20dbeedf-bddb-4784-940f-d72b4e0037e7.jpeg?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/ee9c892c-0198-4bcf-96e2-919515e241a6.jpeg?class=S1600X1600"
+        ];
+
+        function showResult(message, type) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.className = type;
+            resultDiv.innerHTML = message;
+            resultDiv.style.display = 'block';
+        }
+
+        window.addCar = async function() {
+            showResult('<div style="text-align: center;">Tilføjer Mercedes GLE350d...</div>', 'info');
+
+            try {
+                const carData = {
+                    brand: 'Mercedes',
+                    model: 'GLE350d',
+                    variant: '3,0 AMG Line Coupé aut. 4Matic',
+                    year: 2016,
+                    mileage: 215000,
+                    price: 175000,
+                    fuelType: 'Diesel',
+                    bodyType: 'SUV',
+                    horsepower: 258,
+                    status: 'available',
+                    description: description,
+                    features: features,
+                    images: images,
+                    isNew: false,
+                    specifications: {
+                        engine: '3.0 Diesel',
+                        transmission: 'Automatisk',
+                        drivetrain: '4Matic (4WD)',
+                        acceleration: 'N/A',
+                        topSpeed: 'N/A',
+                        fuelConsumption: 'N/A'
+                    },
+                    history: {
+                        previousOwners: 1,
+                        serviceHistory: true,
+                        accidents: false
+                    }
+                };
+
+                console.log('Gemmer Mercedes:', carData);
+
+                const { data, error } = await supabase
+                    .from('cars')
+                    .insert([carData])
+                    .select();
+
+                if (error) throw error;
+
+                console.log('Success:', data);
+
+                showResult(`
+                    ✅ Mercedes GLE350d TILFØJET SUCCESFULDT!<br><br>
+                    <strong>Bil Information:</strong><br>
+                    • ID: ${data[0].id}<br>
+                    • Mærke: ${data[0].brand}<br>
+                    • Model: ${data[0].model}<br>
+                    • Årgang: ${data[0].year}<br>
+                    • Pris: ${data[0].price.toLocaleString('da-DK')} DKK<br>
+                    • Ekstraudstyr: ${features.length} features<br><br>
+                    <strong>🎉 Bilen er nu synlig på hjemmesiden!</strong><br>
+                    <a href="lagerbiler.html" style="color: #667eea; text-decoration: underline;">Se lagerbiler</a>
+                `, 'success');
+
+            } catch (error) {
+                console.error('Error:', error);
+                showResult(`❌ Fejl: ${error.message}`, 'error');
+            }
+        };
+    </script>
+</body>
+</html>

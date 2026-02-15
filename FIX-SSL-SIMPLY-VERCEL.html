@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fix SSL Problem - Nordic Autos</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #dc3545;
+            margin-bottom: 20px;
+            font-size: 32px;
+        }
+        h2 {
+            color: #667eea;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+        h3 {
+            color: #495057;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        .warning {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            color: #856404;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 16px;
+        }
+        .success {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            color: #155724;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .info {
+            background: #d1ecf1;
+            border: 2px solid #0c5460;
+            color: #0c5460;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .step {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+        }
+        .code {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        .btn {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            margin: 10px 10px 10px 0;
+            font-weight: 600;
+        }
+        .btn:hover {
+            background: #5568d3;
+        }
+        .btn-success {
+            background: #28a745;
+        }
+        .btn-success:hover {
+            background: #218838;
+        }
+        ol {
+            margin-left: 20px;
+            line-height: 1.8;
+        }
+        li {
+            margin: 10px 0;
+        }
+        strong {
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔒 Fix SSL Problem - "Forbindelse er ikke privat"</h1>
+
+        <div class="warning">
+            <strong>⚠️ PROBLEM:</strong><br>
+            Når folk besøger nordicautos.dk på telefon, får de advarslen:<br>
+            <em>"Denne forbindelse er ikke privat - dette websted kan udgive sig for at være nordicautos.dk"</em>
+            <br><br>
+            <strong>ÅRSAG:</strong> Dit domæne mangler SSL-certifikat (HTTPS sikkerhed)
+        </div>
+
+        <div class="info">
+            <strong>📋 HVAD DU HAR:</strong><br>
+            • Domæne købt hos Simply.com: nordicautos.dk<br>
+            • Hjemmeside hostet på Vercel: nordicautos.vercel.app<br>
+            • Vercel giver GRATIS SSL-certifikat automatisk ✅
+        </div>
+
+        <h2>🎯 Løsning: Forbind Simply.com domæne til Vercel</h2>
+
+        <div class="step">
+            <h3>TRIN 1: Tilføj domæne i Vercel</h3>
+            <ol>
+                <li>Gå til Vercel: <a href="https://vercel.com/dashboard" target="_blank" class="btn">Åbn Vercel Dashboard</a></li>
+                <li>Find dit "nordicautos" projekt</li>
+                <li>Klik på <strong>Settings</strong> (øverst)</li>
+                <li>Klik på <strong>Domains</strong> i venstre menu</li>
+                <li>Skriv: <code>nordicautos.dk</code></li>
+                <li>Klik <strong>Add</strong></li>
+                <li>Vercel vil vise dig DNS-indstillinger (KOPIER DISSE!)</li>
+            </ol>
+        </div>
+
+        <div class="step">
+            <h3>TRIN 2: Opdater DNS hos Simply.com</h3>
+            <ol>
+                <li>Log ind på Simply.com: <a href="https://www.simply.com/da/controlpanel/" target="_blank" class="btn">Åbn Simply Kontrolpanel</a></li>
+                <li>Find dit domæne: <strong>nordicautos.dk</strong></li>
+                <li>Klik på <strong>DNS-indstillinger</strong> eller <strong>Navneservere</strong></li>
+                <li>Vælg <strong>Tilpassede DNS-records</strong></li>
+            </ol>
+
+            <h3>Tilføj disse DNS-records fra Vercel:</h3>
+            
+            <div class="code">
+Type: A Record
+Name: @ (eller blank)
+Value: 76.76.21.21
+            </div>
+
+            <div class="code">
+Type: CNAME
+Name: www
+Value: cname.vercel-dns.com
+            </div>
+
+            <p><strong>VIGTIGT:</strong> Slet alle gamle A-records og CNAME-records først!</p>
+        </div>
+
+        <div class="step">
+            <h3>TRIN 3: Vent på DNS-opdatering</h3>
+            <ol>
+                <li>DNS-ændringer tager 10 minutter til 24 timer</li>
+                <li>Normalt virker det efter 30-60 minutter</li>
+                <li>Gå tilbage til Vercel → Domains</li>
+                <li>Når det virker, ser du: <strong style="color: #28a745;">✓ Valid Configuration</strong></li>
+                <li>SSL-certifikat aktiveres automatisk (GRATIS)</li>
+            </ol>
+        </div>
+
+        <div class="success">
+            <strong>✅ EFTER DNS-OPDATERING:</strong><br>
+            • nordicautos.dk vil automatisk bruge HTTPS (sikker forbindelse)<br>
+            • Gratis SSL-certifikat fra Vercel (Let's Encrypt)<br>
+            • Ingen advarsler på telefon eller computer<br>
+            • Grøn hængelås i browseren 🔒<br>
+            • Professionelt og sikkert udseende
+        </div>
+
+        <h2>🔍 Tjek om det virker</h2>
+
+        <div class="step">
+            <h3>Test dit domæne:</h3>
+            <ol>
+                <li>Åbn: <a href="https://nordicautos.dk" target="_blank" class="btn btn-success">https://nordicautos.dk</a></li>
+                <li>Hvis du ser grøn hængelås 🔒 = VIRKER!</li>
+                <li>Hvis du stadig ser advarsel = Vent lidt længere på DNS</li>
+            </ol>
+
+            <p>Tjek DNS-status her:</p>
+            <a href="https://www.whatsmydns.net/#A/nordicautos.dk" target="_blank" class="btn">Tjek DNS Propagation</a>
+        </div>
+
+        <h2>❓ Alternativ løsning (hvis du vil beholde Simply hosting)</h2>
+
+        <div class="info">
+            Hvis du vil hoste hjemmesiden hos Simply.com i stedet for Vercel:
+            <ol>
+                <li>Log ind på Simply.com kontrolpanel</li>
+                <li>Find <strong>SSL/HTTPS indstillinger</strong></li>
+                <li>Aktiver <strong>Gratis SSL-certifikat</strong> (Let's Encrypt)</li>
+                <li>Upload dine hjemmeside-filer til Simply's webhotel</li>
+            </ol>
+            <strong>OBS:</strong> Vercel er nemmere og hurtigere, og SSL er automatisk!
+        </div>
+
+        <h2>📞 Brug for hjælp?</h2>
+
+        <div class="step">
+            <p>Hvis du har problemer:</p>
+            <ol>
+                <li>Tag screenshots af Vercel Domains-siden</li>
+                <li>Tag screenshots af Simply DNS-indstillinger</li>
+                <li>Send dem til mig, så kan jeg hjælpe videre</li>
+            </ol>
+        </div>
+
+        <div class="success">
+            <strong>🎉 RESULTAT:</strong><br>
+            Efter DNS-opdatering vil nordicautos.dk være 100% sikker med HTTPS, og alle advarsler forsvinder!
+        </div>
+    </div>
+</body>
+</html>

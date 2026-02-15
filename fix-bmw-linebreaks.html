@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fix BMW Linjeskift</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 30px;
+        }
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        .btn:hover {
+            background: #5568d3;
+        }
+        .btn-success {
+            background: #28a745;
+        }
+        .btn-success:hover {
+            background: #218838;
+        }
+        .section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .section h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .code {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .preview {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            line-height: 1.8;
+            color: #333;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            display: none;
+        }
+        .success {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            border: 2px solid #dc3545;
+            color: #721c24;
+        }
+        .info {
+            background: #d1ecf1;
+            border: 2px solid #17a2b8;
+            color: #0c5460;
+        }
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Fix BMW X5 Linjeskift</h1>
+
+        <div class="warning">
+            <strong>⚠️ PROBLEM:</strong> Beskrivelsen i databasen har ingen linjeskift.<br>
+            Denne side viser dig præcis hvad der er galt og fixer det automatisk.
+        </div>
+
+        <button class="btn" onclick="analyzeBMW()">
+            🔍 Analyser BMW X5 Beskrivelse
+        </button>
+
+        <div id="analysis" style="display: none;">
+            <div class="section">
+                <h3>📊 Nuværende Beskrivelse i Database:</h3>
+                <div class="code" id="rawDescription"></div>
+            </div>
+
+            <div class="section">
+                <h3>👁️ Sådan Ser Det Ud Nu (Dårligt):</h3>
+                <div class="preview" id="currentPreview"></div>
+            </div>
+
+            <div class="section">
+                <h3>✨ Foreslået Fix (Med Linjeskift):</h3>
+                <div class="preview" id="fixedPreview"></div>
+            </div>
+
+            <button class="btn btn-success" onclick="applyFix()">
+                ✅ Anvend Fix - Tilføj Linjeskift
+            </button>
+        </div>
+
+        <div id="result"></div>
+    </div>
+
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+        const supabaseUrl = 'https://gfbsuydsquixhrrarjab.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdmYnN1eWRzcXVpeGhycmFyamFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwMjE5NDcsImV4cCI6MjA4NTU5Nzk0N30.M4nA8itsVSpcZb4l1w3cHtl_86KV89BHyt7xNE0hdSY';
+        
+        const supabase = createClient(supabaseUrl, supabaseKey);
+
+        let bmwCar = null;
+        let fixedDescription = '';
+
+        function showResult(message, type) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.className = type;
+            resultDiv.innerHTML = message;
+            resultDiv.style.display = 'block';
+        }
+
+        window.analyzeBMW = async function() {
+            showResult('<div style="text-align: center;">Analyserer...</div>', 'info');
+
+            try {
+                const { data: cars, error } = await supabase
+                    .from('cars')
+                    .select('*')
+                    .ilike('brand', '%BMW%')
+                    .ilike('model', '%X5%');
+
+                if (error) throw error;
+
+                if (!cars || cars.length === 0) {
+                    showResult('❌ Ingen BMW X5 fundet', 'error');
+                    return;
+                }
+
+                bmwCar = cars[0];
+                const description = bmwCar.description || '';
+
+                console.log('Raw description:', description);
+                console.log('Has newlines:', description.includes('\n'));
+                console.log('Description length:', description.length);
+
+                // Show raw description with visible newlines
+                const rawDiv = document.getElementById('rawDescription');
+                rawDiv.textContent = JSON.stringify(description);
+
+                // Show current preview (how it looks now)
+                const currentDiv = document.getElementById('currentPreview');
+                currentDiv.innerHTML = description.replace(/\n/g, '<br>');
+
+                // Create fixed version with proper line breaks
+                // Split by periods and add line breaks
+                fixedDescription = description
+                    .split('. ')
+                    .map(sentence => sentence.trim())
+                    .filter(sentence => sentence.length > 0)
+                    .join('.\n\n') + (description.endsWith('.') ? '' : '.');
+
+                // Show fixed preview
+                const fixedDiv = document.getElementById('fixedPreview');
+                fixedDiv.innerHTML = fixedDescription.replace(/\n/g, '<br>');
+
+                document.getElementById('analysis').style.display = 'block';
+                showResult('✅ Analyse færdig! Se forslagene ovenfor.', 'success');
+
+            } catch (error) {
+                console.error('Error:', error);
+                showResult(`❌ Fejl: ${error.message}`, 'error');
+            }
+        };
+
+        window.applyFix = async function() {
+            if (!bmwCar || !fixedDescription) {
+                showResult('❌ Analyser først!', 'error');
+                return;
+            }
+
+            showResult('<div style="text-align: center;">Gemmer...</div>', 'info');
+
+            try {
+                const { data, error } = await supabase
+                    .from('cars')
+                    .update({ 
+                        description: fixedDescription,
+                        updated_at: new Date().toISOString()
+                    })
+                    .eq('id', bmwCar.id)
+                    .select();
+
+                if (error) throw error;
+
+                console.log('Updated:', data);
+
+                showResult(`
+                    ✅ Beskrivelse opdateret med linjeskift!<br><br>
+                    <strong>Genindlæs hjemmesiden for at se ændringerne!</strong><br><br>
+                    Beskrivelsen vil nu vises pænt formateret med afstand mellem sætninger.
+                `, 'success');
+
+            } catch (error) {
+                console.error('Error:', error);
+                showResult(`❌ Fejl: ${error.message}`, 'error');
+            }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tilføj Bil - Nordic Autos Admin</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #1e293b;
+            color: white;
+        }
+        .container {
+            background: #334155;
+            padding: 30px;
+            border-radius: 10px;
+        }
+        h1 {
+            color: #10b981;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #e2e8f0;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #475569;
+            border-radius: 8px;
+            font-size: 16px;
+            background: #1e293b;
+            color: white;
+        }
+        textarea {
+            font-family: inherit;
+        }
+        button {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+            width: 100%;
+        }
+        button:hover {
+            background: #059669;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+        .success {
+            background: #064e3b;
+            border: 2px solid #10b981;
+            color: #10b981;
+        }
+        .error {
+            background: #7f1d1d;
+            border: 2px solid #ef4444;
+            color: #ef4444;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚗 Tilføj Ny Bil</h1>
+
+        <form id="carForm">
+            <div class="form-group">
+                <label>Mærke *</label>
+                <input type="text" id="brand" required placeholder="BMW">
+            </div>
+
+            <div class="form-group">
+                <label>Model *</label>
+                <input type="text" id="model" required placeholder="M5">
+            </div>
+
+            <div class="form-group">
+                <label>Variant</label>
+                <input type="text" id="variant" placeholder="Competition">
+            </div>
+
+            <div class="form-group">
+                <label>År *</label>
+                <input type="number" id="year" required placeholder="2023" min="1900" max="2030">
+            </div>
+
+            <div class="form-group">
+                <label>Kilometer *</label>
+                <input type="number" id="mileage" required placeholder="15000" min="0">
+            </div>
+
+            <div class="form-group">
+                <label>Pris (DKK) *</label>
+                <input type="number" id="price" required placeholder="899000" min="0">
+            </div>
+
+            <div class="form-group">
+                <label>Brændstof *</label>
+                <select id="fuelType" required>
+                    <option value="Benzin">Benzin</option>
+                    <option value="Diesel">Diesel</option>
+                    <option value="El">El</option>
+                    <option value="Hybrid">Hybrid</option>
+                    <option value="Plug-in Hybrid">Plug-in Hybrid</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Karrosseri</label>
+                <select id="bodyType">
+                    <option value="Sedan">Sedan</option>
+                    <option value="SUV">SUV</option>
+                    <option value="Coupe">Coupe</option>
+                    <option value="Hatchback">Hatchback</option>
+                    <option value="Van">Van</option>
+                    <option value="Cabriolet">Cabriolet</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Hestekræfter</label>
+                <input type="number" id="horsepower" placeholder="510" min="0">
+            </div>
+
+            <div class="form-group">
+                <label>Status</label>
+                <select id="status">
+                    <option value="available">Tilgængelig</option>
+                    <option value="reserved">Reserveret</option>
+                    <option value="sold">Solgt</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>📝 Beskrivelse</label>
+                <textarea id="description" rows="4" placeholder="Beskriv bilen..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>✨ Ekstraudstyr (én per linje)</label>
+                <textarea id="features" rows="5" placeholder="Læder
+Navigation
+Parkeringssensor"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>🖼️ Billede URLs (én per linje)</label>
+                <textarea id="images" rows="3" placeholder="https://example.com/image1.jpg
+https://example.com/image2.jpg"></textarea>
+            </div>
+
+            <button type="submit">💾 Gem Bil</button>
+        </form>
+
+        <div id="result"></div>
+    </div>
+
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+        const supabaseUrl = 'https://gfbsuydsquixhrrarjab.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdmYnN1eWRzcXVpeGhycmFyamFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwMjE5NDcsImV4cCI6MjA4NTU5Nzk0N30.M4nA8itsVSpcZb4l1w3cHtl_86KV89BHyt7xNE0hdSY';
+        
+        const supabase = createClient(supabaseUrl, supabaseKey);
+
+        document.getElementById('carForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'none';
+
+            try {
+                // Get form data
+                const featuresText = document.getElementById('features').value;
+                const features = featuresText.split('\n').map(f => f.trim()).filter(f => f.length > 0);
+                
+                const imagesText = document.getElementById('images').value;
+                const images = imagesText.split('\n').map(img => img.trim()).filter(img => img.length > 0);
+
+                const carData = {
+                    brand: document.getElementById('brand').value,
+                    model: document.getElementById('model').value,
+                    variant: document.getElementById('variant').value || null,
+                    year: parseInt(document.getElementById('year').value),
+                    mileage: parseInt(document.getElementById('mileage').value),
+                    price: parseInt(document.getElementById('price').value),
+                    fuelType: document.getElementById('fuelType').value,
+                    bodyType: document.getElementById('bodyType').value,
+                    horsepower: parseInt(document.getElementById('horsepower').value) || null,
+                    status: document.getElementById('status').value,
+                    description: document.getElementById('description').value || null,
+                    features: features.length > 0 ? features : [],
+                    images: images.length > 0 ? images : [],
+                    isNew: false,
+                    specifications: {
+                        engine: 'N/A',
+                        transmission: 'N/A',
+                        drivetrain: 'N/A',
+                        acceleration: 'N/A',
+                        topSpeed: 'N/A',
+                        fuelConsumption: 'N/A'
+                    },
+                    history: {
+                        previousOwners: 1,
+                        serviceHistory: true,
+                        accidents: false
+                    }
+                };
+
+                console.log('Gemmer bil:', carData);
+
+                // Insert into Supabase (ID will be auto-generated)
+                const { data, error } = await supabase
+                    .from('cars')
+                    .insert([carData])
+                    .select();
+
+                if (error) {
+                    throw error;
+                }
+
+                console.log('Success:', data);
+
+                resultDiv.className = 'success';
+                resultDiv.innerHTML = `✅ Bil gemt succesfuldt!<br>ID: ${data[0].id}<br>${data[0].brand} ${data[0].model}`;
+                resultDiv.style.display = 'block';
+
+                // Reset form
+                document.getElementById('carForm').reset();
+
+            } catch (error) {
+                console.error('Error:', error);
+                resultDiv.className = 'error';
+                resultDiv.innerHTML = `❌ Fejl: ${error.message}`;
+                resultDiv.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

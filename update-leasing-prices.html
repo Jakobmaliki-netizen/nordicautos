@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opdater Leasingydelser - Nordic Autos</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 30px;
+        }
+        .btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .btn:hover {
+            background: #218838;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            display: none;
+        }
+        .success {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            border: 2px solid #dc3545;
+            color: #721c24;
+        }
+        .info {
+            background: #d1ecf1;
+            border: 2px solid #0c5460;
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .car-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💰 Opdater Leasingydelser for Eksisterende Biler</h1>
+
+        <div class="info">
+            <strong>📋 Biler der skal opdateres:</strong><br><br>
+            <div class="car-item">
+                <strong>Mercedes GLE350d:</strong> 2.250 kr./md. inkl. moms
+            </div>
+            <div class="car-item">
+                <strong>Audi A7:</strong> 3.000 kr./md. inkl. moms
+            </div>
+            <div class="car-item">
+                <strong>Mercedes A200:</strong> 1.200 kr./md. inkl. moms
+            </div>
+            <div class="car-item">
+                <strong>BMW X5:</strong> 4.993 kr./md. inkl. moms
+            </div>
+        </div>
+
+        <button class="btn" onclick="updateLeasingPrices()">
+            ✅ OPDATER ALLE LEASINGYDELSER
+        </button>
+
+        <div id="result"></div>
+    </div>
+
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+        const supabaseUrl = 'https://gfbsuydsquixhrrarjab.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdmYnN1eWRzcXVpeGhycmFyamFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwMjE5NDcsImV4cCI6MjA4NTU5Nzk0N30.M4nA8itsVSpcZb4l1w3cHtl_86KV89BHyt7xNE0hdSY';
+        
+        const supabase = createClient(supabaseUrl, supabaseKey);
+
+        // Leasing prices for each car
+        const leasingPrices = {
+            'Mercedes GLE350d': 2250,
+            'Audi A7': 3000,
+            'Mercedes A200': 1200,
+            'BMW X5': 4993
+        };
+
+        function showResult(message, type) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.className = type;
+            resultDiv.innerHTML = message;
+            resultDiv.style.display = 'block';
+        }
+
+        window.updateLeasingPrices = async function() {
+            showResult('<div style="text-align: center;">Opdaterer leasingydelser...</div>', 'info');
+
+            try {
+                let results = [];
+                let errors = [];
+
+                // First, check if monthlyLeasing column exists, if not add it
+                console.log('Checking if monthlyLeasing column exists...');
+
+                // Update each car
+                for (const [carName, leasingPrice] of Object.entries(leasingPrices)) {
+                    try {
+                        // Extract brand and model
+                        const parts = carName.split(' ');
+                        const brand = parts[0];
+                        const model = parts.slice(1).join(' ');
+
+                        console.log(`Updating ${brand} ${model} with leasing price ${leasingPrice}...`);
+
+                        // Find the car
+                        const { data: cars, error: findError } = await supabase
+                            .from('cars')
+                            .select('*')
+                            .eq('brand', brand)
+                            .ilike('model', `%${model}%`)
+                            .limit(1);
+
+                        if (findError) throw findError;
+
+                        if (!cars || cars.length === 0) {
+                            errors.push(`❌ ${carName}: Bil ikke fundet i databasen`);
+                            continue;
+                        }
+
+                        const car = cars[0];
+
+                        // Update with monthly leasing
+                        const { data, error: updateError } = await supabase
+                            .from('cars')
+                            .update({ monthlyLeasing: leasingPrice })
+                            .eq('id', car.id)
+                            .select();
+
+                        if (updateError) throw updateError;
+
+                        results.push(`✅ ${carName}: Opdateret til ${leasingPrice} kr./md.`);
+                        console.log(`✅ Updated ${carName}`);
+
+                    } catch (error) {
+                        console.error(`Error updating ${carName}:`, error);
+                        errors.push(`❌ ${carName}: ${error.message}`);
+                    }
+                }
+
+                // Show results
+                let resultHTML = '<strong>📊 Opdateringsresultater:</strong><br><br>';
+                
+                if (results.length > 0) {
+                    resultHTML += results.join('<br>') + '<br><br>';
+                }
+                
+                if (errors.length > 0) {
+                    resultHTML += '<strong style="color: #dc3545;">Fejl:</strong><br>' + errors.join('<br>') + '<br><br>';
+                }
+
+                if (errors.length === 0) {
+                    resultHTML += '<strong>🎉 Alle leasingydelser er opdateret!</strong><br>';
+                    resultHTML += '<a href="lagerbiler.html" style="color: #667eea; text-decoration: underline;">Se lagerbiler</a>';
+                    showResult(resultHTML, 'success');
+                } else {
+                    showResult(resultHTML, 'error');
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                showResult(`❌ Generel fejl: ${error.message}`, 'error');
+            }
+        };
+    </script>
+</body>
+</html>

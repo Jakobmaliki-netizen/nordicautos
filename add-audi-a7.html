@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tilføj Audi A7 - Nordic Autos</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 30px;
+        }
+        .btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .btn:hover {
+            background: #218838;
+        }
+        .preview {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            white-space: pre-wrap;
+            line-height: 1.8;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            display: none;
+        }
+        .success {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            border: 2px solid #dc3545;
+            color: #721c24;
+        }
+        .info {
+            background: #d1ecf1;
+            border: 2px solid #0c5460;
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .car-details {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .car-details strong {
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚗 Tilføj Audi A7 til Database</h1>
+
+        <div class="info">
+            <strong>📋 Bil Information fra Bilbasen:</strong>
+        </div>
+
+        <div class="car-details">
+            <strong>Mærke:</strong> Audi<br>
+            <strong>Model:</strong> A7<br>
+            <strong>Variant:</strong> 3,0 TDi 320 Sportback quattro Tiptr.<br>
+            <strong>Årgang:</strong> 2017<br>
+            <strong>Kilometerstand:</strong> 169.000 km<br>
+            <strong>Pris:</strong> 140.000 DKK (restværdi)<br>
+            <strong>Brændstof:</strong> Diesel<br>
+            <strong>Karrosseri:</strong> Sportback<br>
+            <strong>Hestekræfter:</strong> 320 HK<br>
+            <strong>Billeder:</strong> 18 stk
+        </div>
+
+        <h3>📝 Beskrivelse:</h3>
+        <div class="preview" id="preview"></div>
+
+        <button class="btn" onclick="addCar()">
+            ✅ TILFØJ BIL TIL DATABASE
+        </button>
+
+        <div id="result"></div>
+    </div>
+
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+        const supabaseUrl = 'https://gfbsuydsquixhrrarjab.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdmYnN1eWRzcXVpeGhycmFyamFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwMjE5NDcsImV4cCI6MjA4NTU5Nzk0N30.M4nA8itsVSpcZb4l1w3cHtl_86KV89BHyt7xNE0hdSY';
+        
+        const supabase = createClient(supabaseUrl, supabaseKey);
+
+        const description = `Audi A7 3.0 TDI 320 Sportback
+
+Leasingtilbud
+Ydelse pr. md.: kr. 2.400 ekskl. moms (3.000,- inkl. moms)
+Udbetaling: kr. 31.200 ekskl. moms (39.900,- inkl. moms)
+Restværdi: kr. 140.000 ex moms + afgift.
+Løbetid: 12 mdr.
+
+⸻
+
+🚘 Køretøjsinformation
+• Audi A7 3.0 TDI 320 Sportback Quattro
+• Årgang: 02/2017
+• Kilometerstand: 169.000
+• Motor / Effekt: 3.0 Quattro
+• Brændstof: Diesel
+• Gearkasse: Aut.
+• Træk: Nej
+• Farve (udvendig / kabine): Hvid med sort kabine.
+
+⸻
+
+✨ Udstyr (udvalgte highlights)
+• 3 X S Line
+• Bose Surround Sound
+• 4 zonet klimaanlæg
+• Sort optik pakke
+• Elektrisk justerbar forsæder m. memory funktion
+• Sportsundervogn
+• Skyde/vippe Soltag
+• Parkerings sensor for & bag
+• Ambiente belysning
+• Kabinevarmer
+• Adaptive kurvelygter med LED
+
+(Fuld udstyrsliste fremsendes ved henvendelse)
+Sælges for en kunde
+
+⸻
+
+📘 Stand & historik
+• Importeret og udvalgt af Nordic Autos.
+• Fuld servicehistorik, ikke autoriseret.
+• Bilen fremstår i flot og velholdt stand, alm brugspor.
+
+⸻
+
+📑 Leasingvilkår
+• Vi tilbyder Privatleasing, erhvervsleasing samt split-leasing.
+• Leasingaftale kan tilpasses individuelt
+• Mulighed for tilkøb af service- og garantiløsning
+• Forsikring kan evt. formidles
+
+⸻
+
+🏢 Om Nordic Autos
+Nordic Autos er specialiseret i leasing og salg af eksklusive kvalitetsbiler.
+Vi tilbyder professionel rådgivning, gennemsigtige leasingvilkår og en tryg proces fra start til slut.
+
+📞 Kontakt os for et skræddersyet leasingtilbud eller fremvisning
+(Fremvisning efter aftale)`;
+
+        document.getElementById('preview').textContent = description;
+
+        const features = [
+            "3 X S Line",
+            "Bose Surround Sound",
+            "4 zonet klimaanlæg",
+            "Sort optik pakke",
+            "Elektrisk justerbar forsæder m. memory",
+            "Sportsundervogn",
+            "Skyde/vippe Soltag",
+            "Parkerings sensor for & bag",
+            "Ambiente belysning",
+            "Kabinevarmer",
+            "Adaptive kurvelygter med LED",
+            "Sportssæder",
+            "Læderrat",
+            "Dellæderindtræk",
+            "Justerbar lændestøtte",
+            "Alufælge",
+            "El-soltag",
+            "Kurvelys",
+            "Dynamisk blinklys i bag",
+            "LED kørelys",
+            "Adaptive forlygter",
+            "LED baglygter",
+            "Fuld LED forlygter",
+            "Mørktonede ruder i bag",
+            "Automatgear",
+            "Aircondition",
+            "Elektrisk kabinevarmer",
+            "Centrallås",
+            "Nøglefri tænding",
+            "Ratgearskifte",
+            "Fuldautomatisk klima",
+            "Fartpilot",
+            "Varme i forrude",
+            "Automatisk nedblendeligt bakspejl",
+            "Sædevarme",
+            "DAB+ radio",
+            "Musikstreaming via Bluetooth",
+            "Navigation",
+            "Håndfrit til mobil",
+            "USB-A tilslutning",
+            "Alarm",
+            "Træthedsregistrering",
+            "Lygtevasker",
+            "ESP",
+            "Blindvinkelsassistent",
+            "Auto hold",
+            "Regnsensor",
+            "Bakkamera",
+            "Skiltegenkendelse",
+            "Dæktryksmåler",
+            "ISOFIX",
+            "Fjernlysassistent"
+        ];
+
+        const images = [
+            "https://billeder.bilbasen.dk/bilinfo/5105d636-39a2-4efe-9e0e-aff8673285e8.jpeg?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/d36ff071-637d-4e09-89c7-146e482440f0.jpeg?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/5b7b597f-4b04-4557-a69e-1399a31824e1.jpeg?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/58eb85d5-7349-42c9-b71f-b92381279396.jpeg?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/374c0a91-e1aa-4c0a-8598-5d19bd22b2b3.jpeg?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/a5d8d0df-c462-42f2-afca-098a1d6c4b80.jpeg?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/4d23b6a5-dd61-4e6e-93c0-c97e0d31873a.jpeg?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/c3bff695-f16d-4f4f-bf74-8a7620f51f90.jpeg?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/b4c3d9a2-ed77-4625-be65-c71c12b393b6.jpeg?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/3efd8bb6-8f3b-443b-bc61-0aba87cb5b19.jpeg?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/a64042f3-1f5e-4291-95d5-ccade63e5a96.jpeg?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/56dd09d0-e0a6-4d56-b96a-2a9d3c25ae2e.jpeg?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/da0dfe8f-4fa6-4ad1-ab05-7192c84736c8.jpeg?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/edb668ce-b8c5-4c25-ab55-3e62396ec17d.jpeg?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/5638f103-fde5-4534-9374-a6d1b39a4c91.jpeg?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/9cf6eb65-3330-405f-a7e5-219a3c4a9149.jpeg?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/97947143-fdbf-4bc5-8aa1-00eb11854b50.jpeg?class=S1600X1600"
+        ];
+
+        function showResult(message, type) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.className = type;
+            resultDiv.innerHTML = message;
+            resultDiv.style.display = 'block';
+        }
+
+        window.addCar = async function() {
+            showResult('<div style="text-align: center;">Tilføjer Audi A7...</div>', 'info');
+
+            try {
+                const carData = {
+                    brand: 'Audi',
+                    model: 'A7',
+                    variant: '3,0 TDi 320 Sportback quattro Tiptr.',
+                    year: 2017,
+                    mileage: 169000,
+                    price: 140000,
+                    fuelType: 'Diesel',
+                    bodyType: 'Sportback',
+                    horsepower: 320,
+                    status: 'available',
+                    description: description,
+                    features: features,
+                    images: images,
+                    isNew: false,
+                    specifications: {
+                        engine: '3.0 TDI',
+                        transmission: 'Automatisk Tiptronic',
+                        drivetrain: 'Quattro (4WD)',
+                        acceleration: 'N/A',
+                        topSpeed: 'N/A',
+                        fuelConsumption: 'N/A'
+                    },
+                    history: {
+                        previousOwners: 1,
+                        serviceHistory: true,
+                        accidents: false
+                    }
+                };
+
+                console.log('Gemmer Audi A7:', carData);
+
+                const { data, error } = await supabase
+                    .from('cars')
+                    .insert([carData])
+                    .select();
+
+                if (error) throw error;
+
+                console.log('Success:', data);
+
+                showResult(`
+                    ✅ Audi A7 TILFØJET SUCCESFULDT!<br><br>
+                    <strong>Bil Information:</strong><br>
+                    • ID: ${data[0].id}<br>
+                    • Mærke: ${data[0].brand}<br>
+                    • Model: ${data[0].model}<br>
+                    • Årgang: ${data[0].year}<br>
+                    • Pris: ${data[0].price.toLocaleString('da-DK')} DKK<br>
+                    • Ekstraudstyr: ${features.length} features<br>
+                    • Billeder: ${images.length} stk<br><br>
+                    <strong>🎉 Bilen er nu synlig på hjemmesiden!</strong><br>
+                    <a href="lagerbiler.html" style="color: #667eea; text-decoration: underline;">Se lagerbiler</a>
+                `, 'success');
+
+            } catch (error) {
+                console.error('Error:', error);
+                showResult(`❌ Fejl: ${error.message}`, 'error');
+            }
+        };
+    </script>
+</body>
+</html>

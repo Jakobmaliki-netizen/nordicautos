@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tilføj Mini Cooper SE - Nordic Autos</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 30px;
+        }
+        .btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .btn:hover {
+            background: #218838;
+        }
+        .preview {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            white-space: pre-wrap;
+            line-height: 1.8;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            display: none;
+        }
+        .success {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            border: 2px solid #dc3545;
+            color: #721c24;
+        }
+        .info {
+            background: #d1ecf1;
+            border: 2px solid #0c5460;
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .car-details {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .car-details strong {
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚡ Tilføj Mini Cooper SE til Database</h1>
+
+        <div class="info">
+            <strong>📋 Bil Information fra Bilbasen:</strong>
+        </div>
+
+        <div class="car-details">
+            <strong>Mærke:</strong> Mini<br>
+            <strong>Model:</strong> Cooper SE<br>
+            <strong>Variant:</strong> Classic Trim 3d<br>
+            <strong>Årgang:</strong> 2023<br>
+            <strong>Kilometerstand:</strong> 25.000 km<br>
+            <strong>Brændstof:</strong> Elektrisk ⚡<br>
+            <strong>Rækkevidde:</strong> 232 km<br>
+            <strong>Karrosseri:</strong> Hatchback<br>
+            <strong>Hestekræfter:</strong> 184 HK<br>
+            <strong>Billeder:</strong> 18 stk
+        </div>
+
+        <h3>📝 Beskrivelse:</h3>
+        <div class="preview" id="preview"></div>
+
+        <button class="btn" onclick="addCar()">
+            ✅ TILFØJ BIL TIL DATABASE
+        </button>
+
+        <div id="result"></div>
+    </div>
+
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+        const supabaseUrl = 'https://gfbsuydsquixhrrarjab.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdmYnN1eWRzcXVpeGhycmFyamFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwMjE5NDcsImV4cCI6MjA4NTU5Nzk0N30.M4nA8itsVSpcZb4l1w3cHtl_86KV89BHyt7xNE0hdSY';
+        
+        const supabase = createClient(supabaseUrl, supabaseKey);
+
+        const description = `Mini Cooper SE Classic Trim 3d
+
+Bilen hjemtages på bestilling og leveres direkte fra BMW/Mini i Tyskland.
+Hvis denne model ikke helt rammer dine ønsker, er du meget velkommen til at kontakte os med dine præferencer – så finder vi hurtigt den helt rigtige bil til dig.
+
+⸻
+
+🚘 Køretøjsinformation
+• Mini Cooper SE Classic Trim 3d
+• Årgang: 10/2023
+• Kilometerstand: 25.000
+• Motor / Effekt: Elektrisk
+• Brændstof: Elektrisk ⚡
+• Gearkasse: Aut.
+• Træk: Nej
+• Farve (udvendig / kabine): Sort med sort kabine.
+• Rækkevidde: 232 km
+
+⸻
+
+✨ Udstyr (udvalgte highlights)
+• Classic Trim
+• Ambient belysning
+• Fartpilot
+• Sædevarme
+• Nøglefri adgang / Keyless
+• Fjernlys assistent
+• Vognbane assistent
+• LED Lys
+• Navigation
+• 16" Victory Spoke alufælge
+• Varmepumpe
+• Parkerings sensor
+• 2 Zonet klimaanlæg
+• Sports rat med multifunktion
+• Lys og regnsensor
+• Forberedt til Apple CarPlay
+• Kollisionadvarsel med bremsefunktion
+• Skiltegenkendelse
+• Vognbaneskiftassistent
+• Sort loftbeklædning
+• Isofix
+• Mini Driving modes
+
+(Fuld udstyrsliste fremsendes ved henvendelse)
+
+⸻
+
+📘 Stand & historik
+• Importeret og udvalgt af Nordic Autos.
+• Fuld servicehistorik ved Mini
+• Bilen fremstår i meget flot og velholdt stand
+
+⸻
+
+📑 Leasingvilkår
+• Vi tilbyder Privatleasing, erhvervsleasing samt split-leasing.
+• Leasingaftale kan tilpasses individuelt
+• Mulighed for tilkøb af service- og garantiløsning
+• Forsikring kan evt. formidles
+
+⸻
+
+🏢 Om Nordic Autos
+Nordic Autos er specialiseret i leasing og salg af eksklusive kvalitetsbiler.
+Vi tilbyder professionel rådgivning, gennemsigtige leasingvilkår og en tryg proces fra start til slut.
+
+📞 Kontakt os for et skræddersyet leasingtilbud eller fremvisning
+(Fremvisning efter aftale)`;
+
+        document.getElementById('preview').textContent = description;
+
+        const features = [
+            "Classic Trim",
+            "Ambient belysning",
+            "Fartpilot",
+            "Sædevarme",
+            "Nøglefri adgang / Keyless",
+            "Fjernlys assistent",
+            "Vognbane assistent",
+            "LED Lys",
+            "Navigation",
+            "16\" Victory Spoke alufælge",
+            "Varmepumpe",
+            "Parkerings sensor",
+            "2 Zonet klimaanlæg",
+            "Sports rat med multifunktion",
+            "Lys og regnsensor",
+            "Forberedt til Apple CarPlay",
+            "Kollisionadvarsel med bremsefunktion",
+            "Skiltegenkendelse",
+            "Vognbaneskiftassistent",
+            "Sort loftbeklædning",
+            "Isofix",
+            "Mini Driving modes",
+            "Læderindtræk",
+            "Sportssæder",
+            "Digitalt cockpit",
+            "Læderrat",
+            "Kunstlæderindtræk",
+            "Virtuelle sidespejle",
+            "El-klapbare sidespejle",
+            "Adaptive forlygter",
+            "LED baglygter",
+            "Fuld LED forlygter",
+            "Automatgear",
+            "Aircondition",
+            "Centrallås",
+            "Nøglefri tænding",
+            "Fuldautomatisk klima",
+            "Fjernbetjent centrallås",
+            "Automatisk start/stop",
+            "App integration",
+            "Automatisk nedblendeligt bakspejl",
+            "DAB+ radio",
+            "Musikstreaming via Bluetooth",
+            "Håndfrit til mobil",
+            "Træthedsregistrering",
+            "ESP",
+            "Auto hold",
+            "Regnsensor",
+            "Automatisk lys",
+            "Automatisk nødbremsesystem",
+            "EDR-boks"
+        ];
+
+        const images = [
+            "https://billeder.bilbasen.dk/bilinfo/e90ded3e-b6e8-4d23-ae36-ca3b432066ed.png?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/7b266dec-1351-4c4a-88d5-9bde95331504.png?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/f2973504-aa4f-44a8-9fbe-cb8fb20cb8a7.png?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/663c3e8c-96ad-4210-a51a-3d950071a1fc.png?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/05621312-5a93-439b-b2e5-36c18a67674d.png?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/e96ba752-d5f4-42bc-a618-11446716f724.png?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/705e937c-fc18-45e2-9879-fc02dd94bfe1.png?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/f7b36162-c4dc-41ab-a064-6130cef5e652.png?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/4c698f10-a72c-424e-9f45-157c2ebae852.png?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/3733f13d-0c1c-45b5-bc58-d9e7b8686fe1.png?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/c52e15a6-4154-4abb-b455-c12227749fe6.png?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/388789bf-1d6d-4376-9cbe-9c6d0af56e15.png?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/60dd6ced-2c7e-46c1-bd82-9010ca7d8b97.png?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/6568cb40-e28c-44af-ab57-49bf983ac40f.png?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/8577368b-9248-4492-a182-dbcc4bcbb316.png?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/b2124ffa-10f8-4248-8526-661ff95b5e2b.png?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/b3468369-9899-41b2-8a45-15c976aaaf65.png?class=S1600X1600",
+            "https://billeder.bilbasen.dk/bilinfo/36332200-5e5d-4311-b479-7e5cd5dd1892.png?class=S1600X1600"
+        ];
+
+        function showResult(message, type) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.className = type;
+            resultDiv.innerHTML = message;
+            resultDiv.style.display = 'block';
+        }
+
+        window.addCar = async function() {
+            showResult('<div style="text-align: center;">Tilføjer Mini Cooper SE...</div>', 'info');
+
+            try {
+                const carData = {
+                    brand: 'Mini',
+                    model: 'Cooper SE',
+                    variant: 'Classic Trim 3d',
+                    year: 2023,
+                    mileage: 25000,
+                    price: 129800,
+                    fuelType: 'El',
+                    bodyType: 'Hatchback',
+                    horsepower: 184,
+                    status: 'available',
+                    description: description,
+                    features: features,
+                    images: images,
+                    isNew: false,
+                    specifications: {
+                        engine: 'Elektrisk motor',
+                        transmission: 'Automatisk',
+                        drivetrain: 'Forhjulstræk',
+                        acceleration: 'N/A',
+                        topSpeed: 'N/A',
+                        fuelConsumption: 'Rækkevidde: 232 km'
+                    },
+                    history: {
+                        previousOwners: 1,
+                        serviceHistory: true,
+                        accidents: false
+                    }
+                };
+
+                console.log('Gemmer Mini Cooper SE:', carData);
+
+                const { data, error } = await supabase
+                    .from('cars')
+                    .insert([carData])
+                    .select();
+
+                if (error) throw error;
+
+                console.log('Success:', data);
+
+                showResult(`
+                    ✅ Mini Cooper SE TILFØJET SUCCESFULDT!<br><br>
+                    <strong>Bil Information:</strong><br>
+                    • ID: ${data[0].id}<br>
+                    • Mærke: ${data[0].brand}<br>
+                    • Model: ${data[0].model}<br>
+                    • Årgang: ${data[0].year}<br>
+                    • Type: Elektrisk ⚡<br>
+                    • Rækkevidde: 232 km<br>
+                    • Ekstraudstyr: ${features.length} features<br>
+                    • Billeder: ${images.length} stk<br><br>
+                    <strong>🎉 Bilen er nu synlig på hjemmesiden!</strong><br>
+                    <a href="lagerbiler.html" style="color: #667eea; text-decoration: underline;">Se lagerbiler</a>
+                `, 'success');
+
+            } catch (error) {
+                console.error('Error:', error);
+                showResult(`❌ Fejl: ${error.message}`, 'error');
+            }
+        };
+    </script>
+</body>
+</html>

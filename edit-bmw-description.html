@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rediger BMW X5 Beskrivelse</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        .btn:hover {
+            background: #5568d3;
+        }
+        .btn-success {
+            background: #28a745;
+        }
+        .btn-success:hover {
+            background: #218838;
+        }
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 16px;
+            line-height: 1.6;
+            resize: vertical;
+        }
+        .section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .section h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .preview {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            white-space: pre-wrap;
+            line-height: 1.8;
+            color: #333;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            display: none;
+        }
+        .success {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            border: 2px solid #dc3545;
+            color: #721c24;
+        }
+        .info {
+            background: #d1ecf1;
+            border: 2px solid #17a2b8;
+            color: #0c5460;
+        }
+        .tip {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+        }
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📝 Rediger BMW X5 Beskrivelse</h1>
+        <p class="subtitle">Formater beskrivelsen så den ser pæn ud på hjemmesiden</p>
+
+        <button class="btn" onclick="loadBMW()">
+            🔍 Hent Nuværende Beskrivelse
+        </button>
+
+        <div id="editSection" style="display: none;">
+            <div class="section">
+                <h3>📄 Nuværende Beskrivelse:</h3>
+                <div id="currentDescription" class="preview"></div>
+            </div>
+
+            <div class="tip">
+                <strong>💡 TIP:</strong> Tryk Enter for at lave linjeskift. Det gør beskrivelsen mere læsbar!
+            </div>
+
+            <div class="section">
+                <h3>✏️ Rediger Beskrivelse:</h3>
+                <textarea id="newDescription" rows="12" placeholder="Skriv beskrivelsen her...
+Tryk Enter for at lave linjeskift mellem afsnit.
+
+Det gør teksten meget mere læsbar!"></textarea>
+            </div>
+
+            <div class="section">
+                <h3>👁️ Forhåndsvisning:</h3>
+                <div id="preview" class="preview">Skriv noget i tekstfeltet ovenfor...</div>
+            </div>
+
+            <button class="btn btn-success" onclick="saveDescription()">
+                💾 Gem Beskrivelse
+            </button>
+        </div>
+
+        <div id="result"></div>
+    </div>
+
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+        const supabaseUrl = 'https://gfbsuydsquixhrrarjab.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdmYnN1eWRzcXVpeGhycmFyamFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwMjE5NDcsImV4cCI6MjA4NTU5Nzk0N30.M4nA8itsVSpcZb4l1w3cHtl_86KV89BHyt7xNE0hdSY';
+        
+        const supabase = createClient(supabaseUrl, supabaseKey);
+
+        let bmwCar = null;
+
+        function showResult(message, type) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.className = type;
+            resultDiv.innerHTML = message;
+            resultDiv.style.display = 'block';
+        }
+
+        function showLoading() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.className = 'info';
+            resultDiv.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p style="margin-top: 10px;">Arbejder...</p>
+                </div>
+            `;
+            resultDiv.style.display = 'block';
+        }
+
+        window.loadBMW = async function() {
+            showLoading();
+            
+            try {
+                // Find BMW X5 in database
+                const { data: cars, error } = await supabase
+                    .from('cars')
+                    .select('*')
+                    .ilike('brand', '%BMW%')
+                    .ilike('model', '%X5%');
+
+                if (error) throw error;
+
+                if (!cars || cars.length === 0) {
+                    showResult('❌ Ingen BMW X5 fundet i databasen', 'error');
+                    return;
+                }
+
+                bmwCar = cars[0];
+                console.log('Found BMW:', bmwCar);
+
+                // Show current description
+                const currentDesc = bmwCar.description || 'Ingen beskrivelse';
+                document.getElementById('currentDescription').textContent = currentDesc;
+                document.getElementById('newDescription').value = currentDesc;
+                document.getElementById('preview').textContent = currentDesc;
+
+                document.getElementById('editSection').style.display = 'block';
+
+                showResult(`✅ Fandt BMW X5 (ID: ${bmwCar.id})`, 'success');
+
+            } catch (error) {
+                console.error('Error:', error);
+                showResult(`❌ Fejl: ${error.message}`, 'error');
+            }
+        };
+
+        // Live preview
+        document.addEventListener('DOMContentLoaded', () => {
+            const textarea = document.getElementById('newDescription');
+            const preview = document.getElementById('preview');
+            
+            if (textarea && preview) {
+                textarea.addEventListener('input', () => {
+                    const text = textarea.value;
+                    preview.textContent = text || 'Skriv noget i tekstfeltet ovenfor...';
+                });
+            }
+        });
+
+        window.saveDescription = async function() {
+            if (!bmwCar) {
+                showResult('❌ Hent BMW X5 først!', 'error');
+                return;
+            }
+
+            const newDesc = document.getElementById('newDescription').value;
+            
+            if (!newDesc.trim()) {
+                showResult('❌ Beskrivelsen kan ikke være tom!', 'error');
+                return;
+            }
+
+            showLoading();
+
+            try {
+                // Update description
+                const { data, error } = await supabase
+                    .from('cars')
+                    .update({ 
+                        description: newDesc,
+                        updated_at: new Date().toISOString()
+                    })
+                    .eq('id', bmwCar.id)
+                    .select();
+
+                if (error) throw error;
+
+                console.log('Updated:', data);
+
+                // Update display
+                document.getElementById('currentDescription').textContent = newDesc;
+
+                showResult(`
+                    ✅ Beskrivelse opdateret succesfuldt!<br><br>
+                    <strong>Genindlæs hjemmesiden for at se ændringerne!</strong><br><br>
+                    Beskrivelsen vil nu vises med linjeskift på bil-detaljer siden.
+                `, 'success');
+
+            } catch (error) {
+                console.error('Error:', error);
+                showResult(`❌ Fejl ved opdatering: ${error.message}`, 'error');
+            }
+        };
+    </script>
+</body>
+</html>

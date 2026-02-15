@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tilføj Bil fra Bilbasen - Nordic Autos</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #6b7280;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #374151;
+        }
+        input[type="url"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        input[type="url"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            display: none;
+        }
+        .success {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            border: 2px solid #dc3545;
+            color: #721c24;
+        }
+        .info {
+            background: #d1ecf1;
+            border: 2px solid #0c5460;
+            color: #0c5460;
+        }
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .preview {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+        }
+        .preview h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        .preview-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+        }
+        .preview-item strong {
+            color: #374151;
+        }
+        .images-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .images-preview img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid #e5e7eb;
+        }
+        .example {
+            background: #f3f4f6;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: #6b7280;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚗 Tilføj Bil fra Bilbasen</h1>
+        <p class="subtitle">Indsæt linket til bilen på Bilbasen, og vi henter automatisk alle data</p>
+
+        <div class="warning">
+            <strong>⚠️ VIGTIGT:</strong> Dette er en DEMO version. Bilbasen tillader ikke direkte scraping af deres hjemmeside.<br><br>
+            <strong>Løsning:</strong> Du skal manuelt kopiere data fra Bilbasen og indsætte i formularen nedenfor.
+        </div>
+
+        <form id="carForm">
+            <div class="input-group">
+                <label>🔗 Bilbasen Link (til reference)</label>
+                <input type="url" id="bilbasenUrl" placeholder="https://www.bilbasen.dk/brugt/bil/..." />
+                <div class="example">Eksempel: https://www.bilbasen.dk/brugt/bil/bmw/x5/30-xdrive45e-m-sport-aut-5d/7584893</div>
+            </div>
+
+            <div class="input-group">
+                <label>🚙 Mærke *</label>
+                <input type="text" id="brand" required placeholder="BMW" />
+            </div>
+
+            <div class="input-group">
+                <label>🏎️ Model *</label>
+                <input type="text" id="model" required placeholder="X5" />
+            </div>
+
+            <div class="input-group">
+                <label>✨ Variant</label>
+                <input type="text" id="variant" placeholder="3,0 xDrive45e M-Sport" />
+            </div>
+
+            <div class="input-group">
+                <label>📅 Årgang *</label>
+                <input type="number" id="year" required placeholder="2023" min="1900" max="2030" />
+            </div>
+
+            <div class="input-group">
+                <label>🛣️ Kilometerstand *</label>
+                <input type="number" id="mileage" required placeholder="32000" min="0" />
+            </div>
+
+            <div class="input-group">
+                <label>💰 Pris (DKK) *</label>
+                <input type="number" id="price" required placeholder="340000" min="0" />
+            </div>
+
+            <div class="input-group">
+                <label>⛽ Brændstof *</label>
+                <select id="fuelType" required style="width: 100%; padding: 15px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 16px;">
+                    <option value="">Vælg brændstof</option>
+                    <option value="Benzin">Benzin</option>
+                    <option value="Diesel">Diesel</option>
+                    <option value="El">El</option>
+                    <option value="Hybrid">Hybrid</option>
+                    <option value="Plug-in Hybrid">Plug-in Hybrid</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>🚗 Karrosseri *</label>
+                <select id="bodyType" required style="width: 100%; padding: 15px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 16px;">
+                    <option value="">Vælg karrosseri</option>
+                    <option value="SUV">SUV</option>
+                    <option value="Sedan">Sedan</option>
+                    <option value="Stationcar">Stationcar</option>
+                    <option value="Coupe">Coupe</option>
+                    <option value="Cabriolet">Cabriolet</option>
+                    <option value="Hatchback">Hatchback</option>
+                    <option value="Van">Van</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>🐎 Hestekræfter</label>
+                <input type="number" id="horsepower" placeholder="394" min="0" />
+            </div>
+
+            <div class="input-group">
+                <label>📝 Beskrivelse (brug Enter for linjeskift)</label>
+                <textarea id="description" rows="8" style="width: 100%; padding: 15px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 16px; font-family: inherit;" placeholder="BMW X5 3,0 xDrive45e M-Sport
+
+Leasingtilbud
+Ydelse pr. md.: kr. 3.995 ekskl. moms
+
+🚘 Køretøjsinformation
+• BMW X5 3,0 xDrive45e M-Sport
+• Årgang: 2023"></textarea>
+            </div>
+
+            <div class="input-group">
+                <label>🖼️ Billede URLs (én per linje)</label>
+                <textarea id="images" rows="5" style="width: 100%; padding: 15px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 16px; font-family: 'Courier New', monospace;" placeholder="https://example.com/image1.jpg
+https://example.com/image2.jpg
+https://example.com/image3.jpg"></textarea>
+                <div class="example">Højreklik på billederne på Bilbasen og vælg "Kopier billedadresse"</div>
+            </div>
+
+            <div class="input-group">
+                <label>✨ Ekstraudstyr (én per linje)</label>
+                <textarea id="features" rows="6" style="width: 100%; padding: 15px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 16px; font-family: inherit;" placeholder="Læder
+Navigation
+Parkeringssensor
+Adaptiv fartpilot
+Panoramaglastag"></textarea>
+            </div>
+
+            <button type="submit" class="btn" id="submitBtn">
+                💾 Tilføj Bil til Database
+            </button>
+        </form>
+
+        <div id="preview" class="preview"></div>
+        <div id="result"></div>
+    </div>
+
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+        const supabaseUrl = 'https://gfbsuydsquixhrrarjab.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdmYnN1eWRzcXVpeGhycmFyamFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwMjE5NDcsImV4cCI6MjA4NTU5Nzk0N30.M4nA8itsVSpcZb4l1w3cHtl_86KV89BHyt7xNE0hdSY';
+        
+        const supabase = createClient(supabaseUrl, supabaseKey);
+
+        function showResult(message, type) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.className = type;
+            resultDiv.innerHTML = message;
+            resultDiv.style.display = 'block';
+            
+            // Scroll to result
+            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        document.getElementById('carForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = '⏳ Tilføjer bil...';
+            
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'none';
+
+            try {
+                // Get form data
+                const featuresText = document.getElementById('features').value;
+                const features = featuresText.split('\n').map(f => f.trim()).filter(f => f.length > 0);
+                
+                const imagesText = document.getElementById('images').value;
+                const images = imagesText.split('\n').map(img => img.trim()).filter(img => img.length > 0);
+
+                const carData = {
+                    brand: document.getElementById('brand').value.trim(),
+                    model: document.getElementById('model').value.trim(),
+                    variant: document.getElementById('variant').value.trim() || null,
+                    year: parseInt(document.getElementById('year').value),
+                    mileage: parseInt(document.getElementById('mileage').value),
+                    price: parseInt(document.getElementById('price').value),
+                    fuelType: document.getElementById('fuelType').value,
+                    bodyType: document.getElementById('bodyType').value,
+                    horsepower: parseInt(document.getElementById('horsepower').value) || null,
+                    status: 'available',
+                    description: document.getElementById('description').value.trim() || null,
+                    features: features.length > 0 ? features : [],
+                    images: images.length > 0 ? images : [],
+                    isNew: false,
+                    specifications: {
+                        engine: 'N/A',
+                        transmission: 'Automatisk',
+                        drivetrain: 'N/A',
+                        acceleration: 'N/A',
+                        topSpeed: 'N/A',
+                        fuelConsumption: 'N/A'
+                    },
+                    history: {
+                        previousOwners: 1,
+                        serviceHistory: true,
+                        accidents: false
+                    }
+                };
+
+                console.log('📤 Gemmer bil:', carData);
+
+                // Insert into Supabase
+                const { data, error } = await supabase
+                    .from('cars')
+                    .insert([carData])
+                    .select();
+
+                if (error) {
+                    throw error;
+                }
+
+                console.log('✅ Success:', data);
+
+                showResult(`
+                    <h3 style="color: #28a745; margin-bottom: 15px;">✅ Bil tilføjet succesfuldt!</h3>
+                    <div style="background: white; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                        <strong>ID:</strong> ${data[0].id}<br>
+                        <strong>Bil:</strong> ${data[0].brand} ${data[0].model} ${data[0].variant || ''}<br>
+                        <strong>Årgang:</strong> ${data[0].year}<br>
+                        <strong>Pris:</strong> ${data[0].price.toLocaleString('da-DK')} DKK<br>
+                        <strong>Billeder:</strong> ${images.length} stk
+                    </div>
+                    <p style="margin-top: 15px;">
+                        <strong>🎉 Bilen er nu synlig på hjemmesiden!</strong><br>
+                        <a href="lagerbiler.html" style="color: #667eea; text-decoration: underline;">Se lagerbiler</a>
+                    </p>
+                `, 'success');
+
+                // Reset form
+                document.getElementById('carForm').reset();
+
+            } catch (error) {
+                console.error('❌ Error:', error);
+                showResult(`
+                    <h3 style="color: #dc3545; margin-bottom: 10px;">❌ Fejl ved tilføjelse af bil</h3>
+                    <p><strong>Fejlbesked:</strong> ${error.message}</p>
+                    <p style="margin-top: 10px;">Tjek at alle påkrævede felter er udfyldt korrekt.</p>
+                `, 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = '💾 Tilføj Bil til Database';
+            }
+        });
+
+        // Auto-fill example (for testing)
+        window.fillExample = function() {
+            document.getElementById('brand').value = 'BMW';
+            document.getElementById('model').value = 'X5';
+            document.getElementById('variant').value = '3,0 xDrive45e M-Sport';
+            document.getElementById('year').value = '2023';
+            document.getElementById('mileage').value = '32000';
+            document.getElementById('price').value = '340000';
+            document.getElementById('fuelType').value = 'Plug-in Hybrid';
+            document.getElementById('bodyType').value = 'SUV';
+            document.getElementById('horsepower').value = '394';
+        };
+    </script>
+</body>
+</html>

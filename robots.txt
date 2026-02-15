@@ -2,21 +2,30 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://nordicautos.dk/sitemap.xml
+Sitemap: https://nordicautos.vercel.app/sitemap.xml
 
 # Block admin areas from search engines - SECURITY
 Disallow: /admin/
-Disallow: /debug-admin.html
+Disallow: /debug-*
 Disallow: /test-*
-Disallow: /implementer-billeder.html
+Disallow: /fix-*
+Disallow: /update-*
+Disallow: /edit-*
+Disallow: /check-*
+Disallow: /simple-*
+Disallow: /verify-*
 Disallow: /*.log
-Disallow: /*.txt
-Disallow: /SIKKERHEDSGUIDE.md
+Disallow: /*.md
+Disallow: /*.sql
+Disallow: /*.zip
 
 # Block sensitive files - SECURITY
-Disallow: /firebase-config.js
+Disallow: /supabase-config.js
+Disallow: /emailjs-config.js
 Disallow: /send-email.php
 Disallow: /.htaccess
+Disallow: /.env
+Disallow: /vercel.json
 
 # Allow important pages
 Allow: /index.html
@@ -27,10 +36,25 @@ Allow: /bil-detaljer.html
 Allow: /privatlivspolitik.html
 Allow: /cookies.html
 Allow: /handelsbetingelser.html
+Allow: /tak-for-din-besked.html
 
 # Allow assets
 Allow: /assets/
 Allow: /components/
 
-# Crawl delay (optional)
+# Crawl delay (optional - be nice to servers)
 Crawl-delay: 1
+
+# Specific bot instructions
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /assets/images/
+
+# Block bad bots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /

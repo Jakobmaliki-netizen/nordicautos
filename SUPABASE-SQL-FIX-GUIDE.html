@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔧 Supabase SQL Fix Guide</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+        .step {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+        .step-number {
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .step-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .step-content {
+            color: #555;
+            line-height: 1.6;
+            margin-left: 40px;
+        }
+        .code-box {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            position: relative;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .copy-btn:hover {
+            background: #5568d3;
+        }
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .link-btn {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        .link-btn:hover {
+            background: #5568d3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Supabase SQL Fix Guide</h1>
+        <p class="subtitle">Følg disse trin for at fixe din Supabase database</p>
+
+        <div class="warning">
+            <strong>⚠️ VIGTIGT:</strong> Du skal køre BEGGE SQL fixes i Supabase for at biler kan gemmes korrekt.
+        </div>
+
+        <!-- STEP 1 -->
+        <div class="step">
+            <div class="step-title">
+                <span class="step-number">1</span>
+                Åbn Supabase SQL Editor
+            </div>
+            <div class="step-content">
+                <p>Gå til din Supabase dashboard:</p>
+                <a href="https://supabase.com/dashboard/project/gfbsuydsquixhrrarjab/sql/new" target="_blank" class="link-btn">
+                    🔗 Åbn Supabase SQL Editor
+                </a>
+            </div>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="step">
+            <div class="step-title">
+                <span class="step-number">2</span>
+                Kør SQL Fix #1: Auto-Increment ID
+            </div>
+            <div class="step-content">
+                <p>Kopier denne SQL kode og kør den i SQL Editor:</p>
+                <div class="code-box">
+                    <button class="copy-btn" onclick="copyCode('sql1')">📋 Kopier</button>
+                    <pre id="sql1">-- Fix 1: Auto-Increment ID
+CREATE SEQUENCE IF NOT EXISTS cars_id_seq;
+SELECT setval('cars_id_seq', COALESCE((SELECT MAX(id) FROM cars), 0) + 1, false);
+ALTER TABLE cars ALTER COLUMN id SET DEFAULT nextval('cars_id_seq');
+ALTER SEQUENCE cars_id_seq OWNED BY cars.id;</pre>
+                </div>
+                <p><strong>Tryk på "RUN" knappen i Supabase</strong></p>
+            </div>
+        </div>
+
+        <!-- STEP 3 -->
+        <div class="step">
+            <div class="step-title">
+                <span class="step-number">3</span>
+                Kør SQL Fix #2: Plug-in Hybrid Support
+            </div>
+            <div class="step-content">
+                <p>Kopier denne SQL kode og kør den i SQL Editor:</p>
+                <div class="code-box">
+                    <button class="copy-btn" onclick="copyCode('sql2')">📋 Kopier</button>
+                    <pre id="sql2">-- Fix 2: Add Plug-in Hybrid support
+ALTER TABLE cars DROP CONSTRAINT IF EXISTS cars_fuelType_check;
+ALTER TABLE cars ADD CONSTRAINT cars_fuelType_check 
+CHECK ("fuelType" IN ('Benzin', 'Diesel', 'El', 'Hybrid', 'Plug-in Hybrid'));</pre>
+                </div>
+                <p><strong>Tryk på "RUN" knappen i Supabase</strong></p>
+            </div>
+        </div>
+
+        <!-- STEP 4 -->
+        <div class="step">
+            <div class="step-title">
+                <span class="step-number">4</span>
+                Test at det virker
+            </div>
+            <div class="step-content">
+                <p>Åbn <strong>test-sql-fix.html</strong> i din browser og kør alle 3 tests.</p>
+                <p>Alle tests skal vise ✅ SUCCESS!</p>
+            </div>
+        </div>
+
+        <div class="success">
+            <strong>✅ Når begge SQL fixes er kørt:</strong><br>
+            Du kan bruge <strong>simple-add-car.html</strong> til at tilføje biler!<br>
+            ID bliver automatisk genereret og "Plug-in Hybrid" virker.
+        </div>
+
+        <div class="warning">
+            <strong>💡 TIP:</strong> Hvis du får fejl, prøv at køre SQL'en igen. Nogle gange skal Supabase opdatere sin cache.
+        </div>
+    </div>
+
+    <script>
+        function copyCode(id) {
+            const code = document.getElementById(id).textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                alert('✅ SQL kopieret! Indsæt den i Supabase SQL Editor og tryk RUN');
+            });
+        }
+    </script>
+</body>
+</html>

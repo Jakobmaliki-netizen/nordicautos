@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leasingydelse Guide - Nordic Autos</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 32px;
+        }
+        h2 {
+            color: #495057;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+        .success {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            color: #155724;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .info {
+            background: #d1ecf1;
+            border: 2px solid #0c5460;
+            color: #0c5460;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .step {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+        }
+        .code {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        ol {
+            margin-left: 20px;
+            line-height: 1.8;
+        }
+        li {
+            margin: 10px 0;
+        }
+        strong {
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💰 Leasingydelse Guide - Nordic Autos</h1>
+
+        <div class="success">
+            <strong>✅ HVAD ER LAVET:</strong><br>
+            • Tilføjet support for månedlig leasingydelse i systemet<br>
+            • Lagerbiler viser nu "Leasingydelse pr. måned" i stedet for "Pris" når leasingydelse findes<br>
+            • Hvis ingen leasingydelse findes, vises normal pris som før
+        </div>
+
+        <h2>🎯 Trin 1: Tilføj kolonne til Supabase</h2>
+
+        <div class="step">
+            <strong>Kør denne SQL i Supabase:</strong>
+            <ol>
+                <li>Gå til Supabase: <a href="https://supabase.com/dashboard" target="_blank">https://supabase.com/dashboard</a></li>
+                <li>Vælg dit projekt: gfbsuydsquixhrrarjab</li>
+                <li>Klik på <strong>SQL Editor</strong> i venstre menu</li>
+                <li>Klik <strong>New Query</strong></li>
+                <li>Kopier og indsæt denne SQL:</li>
+            </ol>
+
+            <div class="code">ALTER TABLE cars 
+ADD COLUMN IF NOT EXISTS "monthlyLeasing" INTEGER;
+
+COMMENT ON COLUMN cars."monthlyLeasing" IS 'Monthly leasing payment in DKK';</div>
+
+            <ol start="6">
+                <li>Klik <strong>Run</strong> (eller tryk Ctrl+Enter)</li>
+                <li>Du skulle se: "Success. No rows returned"</li>
+            </ol>
+
+            <p><strong>Alternativt:</strong> Åbn filen <code>add-monthly-leasing-column.sql</code> og kopier SQL'en derfra.</p>
+        </div>
+
+        <h2>🎯 Trin 2: Opdater eksisterende biler</h2>
+
+        <div class="step">
+            <strong>Opdater de 4 biler med leasingydelser:</strong>
+            <ol>
+                <li>Åbn filen: <code>update-leasing-prices.html</code></li>
+                <li>Klik på den grønne knap: <strong>"OPDATER ALLE LEASINGYDELSER"</strong></li>
+                <li>Vent på bekræftelse</li>
+            </ol>
+
+            <p><strong>Bilerne der opdateres:</strong></p>
+            <ul>
+                <li>Mercedes GLE350d → 2.250 kr./md.</li>
+                <li>Audi A7 → 3.000 kr./md.</li>
+                <li>Mercedes A200 → 1.200 kr./md.</li>
+                <li>BMW X5 → 4.993 kr./md.</li>
+            </ul>
+        </div>
+
+        <h2>🎯 Trin 3: Tjek resultatet</h2>
+
+        <div class="step">
+            <strong>Se ændringerne på lagerbiler-siden:</strong>
+            <ol>
+                <li>Åbn: <a href="lagerbiler.html" target="_blank">lagerbiler.html</a></li>
+                <li>Find de 4 biler ovenfor</li>
+                <li>De skulle nu vise "Leasingydelse pr. måned" i stedet for "Pris inkl. afgift"</li>
+                <li>Andre biler (Mini Cooper SE, Mercedes EQA250+, etc.) viser stadig normal pris</li>
+            </ol>
+        </div>
+
+        <h2>📝 Fremover: Tilføj nye biler med leasingydelse</h2>
+
+        <div class="info">
+            <strong>Når du tilføjer nye biler med leasingydelse:</strong><br><br>
+            
+            I de HTML-filer jeg laver til dig (f.eks. <code>add-mercedes-eqa250.html</code>), skal du tilføje denne linje i <code>carData</code> objektet:
+
+            <div class="code">const carData = {
+    brand: 'Mercedes',
+    model: 'EQA250+',
+    variant: 'Progressive Advance 5d',
+    year: 2024,
+    mileage: 24000,
+    price: 259800,
+    <strong style="color: #28a745;">monthlyLeasing: 3500,  // ← Tilføj denne linje (beløb i kr./md.)</strong>
+    fuelType: 'El',
+    bodyType: 'SUV',
+    // ... resten af data
+};</div>
+
+            <p><strong>Vigtigt:</strong></p>
+            <ul>
+                <li>Hvis bilen har leasingydelse: Tilføj <code>monthlyLeasing: BELØB</code></li>
+                <li>Hvis bilen IKKE har leasingydelse: Udelad linjen (eller sæt til <code>null</code>)</li>
+                <li>Beløbet er i hele kroner (uden decimaler)</li>
+            </ul>
+        </div>
+
+        <h2>🔍 Hvordan det virker</h2>
+
+        <div class="step">
+            <strong>Logik på lagerbiler-siden:</strong>
+            <ul>
+                <li>Hvis <code>monthlyLeasing</code> findes → Vis "Leasingydelse pr. måned: X kr./md."</li>
+                <li>Hvis <code>monthlyLeasing</code> IKKE findes → Vis "Pris inkl. afgift: X DKK"</li>
+            </ul>
+
+            <p>Dette betyder at du kan have både leasing-biler og salgs-biler på samme side!</p>
+        </div>
+
+        <div class="success">
+            <strong>🎉 RESULTAT:</strong><br>
+            Efter disse trin vil dine leasingbiler vise månedlig ydelse i stedet for pris på lagerbiler-siden!
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✅ Test SQL Fix - Nordic Autos</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .test-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 15px;
+            transition: transform 0.2s;
+        }
+        .test-btn:hover {
+            transform: translateY(-2px);
+        }
+        .test-btn:active {
+            transform: translateY(0);
+        }
+        #result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            display: none;
+        }
+        .success {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            border: 2px solid #dc3545;
+            color: #721c24;
+        }
+        .info {
+            background: #d1ecf1;
+            border: 2px solid #17a2b8;
+            color: #0c5460;
+        }
+        .result-title {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .result-detail {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+        }
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✅ Test SQL Fix</h1>
+        <p class="subtitle">Tester om auto-increment ID virker efter SQL fix</p>
+
+        <button class="test-btn" onclick="testAutoIncrement()">
+            🧪 Test Auto-Increment ID
+        </button>
+
+        <button class="test-btn" onclick="testPluginHybrid()">
+            🔌 Test Plug-in Hybrid
+        </button>
+
+        <button class="test-btn" onclick="testFullCarSave()">
+            🚗 Test Fuld Bil Gem
+        </button>
+
+        <div id="result"></div>
+    </div>
+
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+        const supabaseUrl = 'https://gfbsuydsquixhrrarjab.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdmYnN1eWRzcXVpeGhycmFyamFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwMjE5NDcsImV4cCI6MjA4NTU5Nzk0N30.M4nA8itsVSpcZb4l1w3cHtl_86KV89BHyt7xNE0hdSY';
+        
+        const supabase = createClient(supabaseUrl, supabaseKey);
+
+        function showResult(title, message, type) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.className = type;
+            resultDiv.innerHTML = `
+                <div class="result-title">${title}</div>
+                <div class="result-detail">${message}</div>
+            `;
+            resultDiv.style.display = 'block';
+        }
+
+        function showLoading() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.className = 'info';
+            resultDiv.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p style="margin-top: 10px;">Tester...</p>
+                </div>
+            `;
+            resultDiv.style.display = 'block';
+        }
+
+        window.testAutoIncrement = async function() {
+            showLoading();
+            
+            try {
+                // Insert WITHOUT specifying ID - should auto-generate
+                const testCar = {
+                    brand: 'TEST',
+                    model: 'Auto-ID Test',
+                    variant: 'Test Variant',
+                    year: 2024,
+                    mileage: 0,
+                    price: 1,
+                    fuelType: 'Benzin',
+                    bodyType: 'Sedan',
+                    status: 'available',
+                    features: [],
+                    images: []
+                };
+
+                console.log('Inserting test car WITHOUT ID:', testCar);
+
+                const { data, error } = await supabase
+                    .from('cars')
+                    .insert([testCar])
+                    .select();
+
+                if (error) throw error;
+
+                const generatedId = data[0].id;
+                console.log('Generated ID:', generatedId);
+
+                // Clean up - delete test car
+                await supabase.from('cars').delete().eq('id', generatedId);
+
+                showResult(
+                    '✅ SUCCESS!',
+                    `Auto-increment virker perfekt!<br><br>
+                    <strong>Genereret ID:</strong> ${generatedId}<br>
+                    <strong>Bil:</strong> ${data[0].brand} ${data[0].model}<br><br>
+                    Test bil blev automatisk slettet igen.`,
+                    'success'
+                );
+
+            } catch (error) {
+                console.error('Error:', error);
+                showResult(
+                    '❌ FEJL',
+                    `Auto-increment virker IKKE endnu.<br><br>
+                    <strong>Fejl:</strong> ${error.message}<br><br>
+                    Har du kørt SQL fix i Supabase?`,
+                    'error'
+                );
+            }
+        };
+
+        window.testPluginHybrid = async function() {
+            showLoading();
+            
+            try {
+                const testCar = {
+                    brand: 'TEST',
+                    model: 'Plug-in Hybrid Test',
+                    year: 2024,
+                    mileage: 0,
+                    price: 1,
+                    fuelType: 'Plug-in Hybrid',  // Testing new fuel type
+                    bodyType: 'SUV',
+                    status: 'available',
+                    features: [],
+                    images: []
+                };
+
+                console.log('Testing Plug-in Hybrid:', testCar);
+
+                const { data, error } = await supabase
+                    .from('cars')
+                    .insert([testCar])
+                    .select();
+
+                if (error) throw error;
+
+                // Clean up
+                await supabase.from('cars').delete().eq('id', data[0].id);
+
+                showResult(
+                    '✅ SUCCESS!',
+                    `Plug-in Hybrid virker!<br><br>
+                    <strong>ID:</strong> ${data[0].id}<br>
+                    <strong>Brændstof:</strong> ${data[0].fuelType}<br><br>
+                    Test bil blev automatisk slettet.`,
+                    'success'
+                );
+
+            } catch (error) {
+                console.error('Error:', error);
+                showResult(
+                    '❌ FEJL',
+                    `Plug-in Hybrid virker IKKE.<br><br>
+                    <strong>Fejl:</strong> ${error.message}<br><br>
+                    Har du kørt SQL fix for fuel type constraint?`,
+                    'error'
+                );
+            }
+        };
+
+        window.testFullCarSave = async function() {
+            showLoading();
+            
+            try {
+                const fullTestCar = {
+                    brand: 'BMW',
+                    model: 'X5',
+                    variant: 'xDrive45e',
+                    year: 2024,
+                    mileage: 5000,
+                    price: 899000,
+                    fuelType: 'Plug-in Hybrid',
+                    bodyType: 'SUV',
+                    horsepower: 394,
+                    status: 'available',
+                    description: 'Test bil med fuld data\nMed linjeskift',
+                    features: ['Læder', 'Navigation', 'Panoramatag'],
+                    images: ['https://via.placeholder.com/800x600'],
+                    isNew: false,
+                    specifications: {
+                        engine: '3.0L I6 + Electric',
+                        transmission: 'Automatisk',
+                        drivetrain: 'AWD',
+                        acceleration: '5.6s',
+                        topSpeed: '235 km/h',
+                        fuelConsumption: '2.1 L/100km'
+                    },
+                    history: {
+                        previousOwners: 1,
+                        serviceHistory: true,
+                        accidents: false
+                    }
+                };
+
+                console.log('Testing full car save:', fullTestCar);
+
+                const { data, error } = await supabase
+                    .from('cars')
+                    .insert([fullTestCar])
+                    .select();
+
+                if (error) throw error;
+
+                const savedCar = data[0];
+
+                // Clean up
+                await supabase.from('cars').delete().eq('id', savedCar.id);
+
+                showResult(
+                    '✅ PERFEKT!',
+                    `Fuld bil gem virker 100%!<br><br>
+                    <strong>ID:</strong> ${savedCar.id}<br>
+                    <strong>Bil:</strong> ${savedCar.brand} ${savedCar.model} ${savedCar.variant}<br>
+                    <strong>Pris:</strong> ${savedCar.price.toLocaleString('da-DK')} DKK<br>
+                    <strong>Brændstof:</strong> ${savedCar.fuelType}<br>
+                    <strong>Features:</strong> ${savedCar.features.length} stk<br><br>
+                    Test bil blev automatisk slettet.<br><br>
+                    <strong>🎉 Alt virker! Du kan nu bruge simple-add-car.html</strong>`,
+                    'success'
+                );
+
+            } catch (error) {
+                console.error('Error:', error);
+                showResult(
+                    '❌ FEJL',
+                    `Fuld bil gem fejlede.<br><br>
+                    <strong>Fejl:</strong> ${error.message}<br><br>
+                    ${error.message.includes('id') ? 'Problem med ID generation' : ''}
+                    ${error.message.includes('fuelType') ? 'Problem med fuel type constraint' : ''}`,
+                    'error'
+                );
+            }
+        };
+    </script>
+</body>
+</html>
