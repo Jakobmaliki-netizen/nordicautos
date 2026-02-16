@@ -321,7 +321,13 @@
                             </h1>
                             <p class="text-xl text-slate-600 dark:text-slate-400 mb-6">${car.variant || car.model}</p>
                             <p class="text-3xl md:text-4xl font-black text-primary mb-8">
-                                ${car.price.toLocaleString('da-DK')} DKK
+                                ${(() => {
+                                    const monthlyLeasing = car.monthlyLeasing || (car.specifications && car.specifications.monthlyLeasing);
+                                    if (monthlyLeasing) {
+                                        return `${monthlyLeasing.toLocaleString('da-DK')} kr./md.`;
+                                    }
+                                    return `${car.price.toLocaleString('da-DK')} DKK`;
+                                })()}
                             </p>
                         </div>
 
