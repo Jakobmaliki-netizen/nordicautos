@@ -141,7 +141,17 @@ class CarDetails {
         // Car price
         const priceElement = document.getElementById('car-price');
         if (priceElement) {
-            priceElement.textContent = `${this.formatPrice(this.car.price)} DKK`;
+            const monthlyLeasing = this.getMonthlyLeasing(this.car);
+            if (monthlyLeasing) {
+                priceElement.textContent = `${this.formatMonthlyLeasing(monthlyLeasing)} kr./md.`;
+                // Update label
+                const priceLabel = priceElement.previousElementSibling;
+                if (priceLabel && priceLabel.textContent.includes('Pris')) {
+                    priceLabel.textContent = 'Leasingydelse pr. måned';
+                }
+            } else {
+                priceElement.textContent = `${this.formatPrice(this.car.price)} DKK`;
+            }
         }
 
         // Car badges
@@ -630,8 +640,8 @@ class CarDetails {
                     </div>
                     <div class="flex items-center justify-between">
                         <div class="flex flex-col">
-                            <span class="text-slate-500 dark:text-slate-400 text-xs font-medium">Pris inkl. afgift</span>
-                            <span class="text-slate-900 dark:text-white text-lg font-black tracking-tight">${this.formatPrice(car.price)} DKK</span>
+                            <span class="text-slate-500 dark:text-slate-400 text-xs font-medium">${this.getMonthlyLeasing(car) ? 'Leasingydelse pr. måned' : 'Pris inkl. afgift'}</span>
+                            <span class="text-slate-900 dark:text-white text-lg font-black tracking-tight">${this.getMonthlyLeasing(car) ? this.formatMonthlyLeasing(this.getMonthlyLeasing(car)) : this.formatPrice(car.price) + ' DKK'}</span>
                         </div>
                         <button class="size-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-border-dark text-slate-600 dark:text-white hover:bg-primary hover:text-white transition-all">
                             <span class="material-symbols-outlined text-sm">arrow_forward</span>
@@ -788,6 +798,31 @@ class CarDetails {
                 }
             }
         }, { passive: true });
+    }
+
+    /**
+     * Get monthly leasing from car object (checks both monthlyLeasing field and specifications.monthlyLeasing)
+     */
+    getMonthlyLeasing(car) {
+        // Check direct field first
+        if (car.monthlyLeasing) {
+            return car.monthlyLeasing;
+        }
+        // Check specifications object
+        if (car.specifications && car.specifications.monthlyLeasing) {
+            return car.specifications.monthlyLeasing;
+        }
+        return null;
+    }
+
+    /**
+     * Format monthly leasing payment
+     */
+    formatMonthlyLeasing(amount) {
+        if (!amount || amount <= 0) {
+            return 'Kontakt os';
+        }
+        return amount.toLocaleString('da-DK');
     }
 
     /**
