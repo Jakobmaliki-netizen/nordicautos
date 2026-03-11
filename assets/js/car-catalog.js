@@ -71,6 +71,13 @@ class CarCatalog {
                 // Filter out cars without status or set to available
                 this.cars = this.cars.filter(car => !car.status || car.status === 'available');
                 
+                // Hide Mercedes A200 (sold)
+                this.cars = this.cars.filter(car => {
+                    const isMercedes = car.brand && car.brand.toLowerCase().includes('mercedes');
+                    const isA200 = car.model && car.model.toLowerCase().includes('a200');
+                    return !(isMercedes && isA200);
+                });
+                
                 window.carsData = this.cars; // Make available globally
                 
                 return;
