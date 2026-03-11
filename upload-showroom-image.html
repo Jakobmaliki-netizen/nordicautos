@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Showroom Billede - Nordic Autos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        h1 {
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .subtitle {
+            color: #718096;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+        
+        .upload-area {
+            border: 3px dashed #cbd5e0;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+        
+        .upload-area:hover {
+            border-color: #667eea;
+            background: #f7fafc;
+        }
+        
+        .upload-area.dragover {
+            border-color: #667eea;
+            background: #edf2f7;
+        }
+        
+        .upload-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        
+        input[type="file"] {
+            display: none;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .preview {
+            margin-top: 30px;
+            display: none;
+        }
+        
+        .preview img {
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .result {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .result h3 {
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+        
+        .code-box {
+            background: #2d3748;
+            color: #68d391;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            overflow-x: auto;
+            margin-bottom: 15px;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        
+        .success {
+            background: #c6f6d5;
+            color: #22543d;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .instructions {
+            background: #bee3f8;
+            color: #2c5282;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            line-height: 1.6;
+        }
+        
+        .instructions ol {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏢 Upload Showroom Billede</h1>
+        <p class="subtitle">Upload billedet du sendte, og få det automatisk sat ind i Om Os siden</p>
+        
+        <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+            <div class="upload-icon">📸</div>
+            <p style="color: #4a5568; font-size: 18px; margin-bottom: 10px;">Klik for at vælge billede</p>
+            <p style="color: #a0aec0; font-size: 14px;">eller træk og slip billedet her</p>
+        </div>
+        
+        <input type="file" id="fileInput" accept="image/*">
+        
+        <div class="preview" id="preview">
+            <h3 style="color: #2d3748; margin-bottom: 15px;">📸 Preview (16:10 format):</h3>
+            <img id="previewImg" alt="Preview">
+        </div>
+        
+        <div class="result" id="result">
+            <h3>✅ Billedet er klar!</h3>
+            
+            <div class="instructions">
+                <strong>📋 Sådan sætter du billedet ind:</strong>
+                <ol>
+                    <li>Åbn filen <code>om-os.html</code> i din editor</li>
+                    <li>Find linjen der starter med <code>&lt;img src="https://images.unsplash.com...</code></li>
+                    <li>Erstat hele <code>src="..."</code> delen med koden nedenfor</li>
+                    <li>Gem filen og push til GitHub</li>
+                </ol>
+            </div>
+            
+            <div style="margin-top: 20px;">
+                <strong style="color: #2d3748;">Kode til om-os.html:</strong>
+                <div class="code-box" id="codeBox"></div>
+                <button class="btn" onclick="copyCode()">📋 Kopier Kode</button>
+            </div>
+        </div>
+        
+        <div class="success" id="success">
+            ✅ Koden er kopieret! Sæt den nu ind i om-os.html
+        </div>
+    </div>
+
+    <script>
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const preview = document.getElementById('preview');
+        const previewImg = document.getElementById('previewImg');
+        const result = document.getElementById('result');
+        const codeBox = document.getElementById('codeBox');
+        const success = document.getElementById('success');
+        
+        let imageData = '';
+        
+        // Drag and drop
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+        
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+        
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith('image/')) {
+                processImage(file);
+            }
+        });
+        
+        // File input
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                processImage(file);
+            }
+        });
+        
+        function processImage(file) {
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    // Create canvas with 16:10 aspect ratio
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    
+                    // Target dimensions (16:10 aspect ratio)
+                    const targetWidth = 1600;
+                    const targetHeight = 1000;
+                    
+                    canvas.width = targetWidth;
+                    canvas.height = targetHeight;
+                    
+                    // Calculate scaling to cover the canvas
+                    const scale = Math.max(targetWidth / img.width, targetHeight / img.height);
+                    const scaledWidth = img.width * scale;
+                    const scaledHeight = img.height * scale;
+                    
+                    // Center the image
+                    const x = (targetWidth - scaledWidth) / 2;
+                    const y = (targetHeight - scaledHeight) / 2;
+                    
+                    // Draw image
+                    ctx.drawImage(img, x, y, scaledWidth, scaledHeight);
+                    
+                    // Convert to base64 with high quality
+                    imageData = canvas.toDataURL('image/jpeg', 0.92);
+                    
+                    // Show preview
+                    previewImg.src = imageData;
+                    preview.style.display = 'block';
+                    
+                    // Generate code
+                    const code = `src="${imageData}"`;
+                    codeBox.textContent = code;
+                    result.style.display = 'block';
+                    
+                    // Scroll to result
+                    result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                };
+                img.src = e.target.result;
+            };
+            
+            reader.readAsDataURL(file);
+        }
+        
+        function copyCode() {
+            const code = codeBox.textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                success.style.display = 'block';
+                setTimeout(() => {
+                    success.style.display = 'none';
+                }, 3000);
+            });
+        }
+    </script>
+</body>
+</html>

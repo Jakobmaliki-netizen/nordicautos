@@ -341,18 +341,34 @@
             
             // Save to localStorage
             try {
+                console.log('🔄 Starter gemning af showroom billede...');
+                
                 // Get existing content or create new
                 let content = {};
                 const savedContent = localStorage.getItem('nordic-autos-content');
                 if (savedContent) {
+                    console.log('📦 Eksisterende content fundet');
                     content = JSON.parse(savedContent);
+                } else {
+                    console.log('📦 Opretter nyt content objekt');
                 }
                 
                 // Add showroom image
                 content.showroomImage = processedImageData;
+                console.log('📸 Billede tilføjet til content objekt');
+                console.log('📊 Billede størrelse:', (processedImageData.length / 1024).toFixed(2), 'KB');
                 
                 // Save back to localStorage
                 localStorage.setItem('nordic-autos-content', JSON.stringify(content));
+                console.log('💾 Gemt til localStorage!');
+                
+                // Verify it was saved
+                const verify = localStorage.getItem('nordic-autos-content');
+                if (verify && JSON.parse(verify).showroomImage) {
+                    console.log('✅ Verificeret: Billede er gemt korrekt!');
+                } else {
+                    console.error('❌ Verificering fejlede!');
+                }
                 
                 // Show success
                 success.style.display = 'block';
@@ -363,11 +379,11 @@
                     success.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 }, 100);
                 
-                console.log('✅ Showroom billede gemt i localStorage!');
+                alert('✅ Showroom billede gemt! Åbn om-os.html for at se det.');
                 
             } catch (error) {
                 console.error('❌ Fejl ved gemning:', error);
-                alert('Fejl ved gemning af billede. Prøv igen eller vælg et mindre billede.');
+                alert('Fejl ved gemning: ' + error.message + '\n\nPrøv et mindre billede.');
                 saveBtn.disabled = false;
                 saveBtn.textContent = '💾 Gem Showroom Billede';
             }

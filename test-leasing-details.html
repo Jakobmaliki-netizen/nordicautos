@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Leasingydelse på Detaljer - Nordic Autos</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 30px;
+        }
+        .car-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+        }
+        .price {
+            font-size: 24px;
+            font-weight: bold;
+            color: #28a745;
+            margin: 10px 0;
+        }
+        .label {
+            color: #6c757d;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test Leasingydelse på Bil-Detaljer</h1>
+
+        <div id="results"></div>
+    </div>
+
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+        const supabaseUrl = 'https://gfbsuydsquixhrrarjab.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdmYnN1eWRzcXVpeGhycmFyamFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwMjE5NDcsImV4cCI6MjA4NTU5Nzk0N30.M4nA8itsVSpcZb4l1w3cHtl_86KV89BHyt7xNE0hdSY';
+        
+        const supabase = createClient(supabaseUrl, supabaseKey);
+
+        async function testLeasing() {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '<p>Henter biler fra Supabase...</p>';
+
+            try {
+                const { data: cars, error } = await supabase
+                    .from('cars')
+                    .select('*')
+                    .in('brand', ['Mercedes', 'Audi', 'BMW']);
+
+                if (error) throw error;
+
+                let html = '';
+
+                cars.forEach(car => {
+                    const monthlyLeasing = car.monthlyLeasing || (car.specifications && car.specifications.monthlyLeasing);
+                    
+                    html += `
+                        <div class="car-card">
+                            <h3>${car.brand} ${car.model}</h3>
+                            <div class="label">${monthlyLeasing ? 'Leasingydelse pr. måned' : 'Pris inkl. afgift'}</div>
+                            <div class="price">
+                                ${monthlyLeasing ? monthlyLeasing.toLocaleString('da-DK') + ' kr./md.' : car.price.toLocaleString('da-DK') + ' DKK'}
+                            </div>
+                            <small style="color: #6c757d;">
+                                monthlyLeasing: ${car.monthlyLeasing || 'null'}<br>
+                                specifications.monthlyLeasing: ${car.specifications?.monthlyLeasing || 'null'}
+                            </small>
+                        </div>
+                    `;
+                });
+
+                resultsDiv.innerHTML = html;
+
+            } catch (error) {
+                resultsDiv.innerHTML = `<div class="car-card" style="border-left-color: #dc3545;">
+                    <strong>Fejl:</strong> ${error.message}
+                </div>`;
+            }
+        }
+
+        testLeasing();
+    </script>
+</body>
+</html>
