@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fremhæv Skoda Enyaq - Nordic Autos</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 40px 20px; }
+        .container { max-width: 800px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); padding: 40px; }
+        h1 { color: #2d3748; margin-bottom: 10px; font-size: 32px; }
+        .subtitle { color: #718096; margin-bottom: 30px; font-size: 18px; }
+        .info-box { background: #f7fafc; padding: 30px; border-radius: 12px; margin-bottom: 30px; border-left: 4px solid #667eea; }
+        .info-box h2 { color: #2d3748; margin-bottom: 15px; font-size: 20px; }
+        .info-box ul { margin-left: 20px; color: #4a5568; line-height: 1.8; }
+        .info-box li { margin-bottom: 8px; }
+        .btn { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 18px 40px; border-radius: 12px; font-size: 18px; font-weight: 700; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); display: block; width: 100%; margin-top: 30px; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .result { margin-top: 20px; padding: 20px; border-radius: 12px; display: none; }
+        .result.success { background: #c6f6d5; color: #22543d; }
+        .result.error { background: #fed7d7; color: #742a2a; }
+        .loading { display: none; text-align: center; margin-top: 20px; }
+        .spinner { border: 4px solid #f3f4f6; border-top: 4px solid #667eea; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .badge-preview { display: inline-block; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⭐ Fremhæv Skoda Enyaq</h1>
+        <p class="subtitle">Sæt Skoda Enyaq øverst med "Skarp Pris" badge</p>
+        
+        <div class="info-box">
+            <h2>📋 Hvad denne opdatering gør:</h2>
+            <ul>
+                <li>✅ Tilføjer <span class="badge-preview">SKARP PRIS</span> badge til Skoda Enyaq</li>
+                <li>✅ Sætter bilen som "featured" så den vises øverst</li>
+                <li>✅ Fremhæver bilen med speciel styling</li>
+                <li>✅ Bilen vil fange opmærksomhed på lagerbiler-siden</li>
+            </ul>
+        </div>
+        
+        <button class="btn" onclick="updateSkoda()">⭐ Fremhæv Skoda Enyaq</button>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p style="color: #718096; margin-top: 10px;">Opdaterer bil...</p>
+        </div>
+        
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://gfbsuydsquixhrrarjab.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdmYnN1eWRzcXVpeGhycmFyamFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwMjE5NDcsImV4cCI6MjA4NTU5Nzk0N30.M4nA8itsVSpcZb4l1w3cHtl_86KV89BHyt7xNE0hdSY';
+        const { createClient } = supabase;
+        window.supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        console.log('✅ Supabase client initialized');
+        
+        async function updateSkoda() {
+            const btn = document.querySelector('.btn');
+            const loading = document.getElementById('loading');
+            const result = document.getElementById('result');
+            
+            btn.disabled = true;
+            btn.textContent = '⏳ Opdaterer...';
+            loading.style.display = 'block';
+            result.style.display = 'none';
+            
+            try {
+                if (!window.supabaseClient) throw new Error('Supabase ikke tilgængelig');
+                
+                // First, find the Skoda Enyaq
+                console.log('🔍 Søger efter Skoda Enyaq...');
+                const { data: cars, error: searchError } = await window.supabaseClient
+                    .from('cars')
+                    .select('*')
+                    .ilike('brand', '%skoda%')
+                    .ilike('model', '%enyaq%');
+                
+                if (searchError) throw searchError;
+                
+                if (!cars || cars.length === 0) {
+                    throw new Error('Kunne ikke finde Skoda Enyaq i databasen');
+                }
+                
+                const skoda = cars[0];
+                console.log('✅ Fandt Skoda Enyaq:', skoda);
+                
+                // Update the car to be featured with "Skarp Pris" badge
+                console.log('⭐ Opdaterer Skoda Enyaq...');
+                
+                // Get current specifications or create empty object
+                const currentSpecs = skoda.specifications || {};
+                
+                const { data: updatedCar, error: updateError } = await window.supabaseClient
+                    .from('cars')
+                    .update({
+                        isNew: true,  // This will make it show at the top
+                        specifications: {
+                            ...currentSpecs,
+                            featured: true  // Mark as featured in specifications
+                        }
+                    })
+                    .eq('id', skoda.id)
+                    .select();
+                
+                if (updateError) throw updateError;
+                
+                console.log('✅ Skoda Enyaq opdateret:', updatedCar);
+                result.className = 'result success';
+                result.innerHTML = `
+                    <h3 style="margin-bottom: 10px;">✅ Skoda Enyaq er nu fremhævet!</h3>
+                    <p>Bilen vises nu øverst på lagerbiler-siden med "SKARP PRIS" badge.</p>
+                    <p style="margin-top: 15px;"><strong>Næste skridt:</strong></p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Gå til lagerbiler-siden og genindlæs</li>
+                        <li>Skoda Enyaq vil være øverst med orange badge</li>
+                    </ul>
+                `;
+                result.style.display = 'block';
+                btn.textContent = '✅ Opdateret!';
+                
+            } catch (error) {
+                console.error('❌ Fejl:', error);
+                result.className = 'result error';
+                result.innerHTML = `<h3 style="margin-bottom: 10px;">❌ Fejl ved opdatering</h3><p>${error.message}</p>`;
+                result.style.display = 'block';
+                btn.disabled = false;
+                btn.textContent = '⭐ Fremhæv Skoda Enyaq';
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

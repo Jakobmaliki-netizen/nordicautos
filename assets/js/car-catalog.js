@@ -348,32 +348,40 @@ class CarCatalog {
             case 'price_low':
                 this.filteredCars.sort((a, b) => {
                     // Featured cars always first
-                    if (a.status === 'featured' && b.status !== 'featured') return -1;
-                    if (a.status !== 'featured' && b.status === 'featured') return 1;
+                    const aFeatured = a.specifications && a.specifications.featured;
+                    const bFeatured = b.specifications && b.specifications.featured;
+                    if (aFeatured && !bFeatured) return -1;
+                    if (!aFeatured && bFeatured) return 1;
                     return a.price - b.price;
                 });
                 break;
             case 'price_high':
                 this.filteredCars.sort((a, b) => {
                     // Featured cars always first
-                    if (a.status === 'featured' && b.status !== 'featured') return -1;
-                    if (a.status !== 'featured' && b.status === 'featured') return 1;
+                    const aFeatured = a.specifications && a.specifications.featured;
+                    const bFeatured = b.specifications && b.specifications.featured;
+                    if (aFeatured && !bFeatured) return -1;
+                    if (!aFeatured && bFeatured) return 1;
                     return b.price - a.price;
                 });
                 break;
             case 'year':
                 this.filteredCars.sort((a, b) => {
                     // Featured cars always first
-                    if (a.status === 'featured' && b.status !== 'featured') return -1;
-                    if (a.status !== 'featured' && b.status === 'featured') return 1;
+                    const aFeatured = a.specifications && a.specifications.featured;
+                    const bFeatured = b.specifications && b.specifications.featured;
+                    if (aFeatured && !bFeatured) return -1;
+                    if (!aFeatured && bFeatured) return 1;
                     return b.year - a.year;
                 });
                 break;
             case 'mileage':
                 this.filteredCars.sort((a, b) => {
                     // Featured cars always first
-                    if (a.status === 'featured' && b.status !== 'featured') return -1;
-                    if (a.status !== 'featured' && b.status === 'featured') return 1;
+                    const aFeatured = a.specifications && a.specifications.featured;
+                    const bFeatured = b.specifications && b.specifications.featured;
+                    if (aFeatured && !bFeatured) return -1;
+                    if (!aFeatured && bFeatured) return 1;
                     return a.mileage - b.mileage;
                 });
                 break;
@@ -381,8 +389,10 @@ class CarCatalog {
             default:
                 this.filteredCars.sort((a, b) => {
                     // Sort by featured first, then isNew, then by year
-                    if (a.status === 'featured' && b.status !== 'featured') return -1;
-                    if (a.status !== 'featured' && b.status === 'featured') return 1;
+                    const aFeatured = a.specifications && a.specifications.featured;
+                    const bFeatured = b.specifications && b.specifications.featured;
+                    if (aFeatured && !bFeatured) return -1;
+                    if (!aFeatured && bFeatured) return 1;
                     if (a.isNew && !b.isNew) return -1;
                     if (!a.isNew && b.isNew) return 1;
                     return b.year - a.year;
@@ -476,7 +486,8 @@ class CarCatalog {
      * Get car badge HTML
      */
     getCarBadge(car) {
-        if (car.status === 'featured') {
+        // Check if car is featured (in specifications)
+        if (car.specifications && car.specifications.featured) {
             return '<div class="absolute top-4 left-4 z-10"><span class="px-3 py-1 bg-gradient-to-r from-orange-500 to-orange-600 text-white text-[10px] font-bold rounded-full uppercase tracking-widest shadow-lg">Skarp Pris</span></div>';
         }
         
