@@ -136,6 +136,7 @@ class CarCatalog {
             brandFilter.addEventListener('change', (e) => {
                 this.filters.brand = e.target.value || null;
                 this.updateBrandFilterDisplay(e.target);
+                this._resetPageOnNextFilter = true;
                 this.applyFiltersAndSort();
             });
         }
@@ -145,6 +146,7 @@ class CarCatalog {
         if (sortSelect) {
             sortSelect.addEventListener('change', (e) => {
                 this.sortBy = e.target.value;
+                this._resetPageOnNextFilter = true;
                 this.applyFiltersAndSort();
             });
         }
@@ -199,13 +201,13 @@ class CarCatalog {
             }
         });
         
-        // Periodic refresh every 10 seconds (reduced from 30)
+        // Periodic refresh every 5 minutes (don't disrupt user browsing)
         setInterval(() => {
             if (document.visibilityState === 'visible') {
                 console.log('🔄 Periodic refresh of car catalog');
                 this.forceRefreshFromSupabase();
             }
-        }, 10000);
+        }, 300000);
         
         // Refresh when page becomes visible
         document.addEventListener('visibilitychange', () => {
@@ -331,8 +333,11 @@ class CarCatalog {
         // Apply sorting
         this.sortCars();
         
-        // Update display
-        this.currentPage = 1;
+        // Update display - only reset to page 1 if filters changed
+        if (this._resetPageOnNextFilter) {
+            this.currentPage = 1;
+            this._resetPageOnNextFilter = false;
+        }
         this.updateCarCount();
         this.renderCars();
         this.renderPagination();
