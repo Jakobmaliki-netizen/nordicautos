@@ -71,48 +71,6 @@ class CarCatalog {
                 // Filter out cars without status or set to available
                 this.cars = this.cars.filter(car => !car.status || car.status === 'available');
                 
-                // Hide Mercedes A200 (sold)
-                this.cars = this.cars.filter(car => {
-                    const isMercedes = car.brand && car.brand.toLowerCase().includes('mercedes');
-                    const isA200 = car.model && car.model.toLowerCase().includes('a200');
-                    return !(isMercedes && isA200);
-                });
-                
-                // Hide Skoda Enyaq (sold)
-                this.cars = this.cars.filter(car => {
-                    const isSkoda = car.brand && car.brand.toLowerCase().includes('skoda');
-                    const isEnyaq = car.model && car.model.toLowerCase().includes('enyaq');
-                    return !(isSkoda && isEnyaq);
-                });
-                
-                // Hide BMW X5 (sold)
-                this.cars = this.cars.filter(car => {
-                    const isBMW = car.brand && car.brand.toLowerCase().includes('bmw');
-                    const isX5 = car.model && car.model.toLowerCase().includes('x5');
-                    return !(isBMW && isX5);
-                });
-                
-                // Hide Mini Cooper SE (sold)
-                this.cars = this.cars.filter(car => {
-                    const isMini = car.brand && car.brand.toLowerCase().includes('mini');
-                    const isCooper = car.model && car.model.toLowerCase().includes('cooper');
-                    return !(isMini && isCooper);
-                });
-                
-                // Hide all Mercedes EQA models (sold)
-                this.cars = this.cars.filter(car => {
-                    const isMercedes = car.brand && car.brand.toLowerCase().includes('mercedes');
-                    const isEQA = car.model && car.model.toLowerCase().includes('eqa');
-                    return !(isMercedes && isEQA);
-                });
-                
-                // Hide all Mercedes EQB models (sold)
-                this.cars = this.cars.filter(car => {
-                    const isMercedes = car.brand && car.brand.toLowerCase().includes('mercedes');
-                    const isEQB = car.model && car.model.toLowerCase().includes('eqb');
-                    return !(isMercedes && isEQB);
-                });
-                
                 window.carsData = this.cars; // Make available globally
                 
                 return;
@@ -388,21 +346,43 @@ class CarCatalog {
     sortCars() {
         switch (this.sortBy) {
             case 'price_low':
-                this.filteredCars.sort((a, b) => a.price - b.price);
+                this.filteredCars.sort((a, b) => {
+                    // Featured cars always first
+                    if (a.status === 'featured' && b.status !== 'featured') return -1;
+                    if (a.status !== 'featured' && b.status === 'featured') return 1;
+                    return a.price - b.price;
+                });
                 break;
             case 'price_high':
-                this.filteredCars.sort((a, b) => b.price - a.price);
+                this.filteredCars.sort((a, b) => {
+                    // Featured cars always first
+                    if (a.status === 'featured' && b.status !== 'featured') return -1;
+                    if (a.status !== 'featured' && b.status === 'featured') return 1;
+                    return b.price - a.price;
+                });
                 break;
             case 'year':
-                this.filteredCars.sort((a, b) => b.year - a.year);
+                this.filteredCars.sort((a, b) => {
+                    // Featured cars always first
+                    if (a.status === 'featured' && b.status !== 'featured') return -1;
+                    if (a.status !== 'featured' && b.status === 'featured') return 1;
+                    return b.year - a.year;
+                });
                 break;
             case 'mileage':
-                this.filteredCars.sort((a, b) => a.mileage - b.mileage);
+                this.filteredCars.sort((a, b) => {
+                    // Featured cars always first
+                    if (a.status === 'featured' && b.status !== 'featured') return -1;
+                    if (a.status !== 'featured' && b.status === 'featured') return 1;
+                    return a.mileage - b.mileage;
+                });
                 break;
             case 'newest':
             default:
                 this.filteredCars.sort((a, b) => {
-                    // Sort by isNew first, then by year
+                    // Sort by featured first, then isNew, then by year
+                    if (a.status === 'featured' && b.status !== 'featured') return -1;
+                    if (a.status !== 'featured' && b.status === 'featured') return 1;
                     if (a.isNew && !b.isNew) return -1;
                     if (!a.isNew && b.isNew) return 1;
                     return b.year - a.year;
@@ -496,6 +476,10 @@ class CarCatalog {
      * Get car badge HTML
      */
     getCarBadge(car) {
+        if (car.status === 'featured') {
+            return '<div class="absolute top-4 left-4 z-10"><span class="px-3 py-1 bg-gradient-to-r from-orange-500 to-orange-600 text-white text-[10px] font-bold rounded-full uppercase tracking-widest shadow-lg">Skarp Pris</span></div>';
+        }
+        
         if (car.isNew) {
             return '<div class="absolute top-4 left-4 z-10"><span class="px-3 py-1 bg-primary text-white text-[10px] font-bold rounded-full uppercase tracking-widest">Nyhed</span></div>';
         }
