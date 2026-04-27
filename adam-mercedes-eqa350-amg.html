@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tilføj Mercedes EQA350 AMG - Nordic Autos</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 40px 20px; }
+        .container { max-width: 800px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); padding: 40px; }
+        h1 { color: #2d3748; margin-bottom: 10px; font-size: 32px; }
+        .subtitle { color: #718096; margin-bottom: 30px; font-size: 18px; }
+        .car-info { background: #f7fafc; padding: 30px; border-radius: 12px; margin-bottom: 30px; border-left: 4px solid #667eea; }
+        .car-info h2 { color: #2d3748; margin-bottom: 15px; font-size: 20px; }
+        .car-info p { color: #4a5568; line-height: 1.6; margin-bottom: 10px; }
+        .btn { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 18px 40px; border-radius: 12px; font-size: 18px; font-weight: 700; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); display: block; width: 100%; margin-top: 30px; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .result { margin-top: 20px; padding: 20px; border-radius: 12px; display: none; }
+        .result.success { background: #c6f6d5; color: #22543d; }
+        .result.error { background: #fed7d7; color: #742a2a; }
+        .loading { display: none; text-align: center; margin-top: 20px; }
+        .spinner { border: 4px solid #f3f4f6; border-top: 4px solid #667eea; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚗 Tilføj Mercedes EQA350 AMG</h1>
+        <p class="subtitle">AMG Advance Plus 4Matic 5d - 2024</p>
+        
+        <div class="car-info">
+            <h2>📋 Bil information:</h2>
+            <p><strong>Mærke:</strong> Mercedes-Benz</p>
+            <p><strong>Model:</strong> EQA350</p>
+            <p><strong>Variant:</strong> AMG Advance Plus 4Matic 5d</p>
+            <p><strong>Årgang:</strong> 2024</p>
+            <p><strong>Kilometerstand:</strong> 17.800 km</p>
+            <p><strong>Pris:</strong> 328.900 kr.</p>
+            <p><strong>Brændstof:</strong> El</p>
+            <p><strong>Hestekræfter:</strong> 292 hk</p>
+            <p><strong>Rækkevidde:</strong> 449 km</p>
+            <p><strong>Billeder:</strong> 8 stk.</p>
+        </div>
+        
+        <button class="btn" onclick="addCar()">➕ Tilføj bil til database</button>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p style="color: #718096; margin-top: 10px;">Tilføjer bil...</p>
+        </div>
+        
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://gfbsuydsquixhrrarjab.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdmYnN1eWRzcXVpeGhycmFyamFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwMjE5NDcsImV4cCI6MjA4NTU5Nzk0N30.M4nA8itsVSpcZb4l1w3cHtl_86KV89BHyt7xNE0hdSY';
+        const { createClient } = supabase;
+        window.supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        console.log('✅ Supabase client initialized');
+        
+        async function addCar() {
+            const btn = document.querySelector('.btn');
+            const loading = document.getElementById('loading');
+            const result = document.getElementById('result');
+            
+            btn.disabled = true;
+            btn.textContent = '⏳ Tilføjer bil...';
+            loading.style.display = 'block';
+            result.style.display = 'none';
+            
+            try {
+                if (!window.supabaseClient) throw new Error('Supabase ikke tilgængelig');
+                
+                const carData = {
+                    brand: 'Mercedes-Benz',
+                    model: 'EQA350',
+                    variant: 'AMG Advance Plus 4Matic 5d',
+                    year: 2024,
+                    mileage: 17800,
+                    price: 328900,
+                    fuelType: 'El',
+                    bodyType: 'SUV',
+                    horsepower: 292,
+                    images: [
+                        'https://billeder.bilbasen.dk/bilinfo/a4250b0a-04fe-45ef-b06b-e88687075746.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/2a8bfe91-83e8-4c7b-b8ed-a81c023a71be.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/a7ce8a9d-6dab-4b5a-bc1e-5d74bf08f81a.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/b32c9dfd-2a09-4861-8de2-355791668c53.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/e328a55f-3aa9-45c4-9de3-1974d72a9ce0.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/4bf5c6ce-ed5c-477f-9a9c-549c3e34f7b5.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/a2779d55-074f-4f62-a4c1-59316bb5167b.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/af0057f7-1da0-4d62-af98-c70f84d8a456.png?class=S1600X1600'
+                    ],
+                    features: [
+                        'AMG Advance Plus 4Matic',
+                        'Adaptiv Fartpilot',
+                        'Aktiv vognbane assistent',
+                        'Aktiv styre assistent',
+                        'Apple CarPlay/Android Auto',
+                        'Ambient belysning 64 farvemuligheder',
+                        'Dødvinkel assistent',
+                        'Rat varme',
+                        'Adaptive LED lygter',
+                        'Adaptiv fjernlys assistent',
+                        'Træthedsregistrering',
+                        'Hastighedsbegrænser',
+                        'Keyless go',
+                        'Parkerings assistent',
+                        'Elektrisk svingbart træk',
+                        'MBUX Infotainment',
+                        'LED High Performance',
+                        'Klimaautomatik',
+                        'Parkeringspakke',
+                        'Varmepumpe',
+                        'Elektrisk bagklap',
+                        'Navigation',
+                        'Bakkamera',
+                        '4MATIC Firehjulstræk'
+                    ],
+                    description: 'Mercedes EQA 350+ AMG Advance Plus 4Matic\n\nBilen hjemtages på bestilling og leveres direkte fra Mercedes i Tyskland. Hvis denne model ikke helt rammer dine ønsker, er du meget velkommen til at kontakte os med dine præferencer – så finder vi hurtigt den helt rigtige bil til dig.\n\n⸻\n\n🚘 Køretøjsinformation\n• Mercedes EQA 350+ AMG Advance Plus 4Matic 5d.\n• Årgang: 06/2024\n• Kilometerstand: 17.800\n• Motor / Effekt: Elektrisk\n• Brændstof: Elektrisk\n• Gearkasse: Aut.\n• Træk: Ja (4MATIC)\n• Farve (udvendig / kabine): Sort med sort kabine.\n• Rækkevidde: 449 km.\n• SOH (batteri-test) 98 %\n\n⸻\n\n✨ Udstyr (udvalgte highlights)\n• AMG Advance Plus 4Matic\n• Adaptiv Fartpilot\n• Aktiv vognbane assistent\n• Aktiv styre assistent\n• Apple CarPlay/Android Auto\n• Ambient belysning 64 farvemuligheder\n• Dødvinkel assistent\n• Rat varme\n• Adaptive LED lygter\n• Adaptiv fjernlys assistent\n• Træthedsregistrering\n• Hastighedsbegrænser\n• Keyless go\n• Parkerings assistent\n• Elektrisk svingbart træk\n\nVinterdæk kan tilkøbes til 12.000,- inkl. moms\n(Fuld udstyrsliste fremsendes ved henvendelse)\n\n⸻\n\n📘 Stand & historik\n• Importeret og udvalgt af Nordic Autos.\n• Fuld servicehistorik ved Mercedes\n• Bilen fremstår i meget flot og velholdt stand\n\n⸻\n\n📑 Leasingvilkår\n• Vi tilbyder Privatleasing, erhvervsleasing samt split-leasing.\n• Leasingaftale kan tilpasses individuelt\n• Mulighed for tilkøb af service- og garantiløsning\n• Forsikring kan evt. formidles\n\n⸻\n\n🏢 Om Nordic Autos\nNordic Autos er specialiseret i leasing og salg af eksklusive kvalitetsbiler. Vi tilbyder professionel rådgivning, gennemsigtige leasingvilkår og en tryg proces fra start til slut.\n\n📞 Kontakt os for et skræddersyet leasingtilbud eller fremvisning (Fremvisning efter aftale)',
+                    status: 'available',
+                    isNew: true,
+                    specifications: {
+                        engine: 'Dual Electric Motors',
+                        transmission: 'Automatgear',
+                        drivetrain: '4MATIC AWD',
+                        acceleration: '6.0 sekunder (0-100 km/t)',
+                        topSpeed: '160 km/t',
+                        range: '449 km',
+                        batteryCapacity: '66.5 kWh',
+                        energyConsumption: '171 Wh/km',
+                        towingCapacity: '1800 kg',
+                        batteryHealth: '98%'
+                    },
+                    history: {
+                        previousOwners: 1,
+                        serviceHistory: true,
+                        accidents: false
+                    }
+                };
+                
+                console.log('📤 Sender bil data:', carData);
+                
+                const { data, error } = await window.supabaseClient
+                    .from('cars')
+                    .insert([carData])
+                    .select();
+                
+                if (error) throw error;
+                
+                console.log('✅ Bil tilføjet:', data);
+                result.className = 'result success';
+                result.innerHTML = `
+                    <h3 style="margin-bottom: 10px;">✅ Mercedes EQA350 AMG tilføjet!</h3>
+                    <p>Bilen er nu tilgængelig på hjemmesiden.</p>
+                    <p style="margin-top: 15px;"><strong>Bil ID:</strong> ${data[0].id}</p>
+                    <p><strong>Næste skridt:</strong> Gå til lagerbiler-siden og genindlæs for at se bilen.</p>
+                `;
+                result.style.display = 'block';
+                btn.textContent = '✅ Bil tilføjet!';
+                
+            } catch (error) {
+                console.error('❌ Fejl:', error);
+                result.className = 'result error';
+                result.innerHTML = `<h3 style="margin-bottom: 10px;">❌ Fejl ved tilføjelse</h3><p>${error.message}</p>`;
+                result.style.display = 'block';
+                btn.disabled = false;
+                btn.textContent = '➕ Tilføj bil til database';
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

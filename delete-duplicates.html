@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slet Dubletter - Nordic Autos</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 40px 20px; }
+        .container { max-width: 800px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); padding: 40px; }
+        h1 { color: #2d3748; margin-bottom: 10px; font-size: 32px; text-align: center; }
+        .subtitle { color: #718096; margin-bottom: 30px; font-size: 18px; text-align: center; }
+        .btn { background: linear-gradient(135deg, #f56565 0%, #c53030 100%); color: white; border: none; padding: 18px 40px; border-radius: 12px; font-size: 18px; font-weight: 700; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(245, 101, 101, 0.4); display: block; width: 100%; margin-top: 30px; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(245, 101, 101, 0.6); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .result { margin-top: 20px; padding: 20px; border-radius: 12px; display: none; }
+        .result.success { background: #c6f6d5; color: #22543d; }
+        .result.error { background: #fed7d7; color: #742a2a; }
+        .log { background: #f7fafc; border-radius: 12px; padding: 20px; margin-top: 20px; max-height: 400px; overflow-y: auto; display: none; }
+        .log-entry { padding: 8px 0; border-bottom: 1px solid #e2e8f0; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🗑️ Slet Dubletter fra Database</h1>
+        <p class="subtitle">Denne fil sletter alle biler med placeholder billeder og dubletter</p>
+        
+        <div style="background: #fff5f5; border: 2px solid #fc8181; border-radius: 12px; padding: 20px; margin: 20px 0;">
+            <h3 style="color: #c53030; margin-bottom: 10px;">⚠️ ADVARSEL</h3>
+            <p style="color: #742a2a;">Dette vil slette alle biler der har:</p>
+            <ul style="color: #742a2a; margin-left: 20px; margin-top: 10px;">
+                <li>Placeholder billeder (placehold.co)</li>
+                <li>Via.placeholder billeder</li>
+            </ul>
+            <p style="color: #742a2a; margin-top: 10px; font-weight: bold;">Biler med rigtige Bilbasen billeder bliver IKKE slettet!</p>
+        </div>
+        
+        <button class="btn" onclick="deleteDuplicates()">🗑️ Slet Dubletter</button>
+        
+        <div class="log" id="log"></div>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://gfbsuydsquixhrrarjab.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdmYnN1eWRzcXVpeGhycmFyamFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwMjE5NDcsImV4cCI6MjA4NTU5Nzk0N30.M4nA8itsVSpcZb4l1w3cHtl_86KV89BHyt7xNE0hdSY';
+        const { createClient } = supabase;
+        window.supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        function addLog(message, type = 'info') {
+            const log = document.getElementById('log');
+            log.style.display = 'block';
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            entry.style.color = type === 'error' ? '#c53030' : type === 'success' ? '#38a169' : '#4a5568';
+            entry.textContent = message;
+            log.appendChild(entry);
+            log.scrollTop = log.scrollHeight;
+        }
+        
+        async function deleteDuplicates() {
+            const btn = document.querySelector('.btn');
+            const result = document.getElementById('result');
+            
+            btn.disabled = true;
+            btn.textContent = '⏳ Sletter dubletter...';
+            result.style.display = 'none';
+            
+            try {
+                addLog('📡 Henter alle biler fra database...', 'info');
+                
+                const { data: allCars, error: fetchError } = await window.supabaseClient
+                    .from('cars')
+                    .select('*');
+                
+                if (fetchError) throw fetchError;
+                
+                addLog(`✅ Fandt ${allCars.length} biler i databasen`, 'success');
+                
+                // Find cars with placeholder images
+                const carsToDelete = allCars.filter(car => {
+                    if (!car.images || car.images.length === 0) return false;
+                    const firstImage = car.images[0];
+                    return firstImage.includes('placehold.co') || 
+                           firstImage.includes('via.placeholder') ||
+                           firstImage.includes('placeholder.com');
+                });
+                
+                addLog(`🎯 Fandt ${carsToDelete.length} biler med placeholder billeder`, 'info');
+                
+                if (carsToDelete.length === 0) {
+                    result.className = 'result success';
+                    result.innerHTML = '<h3>✅ Ingen dubletter fundet!</h3><p>Alle biler har rigtige billeder.</p>';
+                    result.style.display = 'block';
+                    btn.textContent = '✅ Ingen dubletter';
+                    return;
+                }
+                
+                let deletedCount = 0;
+                
+                for (const car of carsToDelete) {
+                    try {
+                        addLog(`Sletter: ${car.brand} ${car.model} (ID: ${car.id})`, 'info');
+                        
+                        const { error: deleteError } = await window.supabaseClient
+                            .from('cars')
+                            .delete()
+                            .eq('id', car.id);
+                        
+                        if (deleteError) throw deleteError;
+                        
+                        deletedCount++;
+                        addLog(`✅ Slettet: ${car.brand} ${car.model}`, 'success');
+                        
+                    } catch (error) {
+                        addLog(`❌ Fejl ved sletning af ${car.brand} ${car.model}: ${error.message}`, 'error');
+                    }
+                    
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                }
+                
+                result.className = 'result success';
+                result.innerHTML = `<h3>✅ ${deletedCount} dubletter slettet!</h3><p>Databasen er nu ryddet op.</p>`;
+                result.style.display = 'block';
+                btn.textContent = '✅ Dubletter slettet!';
+                
+                addLog(`🎉 Færdig! ${deletedCount} biler slettet`, 'success');
+                
+            } catch (error) {
+                console.error('Fejl:', error);
+                result.className = 'result error';
+                result.innerHTML = `<h3>❌ Fejl</h3><p>${error.message}</p>`;
+                result.style.display = 'block';
+                btn.disabled = false;
+                btn.textContent = '🗑️ Slet Dubletter';
+                addLog(`❌ Fejl: ${error.message}`, 'error');
+            }
+        }
+    </script>
+</body>
+</html>

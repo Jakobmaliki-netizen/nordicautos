@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tilføj 13 Nye Biler - Nordic Autos</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 40px 20px; }
+        .container { max-width: 1400px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); padding: 40px; }
+        h1 { color: #2d3748; margin-bottom: 10px; font-size: 32px; }
+        .subtitle { color: #718096; margin-bottom: 30px; font-size: 18px; }
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 12px; text-align: center; }
+        .stat-number { font-size: 36px; font-weight: bold; margin-bottom: 5px; }
+        .stat-label { font-size: 14px; opacity: 0.9; }
+        .cars-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin: 30px 0; }
+        .car-card { background: #f7fafc; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: transform 0.3s; }
+        .car-card:hover { transform: translateY(-5px); box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
+        .car-card h3 { color: #2d3748; margin-bottom: 10px; font-size: 18px; }
+        .car-info-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e2e8f0; font-size: 14px; }
+        .car-info-item:last-child { border-bottom: none; }
+        .car-info-label { color: #718096; }
+        .car-info-value { color: #2d3748; font-weight: 600; }
+        .price-highlight { color: #667eea; font-size: 18px; font-weight: bold; }
+        .btn { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 18px 40px; border-radius: 12px; font-size: 18px; font-weight: 700; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); display: block; width: 100%; margin-top: 30px; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .progress-container { margin-top: 30px; display: none; }
+        .progress-bar { width: 100%; height: 30px; background: #e2e8f0; border-radius: 15px; overflow: hidden; margin-bottom: 15px; }
+        .progress-fill { height: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); transition: width 0.3s; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 14px; }
+        .progress-log { background: #f7fafc; border-radius: 12px; padding: 20px; max-height: 400px; overflow-y: auto; }
+        .log-entry { padding: 8px 0; border-bottom: 1px solid #e2e8f0; font-size: 14px; }
+        .log-entry:last-child { border-bottom: none; }
+        .log-success { color: #48bb78; }
+        .log-error { color: #f56565; }
+        .log-info { color: #4299e1; }
+        .result { margin-top: 20px; padding: 20px; border-radius: 12px; display: none; }
+        .result.success { background: #c6f6d5; color: #22543d; }
+        .result.error { background: #fed7d7; color: #742a2a; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚗 Tilføj 13 Nye Biler til Nordic Autos</h1>
+        <p class="subtitle">Klik på knappen for at tilføje alle biler til databasen</p>
+        
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number">13</div>
+                <div class="stat-label">Biler Klar</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="addedCount">0</div>
+                <div class="stat-label">Biler Tilføjet</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="errorCount">0</div>
+                <div class="stat-label">Fejl</div>
+            </div>
+        </div>
+        
+        <h2 style="color: #2d3748; margin-bottom: 20px;">📋 Biler der skal tilføjes:</h2>
+        <div class="cars-grid" id="carsGrid"></div>
+        
+        <button class="btn" onclick="addAllCars()">➕ Tilføj Alle 13 Biler til Database</button>
+        
+        <div class="progress-container" id="progressContainer">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill">0%</div>
+            </div>
+            <div class="progress-log" id="progressLog"></div>
+        </div>
+        
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://gfbsuydsquixhrrarjab.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdmYnN1eWRzcXVpeGhycmFyamFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwMjE5NDcsImV4cCI6MjA4NTU5Nzk0N30.M4nA8itsVSpcZb4l1w3cHtl_86KV89BHyt7xNE0hdSY';
+        const { createClient } = supabase;
+        window.supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        console.log('✅ Supabase client initialized');
+        
+        // Generate 16 unique images for each car
+        function generateImages(carName, index) {
+            const images = [];
+            const encodedName = encodeURIComponent(carName);
+            for (let i = 1; i <= 16; i++) {
+                images.push(`https://placehold.co/800x600/667eea/ffffff?text=${encodedName}+${i}`);
+            }
+            return images;
+        }
+        
+        const carsData = [
+            {
+                brand: 'VW',
+                model: 'ID.3 45 Pure Performance',
+                variant: '45 Pure Performance',
+                year: 2021,
+                mileage: 29500,
+                price: 139800,
+                fuelType: 'El',
+                bodyType: 'Hatchback',
+                horsepower: 170,
+                description: 'VW ID.3 45 Pure Performance - Moderne elbil med god rækkevidde og praktisk design.',
+                features: ['Elektrisk motor', 'Adaptiv fartpilot', 'LED forlygter', 'Klimaanlæg', 'Navigation'],
+                images: generateImages('VW+ID3', 1),
+                status: 'available',
+                specifications: {
+                    color: 'Blå',
+                    interior: 'Stof',
+                    transmission: 'Automatisk',
+                    drive: 'Forhjulstræk'
+                }
+            },
+            {
+                brand: 'Mercedes',
+                model: 'EQA250+ Progressive Advance',
+                variant: 'EQA250+ Progressive Advance',
+                year: 2024,
+                mileage: 4000,
+                price: 284935,
+                fuelType: 'El',
+                bodyType: 'SUV',
+                horsepower: 190,
+                description: 'Mercedes EQA250+ Progressive Advance - Kompakt elektrisk SUV med premium udstyr.',
+                features: ['MBUX infotainment', 'LED High Performance', 'Parkeringspakke', 'Klimaanlæg', 'Læderrat'],
+                images: generateImages('Mercedes+EQA250', 2),
+                status: 'available',
+                specifications: {
+                    color: 'Sort',
+                    interior: 'Læder',
+                    transmission: 'Automatisk',
+                    drive: 'Forhjulstræk'
+                }
+            },
+            {
+                brand: 'Mercedes',
+                model: 'EQA250+ Progressive Advance',
+                variant: 'EQA250+ Progressive Advance',
+                year: 2024,
+                mileage: 29800,
+                price: 289800,
+                fuelType: 'El',
+                bodyType: 'SUV',
+                horsepower: 190,
+                description: 'Mercedes EQA250+ Progressive Advance - Kompakt elektrisk SUV med premium udstyr.',
+                features: ['MBUX infotainment', 'LED High Performance', 'Parkeringspakke', 'Klimaanlæg', 'Læderrat'],
+                images: generateImages('Mercedes+EQA250+2', 3),
+                status: 'available',
+                specifications: {
+                    color: 'Hvid',
+                    interior: 'Læder',
+                    transmission: 'Automatisk',
+                    drive: 'Forhjulstræk'
+                }
+            },
+            {
+                brand: 'BMW',
+                model: 'X5 30 xDrive45e M Sport',
+                variant: 'xDrive45e M Sport',
+                year: 2023,
+                mileage: 53000,
+                price: 1,
+                fuelType: 'Plug-in Hybrid',
+                bodyType: 'SUV',
+                horsepower: 394,
+                description: 'BMW X5 30 xDrive45e M Sport - Kraftfuld plug-in hybrid SUV med M Sport pakke.',
+                features: ['M Sport pakke', 'Panoramatag', 'Harman Kardon', 'Head-up display', 'Adaptiv undervogn'],
+                images: generateImages('BMW+X5', 4),
+                status: 'available',
+                specifications: {
+                    monthlyLeasing: 5000,
+                    color: 'Grå',
+                    interior: 'Læder',
+                    transmission: 'Automatisk',
+                    drive: 'Firehjulstræk'
+                }
+            },
+            {
+                brand: 'Mercedes',
+                model: 'EQB250+ Electric Art',
+                variant: 'EQB250+ Electric Art',
+                year: 2023,
+                mileage: 109000,
+                price: 216400,
+                fuelType: 'El',
+                bodyType: 'SUV',
+                horsepower: 190,
+                description: 'Mercedes EQB250+ Electric Art - Rummelig elektrisk SUV med 7 sæder.',
+                features: ['7 sæder', 'MBUX', 'LED lygter', 'Parkeringspakke', 'Klimaanlæg'],
+                images: generateImages('Mercedes+EQB250', 5),
+                status: 'available',
+                specifications: {
+                    color: 'Sølv',
+                    interior: 'Stof',
+                    transmission: 'Automatisk',
+                    drive: 'Forhjulstræk'
+                }
+            },
+            {
+                brand: 'Mini',
+                model: 'Cooper SE Classic Trim',
+                variant: 'Cooper SE Classic Trim',
+                year: 2023,
+                mileage: 18500,
+                price: 159000,
+                fuelType: 'El',
+                bodyType: 'Hatchback',
+                horsepower: 184,
+                description: 'Mini Cooper SE Classic Trim - Sjov og kompakt elbil med klassisk Mini-design.',
+                features: ['Elektrisk motor', 'LED lygter', 'Navigation', 'Klimaanlæg', 'Sportssæder'],
+                images: generateImages('Mini+Cooper+SE', 6),
+                status: 'available',
+                specifications: {
+                    color: 'Rød',
+                    interior: 'Stof',
+                    transmission: 'Automatisk',
+                    drive: 'Forhjulstræk'
+                }
+            },
+            {
+                brand: 'Skoda',
+                model: 'Enyaq 80 iV Sportline',
+                variant: 'Enyaq 80 iV Sportline',
+                year: 2022,
+                mileage: 70500,
+                price: 268000,
+                fuelType: 'El',
+                bodyType: 'SUV',
+                horsepower: 204,
+                description: 'Skoda Enyaq 80 iV Sportline - Rummelig elektrisk SUV med sportslook.',
+                features: ['Sportline udstyr', 'Matrix LED', 'Panoramatag', 'Varmepumpe', 'Adaptiv fartpilot'],
+                images: generateImages('Skoda+Enyaq', 7),
+                status: 'available',
+                specifications: {
+                    color: 'Grå',
+                    interior: 'Læder',
+                    transmission: 'Automatisk',
+                    drive: 'Baghjulstræk'
+                }
+            },
+            {
+                brand: 'Alfa Romeo',
+                model: 'Junior Elettrica Speciale',
+                variant: 'Junior Elettrica Speciale',
+                year: 2025,
+                mileage: 11800,
+                price: 194800,
+                fuelType: 'El',
+                bodyType: 'SUV',
+                horsepower: 156,
+                description: 'Alfa Romeo Junior Elettrica Speciale - Italiensk design møder elektrisk kraft.',
+                features: ['Speciale udstyr', 'LED Matrix', 'Sportssæder', 'Klimaanlæg', 'Navigation'],
+                images: generateImages('Alfa+Romeo+Junior', 8),
+                status: 'available',
+                specifications: {
+                    color: 'Rød',
+                    interior: 'Læder',
+                    transmission: 'Automatisk',
+                    drive: 'Forhjulstræk'
+                }
+            },
+            {
+                brand: 'Mercedes',
+                model: 'EQB250+ Progressive Advance Plus',
+                variant: 'EQB250+ Progressive Advance Plus',
+                year: 2024,
+                mileage: 28000,
+                price: 328400,
+                fuelType: 'El',
+                bodyType: 'SUV',
+                horsepower: 190,
+                description: 'Mercedes EQB250+ Progressive Advance Plus - Premium elektrisk SUV med fuld udstyrspakke.',
+                features: ['7 sæder', 'MBUX', 'Panoramatag', 'Burmester', 'Multibeam LED'],
+                images: generateImages('Mercedes+EQB250+Plus', 9),
+                status: 'available',
+                specifications: {
+                    color: 'Blå',
+                    interior: 'Læder',
+                    transmission: 'Automatisk',
+                    drive: 'Forhjulstræk'
+                }
+            },
+            {
+                brand: 'Mercedes',
+                model: 'EQA250 Progressive',
+                variant: 'EQA250 Progressive',
+                year: 2022,
+                mileage: 82000,
+                price: 229400,
+                fuelType: 'El',
+                bodyType: 'SUV',
+                horsepower: 190,
+                description: 'Mercedes EQA250 Progressive - Kompakt elektrisk SUV med god rækkevidde.',
+                features: ['MBUX', 'LED lygter', 'Parkeringspakke', 'Klimaanlæg', 'Læderrat'],
+                images: generateImages('Mercedes+EQA250+Progressive', 10),
+                status: 'available',
+                specifications: {
+                    color: 'Grå',
+                    interior: 'Stof',
+                    transmission: 'Automatisk',
+                    drive: 'Forhjulstræk'
+                }
+            },
+            {
+                brand: 'Mercedes',
+                model: 'EQB350 Progressive Advance Plus 4Matic',
+                variant: 'EQB350 Progressive Advance Plus 4Matic',
+                year: 2025,
+                mileage: 17000,
+                price: 319200,
+                fuelType: 'El',
+                bodyType: 'SUV',
+                horsepower: 292,
+                description: 'Mercedes EQB350 Progressive Advance Plus 4Matic - Kraftfuld elektrisk SUV med firehjulstræk.',
+                features: ['4Matic', '7 sæder', 'MBUX', 'Panoramatag', 'Multibeam LED'],
+                images: generateImages('Mercedes+EQB350', 11),
+                status: 'available',
+                specifications: {
+                    color: 'Sort',
+                    interior: 'Læder',
+                    transmission: 'Automatisk',
+                    drive: 'Firehjulstræk'
+                }
+            },
+            {
+                brand: 'Mercedes',
+                model: 'EQA250 Progressive Advance',
+                variant: 'EQA250 Progressive Advance',
+                year: 2025,
+                mileage: 9500,
+                price: 284600,
+                fuelType: 'El',
+                bodyType: 'SUV',
+                horsepower: 190,
+                description: 'Mercedes EQA250 Progressive Advance - Næsten ny elektrisk SUV med fuld garanti.',
+                features: ['MBUX', 'LED High Performance', 'Parkeringspakke', 'Klimaanlæg', 'Læderrat'],
+                images: generateImages('Mercedes+EQA250+Advance', 12),
+                status: 'available',
+                specifications: {
+                    color: 'Hvid',
+                    interior: 'Læder',
+                    transmission: 'Automatisk',
+                    drive: 'Forhjulstræk'
+                }
+            },
+            {
+                brand: 'Mercedes',
+                model: 'EQA350 AMG Advance Plus 4Matic',
+                variant: 'EQA350 AMG Advance Plus 4Matic',
+                year: 2024,
+                mileage: 17800,
+                price: 328900,
+                fuelType: 'El',
+                bodyType: 'SUV',
+                horsepower: 292,
+                description: 'Mercedes EQA350 AMG Advance Plus 4Matic - Sportlig elektrisk SUV med AMG styling.',
+                features: ['AMG Line', '4Matic', 'MBUX', 'Panoramatag', 'Burmester', 'Multibeam LED'],
+                images: generateImages('Mercedes+EQA350+AMG', 13),
+                status: 'available',
+                specifications: {
+                    color: 'Grå',
+                    interior: 'Læder AMG',
+                    transmission: 'Automatisk',
+                    drive: 'Firehjulstræk'
+                }
+            }
+        ];
+        
+        console.log('Total cars:', carsData.length);
+        
+        // Display all cars in grid
+        const carsGrid = document.getElementById('carsGrid');
+        carsData.forEach((car, index) => {
+            console.log(`Adding car ${index + 1}:`, car.brand, car.model);
+            
+            const card = document.createElement('div');
+            card.className = 'car-card';
+            
+            const isLeasing = car.specifications.monthlyLeasing;
+            const priceDisplay = isLeasing 
+                ? `<span class="price-highlight">Leasing ${car.specifications.monthlyLeasing} kr/md</span>`
+                : `<span class="price-highlight">${car.price.toLocaleString('da-DK')} kr</span>`;
+            
+            card.innerHTML = `
+                <h3>${car.brand} ${car.model}</h3>
+                <div class="car-info-item">
+                    <span class="car-info-label">Årgang</span>
+                    <span class="car-info-value">${car.year}</span>
+                </div>
+                <div class="car-info-item">
+                    <span class="car-info-label">Km-stand</span>
+                    <span class="car-info-value">${car.mileage.toLocaleString('da-DK')} km</span>
+                </div>
+                <div class="car-info-item">
+                    <span class="car-info-label">Brændstof</span>
+                    <span class="car-info-value">${car.fuelType}</span>
+                </div>
+                <div class="car-info-item">
+                    <span class="car-info-label">Hestekræfter</span>
+                    <span class="car-info-value">${car.horsepower} HK</span>
+                </div>
+                <div class="car-info-item">
+                    <span class="car-info-label">Pris</span>
+                    ${priceDisplay}
+                </div>
+            `;
+            
+            carsGrid.appendChild(card);
+        });
+        
+        function addLogEntry(message, type = 'info') {
+            const log = document.getElementById('progressLog');
+            const entry = document.createElement('div');
+            entry.className = `log-entry log-${type}`;
+            const timestamp = new Date().toLocaleTimeString('da-DK');
+            entry.textContent = `[${timestamp}] ${message}`;
+            log.appendChild(entry);
+            log.scrollTop = log.scrollHeight;
+        }
+        
+        async function addAllCars() {
+            const btn = document.querySelector('.btn');
+            const progressContainer = document.getElementById('progressContainer');
+            const progressFill = document.getElementById('progressFill');
+            const result = document.getElementById('result');
+            const addedCountEl = document.getElementById('addedCount');
+            const errorCountEl = document.getElementById('errorCount');
+            
+            btn.disabled = true;
+            btn.textContent = '⏳ Tilføjer biler...';
+            progressContainer.style.display = 'block';
+            result.style.display = 'none';
+            
+            let addedCount = 0;
+            let errorCount = 0;
+            
+            addLogEntry('🚀 Starter tilføjelse af 13 biler...', 'info');
+            
+            for (let i = 0; i < carsData.length; i++) {
+                const car = carsData[i];
+                const progress = Math.round(((i + 1) / carsData.length) * 100);
+                
+                try {
+                    addLogEntry(`Tilføjer bil ${i + 1}/${carsData.length}: ${car.brand} ${car.model}`, 'info');
+                    
+                    const { data, error } = await window.supabaseClient
+                        .from('cars')
+                        .insert([car])
+                        .select();
+                    
+                    if (error) throw error;
+                    
+                    addedCount++;
+                    addedCountEl.textContent = addedCount;
+                    addLogEntry(`✅ ${car.brand} ${car.model} tilføjet (ID: ${data[0].id})`, 'success');
+                    
+                } catch (error) {
+                    errorCount++;
+                    errorCountEl.textContent = errorCount;
+                    addLogEntry(`❌ Fejl ved ${car.brand} ${car.model}: ${error.message}`, 'error');
+                    console.error('Error adding car:', car, error);
+                }
+                
+                progressFill.style.width = `${progress}%`;
+                progressFill.textContent = `${progress}%`;
+                
+                // Small delay to avoid rate limiting
+                await new Promise(resolve => setTimeout(resolve, 200));
+            }
+            
+            // Final result
+            if (errorCount === 0) {
+                result.className = 'result success';
+                result.innerHTML = `<h3 style="margin-bottom: 10px;">✅ Alle ${addedCount} biler tilføjet!</h3><p>Bilerne er nu tilgængelige på lagerbiler-siden.</p>`;
+                btn.textContent = '✅ Alle biler tilføjet!';
+                addLogEntry(`🎉 Færdig! ${addedCount} biler tilføjet uden fejl`, 'success');
+            } else {
+                result.className = 'result error';
+                result.innerHTML = `<h3 style="margin-bottom: 10px;">⚠️ Tilføjelse færdig med fejl</h3><p>${addedCount} biler tilføjet, ${errorCount} fejl.</p>`;
+                btn.textContent = '⚠️ Færdig med fejl';
+                btn.disabled = false;
+                addLogEntry(`⚠️ Færdig med ${errorCount} fejl`, 'error');
+            }
+            
+            result.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

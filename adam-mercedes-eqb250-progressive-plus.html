@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tilføj Mercedes EQB250+ Progressive - Nordic Autos</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 40px 20px; }
+        .container { max-width: 800px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); padding: 40px; }
+        h1 { color: #2d3748; margin-bottom: 10px; font-size: 32px; }
+        .subtitle { color: #718096; margin-bottom: 30px; font-size: 18px; }
+        .car-info { background: #f7fafc; padding: 30px; border-radius: 12px; margin-bottom: 30px; border-left: 4px solid #667eea; }
+        .car-info h2 { color: #2d3748; margin-bottom: 15px; font-size: 20px; }
+        .car-info p { color: #4a5568; line-height: 1.6; margin-bottom: 10px; }
+        .btn { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 18px 40px; border-radius: 12px; font-size: 18px; font-weight: 700; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); display: block; width: 100%; margin-top: 30px; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .result { margin-top: 20px; padding: 20px; border-radius: 12px; display: none; }
+        .result.success { background: #c6f6d5; color: #22543d; }
+        .result.error { background: #fed7d7; color: #742a2a; }
+        .loading { display: none; text-align: center; margin-top: 20px; }
+        .spinner { border: 4px solid #f3f4f6; border-top: 4px solid #667eea; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚗 Tilføj Mercedes EQB250+</h1>
+        <p class="subtitle">Progressive Advance Plus 5d - 2024</p>
+        
+        <div class="car-info">
+            <h2>📋 Bil information:</h2>
+            <p><strong>Mærke:</strong> Mercedes-Benz</p>
+            <p><strong>Model:</strong> EQB250+</p>
+            <p><strong>Variant:</strong> Progressive Advance Plus 5d</p>
+            <p><strong>Årgang:</strong> 2024</p>
+            <p><strong>Kilometerstand:</strong> 28.000 km</p>
+            <p><strong>Pris:</strong> 328.400 kr.</p>
+            <p><strong>Brændstof:</strong> El</p>
+            <p><strong>Hestekræfter:</strong> 190 hk</p>
+            <p><strong>Rækkevidde:</strong> 503 km</p>
+            <p><strong>Billeder:</strong> 17 stk.</p>
+        </div>
+        
+        <button class="btn" onclick="addCar()">➕ Tilføj bil til database</button>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p style="color: #718096; margin-top: 10px;">Tilføjer bil...</p>
+        </div>
+        
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://gfbsuydsquixhrrarjab.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdmYnN1eWRzcXVpeGhycmFyamFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwMjE5NDcsImV4cCI6MjA4NTU5Nzk0N30.M4nA8itsVSpcZb4l1w3cHtl_86KV89BHyt7xNE0hdSY';
+        const { createClient } = supabase;
+        window.supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        console.log('✅ Supabase client initialized');
+        
+        async function addCar() {
+            const btn = document.querySelector('.btn');
+            const loading = document.getElementById('loading');
+            const result = document.getElementById('result');
+            
+            btn.disabled = true;
+            btn.textContent = '⏳ Tilføjer bil...';
+            loading.style.display = 'block';
+            result.style.display = 'none';
+            
+            try {
+                if (!window.supabaseClient) throw new Error('Supabase ikke tilgængelig');
+                
+                const carData = {
+                    brand: 'Mercedes-Benz',
+                    model: 'EQB250+',
+                    variant: 'Progressive Advance Plus 5d',
+                    year: 2024,
+                    mileage: 28000,
+                    price: 328400,
+                    fuelType: 'El',
+                    bodyType: 'SUV',
+                    horsepower: 190,
+                    images: [
+                        'https://billeder.bilbasen.dk/bilinfo/7e1faf38-8a4e-40cf-bfec-7166c10d70d4.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/4428dea2-59d0-4b10-9dd8-70d02f5c7e55.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/67093804-4e90-444c-bb43-72cb3b2f48ca.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/c40c50cc-5a66-414d-893f-778ef698c7a1.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/04001dcb-f9b7-4555-857d-eba1650760e6.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/2f4b1b82-7e01-4828-b072-5a80c1ab3ab5.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/0217be33-7b3b-4938-bdf7-94b75cdac21d.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/63ee7f19-3e24-4973-be74-a566ece49bc4.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/41319dd5-c54b-476c-a893-b1eb77cd1ed7.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/fadd88c3-0900-4633-b5d2-1880603b8c65.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/d6e73e2c-4788-441e-ae2b-99431b4119af.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/5de5259f-6105-43be-a46b-df8910cf5670.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/c7d68a85-3acc-4230-942c-a8285a75745a.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/0d3482a1-e59f-43a9-bcb1-dd16d46a8695.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/071e87a8-df81-4e33-bb50-5acb03be8225.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/0155bf81-fdab-4a6b-9ded-30faaadc77d6.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/14120b38-6e50-4d99-8aac-9d67990e5c9d.png?class=S1600X1600'
+                    ],
+                    features: [
+                        'Progressive Advance Plus',
+                        'Adaptiv Fartpilot',
+                        'Aktiv vognbane assistent',
+                        'Aktiv styre assistent',
+                        'Apple CarPlay/Android Auto',
+                        'Ambient belysning 64 farvemuligheder',
+                        'Dødvinkel assistent',
+                        'Rat varme',
+                        'Adaptive LED lygter',
+                        '360 graders kamera',
+                        'Træthedsregistrering',
+                        'Aftageligt træk (1.400kg)',
+                        'Elektrisk justerbar sæder m. memory funktion',
+                        'Keyless indgang',
+                        'MBUX Navigation',
+                        'LED High Performance forlygter',
+                        'Parkeringspakke med bakkamera',
+                        'Varmepumpe',
+                        'Elektrisk bagklap',
+                        'Navigation',
+                        'Bakkamera'
+                    ],
+                    description: 'Mercedes EQB250+ Progressive Advance Plus 5d\n\nBilen hjemtages på bestilling og leveres direkte fra Mercedes i Tyskland. Hvis denne model ikke helt rammer dine ønsker, er du meget velkommen til at kontakte os med dine præferencer – så finder vi hurtigt den helt rigtige bil til dig.\n\n⸻\n\n🚘 Køretøjsinformation\n• Mercedes EQB 250+ Progressive Advance Plus 5d\n• Årgang: 11/2024\n• Kilometerstand: 28.000\n• Motor / Effekt: Elektrisk\n• Brændstof: Elektrisk\n• Gearkasse: Aut.\n• Træk: Ja (elektrisk svingbart)\n• Farve (udvendig / kabine): Sort med del læder kabine\n• Rækkevidde: 503 km.\n\n⸻\n\n✨ Udstyr (udvalgte highlights)\n• Progressive Advance Plus\n• Adaptiv Fartpilot\n• Aktiv vognbane assistent\n• Aktiv styre assistent\n• Apple CarPlay/Android Auto\n• Ambient belysning 64 farvemuligheder\n• Dødvinkel assistent\n• Rat varme\n• Adaptive LED lygter\n• 360 graders kamera\n• Træthedsregistrering\n• Aftageligt træk (1.400kg)\n• Elektrisk justerbar sæder m. memory funktion\n• Keyless indgang\n\nKomplet sæt vinterhjul kan tilkøbes for 12.000,- Kr.\n(Fuld udstyrsliste fremsendes ved henvendelse)\n\n⸻\n\n📘 Stand & historik\n• Importeret og udvalgt af Nordic Autos.\n• Fuld servicehistorik ved Mercedes\n• Bilen fremstår i meget flot og velholdt stand\n\n⸻\n\n📑 Leasingvilkår\n• Vi tilbyder Privatleasing, erhvervsleasing samt split-leasing.\n• Leasingaftale kan tilpasses individuelt\n• Mulighed for tilkøb af service- og garantiløsning\n• Forsikring kan evt. formidles\n\n⸻\n\n🏢 Om Nordic Autos\nNordic Autos er specialiseret i leasing og salg af eksklusive kvalitetsbiler. Vi tilbyder professionel rådgivning, gennemsigtige leasingvilkår og en tryg proces fra start til slut.\n\n📞 Kontakt os for et skræddersyet leasingtilbud eller fremvisning (Fremvisning efter aftale)',
+                    status: 'available',
+                    isNew: true,
+                    specifications: {
+                        engine: 'Electric Motor',
+                        transmission: 'Automatgear',
+                        drivetrain: 'Forhjulstræk',
+                        acceleration: '9.2 sekunder (0-100 km/t)',
+                        topSpeed: '160 km/t',
+                        range: '503 km',
+                        batteryCapacity: '70.5 kWh',
+                        energyConsumption: '163 Wh/km',
+                        towingCapacity: '1400 kg'
+                    },
+                    history: {
+                        previousOwners: 1,
+                        serviceHistory: true,
+                        accidents: false
+                    }
+                };
+                
+                console.log('📤 Sender bil data:', carData);
+                
+                const { data, error } = await window.supabaseClient
+                    .from('cars')
+                    .insert([carData])
+                    .select();
+                
+                if (error) throw error;
+                
+                console.log('✅ Bil tilføjet:', data);
+                result.className = 'result success';
+                result.innerHTML = `
+                    <h3 style="margin-bottom: 10px;">✅ Mercedes EQB250+ Progressive tilføjet!</h3>
+                    <p>Bilen er nu tilgængelig på hjemmesiden.</p>
+                    <p style="margin-top: 15px;"><strong>Bil ID:</strong> ${data[0].id}</p>
+                    <p><strong>Næste skridt:</strong> Gå til lagerbiler-siden og genindlæs for at se bilen.</p>
+                `;
+                result.style.display = 'block';
+                btn.textContent = '✅ Bil tilføjet!';
+                
+            } catch (error) {
+                console.error('❌ Fejl:', error);
+                result.className = 'result error';
+                result.innerHTML = `<h3 style="margin-bottom: 10px;">❌ Fejl ved tilføjelse</h3><p>${error.message}</p>`;
+                result.style.display = 'block';
+                btn.disabled = false;
+                btn.textContent = '➕ Tilføj bil til database';
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

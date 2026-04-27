@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tilføj Mercedes EQA250 Progressive Advance</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 50px auto; padding: 20px; background: #f5f5f5; }
+        .card { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { color: #333; font-size: 22px; }
+        .info { background: #f0f8ff; padding: 15px; border-radius: 8px; margin: 20px 0; }
+        .info p { margin: 5px 0; font-size: 14px; }
+        button { background: #2563eb; color: white; border: none; padding: 15px 30px; font-size: 16px; border-radius: 8px; cursor: pointer; width: 100%; }
+        button:hover { background: #1d4ed8; }
+        button:disabled { background: #9ca3af; cursor: not-allowed; }
+        #status { margin-top: 20px; padding: 15px; border-radius: 8px; display: none; font-weight: bold; text-align: center; }
+        .success { background: #d1fae5; color: #065f46; }
+        .error { background: #fee2e2; color: #991b1b; }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1>🚗 Tilføj Mercedes EQA250 Progressive Advance</h1>
+    <div class="info">
+        <p><strong>Mærke:</strong> Mercedes</p>
+        <p><strong>Model:</strong> EQA250 Progressive Advance 5d</p>
+        <p><strong>Årgang:</strong> 2025 (reg. 10/2024)</p>
+        <p><strong>Km:</strong> 9.500 km</p>
+        <p><strong>Pris:</strong> 284.600 kr</p>
+        <p><strong>Farve:</strong> Grå</p>
+        <p><strong>Brændstof:</strong> El</p>
+        <p><strong>Rækkevidde:</strong> 528 km (WLTP)</p>
+        <p><strong>Billeder:</strong> 16 stk</p>
+    </div>
+    <button id="addBtn" onclick="addCar()">➕ Tilføj bil til database</button>
+    <div id="status"></div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://gfbsuydsquixhrrarjab.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdmYnN1eWRzcXVpeGhycmFyamFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwMjE5NDcsImV4cCI6MjA4NTU5Nzk0N30.M4nA8itsVSpcZb4l1w3cHtl_86KV89BHyt7xNE0hdSY';
+
+async function addCar() {
+    const btn = document.getElementById('addBtn');
+    const status = document.getElementById('status');
+    btn.disabled = true;
+    btn.textContent = 'Tilføjer...';
+    status.style.display = 'none';
+
+    const carData = {
+        brand: 'Mercedes',
+        model: 'EQA250 Progressive Advance 5d',
+        year: 2025,
+        price: 284600,
+        mileage: 9500,
+        fuelType: 'El',
+        status: 'available',
+        isNew: true,
+        images: [
+            'https://billeder.bilbasen.dk/bilinfo/b581cf61-e80f-428b-8c1e-745a4f39609d.png?class=S1600X1600',
+            'https://billeder.bilbasen.dk/bilinfo/ee47879e-52d7-467d-aec7-a6f8c200b96b.png?class=S1600X1600',
+            'https://billeder.bilbasen.dk/bilinfo/ae80474d-b285-4754-bff4-8bfdaf5585a3.png?class=S1600X1600',
+            'https://billeder.bilbasen.dk/bilinfo/1b851e77-a238-4973-8a03-4179a5531405.png?class=S1600X1600',
+            'https://billeder.bilbasen.dk/bilinfo/8dc90fa5-d223-4be2-af5e-c973c574a0f9.png?class=S1600X1600',
+            'https://billeder.bilbasen.dk/bilinfo/4423d424-86ca-4a9d-ae82-6d533ecb7ae7.png?class=S1600X1600',
+            'https://billeder.bilbasen.dk/bilinfo/c2dca4e1-7127-42f0-b6a3-7c9e722adf12.png?class=S1600X1600',
+            'https://billeder.bilbasen.dk/bilinfo/b8507852-77b8-469b-a2f4-1ff0f9362b2c.png?class=S1600X1600',
+            'https://billeder.bilbasen.dk/bilinfo/bf128065-f854-4ada-8fd9-0bad342a0656.png?class=S1600X1600',
+            'https://billeder.bilbasen.dk/bilinfo/1f4c56c0-55af-45ee-9cf5-fa157fda944d.png?class=S1600X1600',
+            'https://billeder.bilbasen.dk/bilinfo/57df2ee8-c5d1-4c36-aefa-2ac5b049ab0e.png?class=S1600X1600',
+            'https://billeder.bilbasen.dk/bilinfo/45027915-da46-41dc-a622-7d3699083bbd.png?class=S1600X1600',
+            'https://billeder.bilbasen.dk/bilinfo/11783638-7066-417e-a1a6-218cc6ccf0da.png?class=S1600X1600',
+            'https://billeder.bilbasen.dk/bilinfo/6ade64df-98a6-47cc-af02-f16e82a5aac7.png?class=S1600X1600',
+            'https://billeder.bilbasen.dk/bilinfo/8f9b1ad8-7eb6-43dd-b4ff-b1c5ec98096e.png?class=S1600X1600',
+            'https://billeder.bilbasen.dk/bilinfo/0551c40c-f866-4daa-ac74-56476c9186a1.png?class=S1600X1600'
+        ],
+        description: 'Mercedes EQA 250 Progressive Advance 5d\n\nBilen hjemtages på bestilling og leveres direkte fra Mercedes i Tyskland. Hvis denne model ikke helt rammer dine ønsker, er du meget velkommen til at kontakte os med dine præferencer – så finder vi hurtigt den helt rigtige bil til dig.\n\n⸻\n\n🚘 Køretøjsinformation\n• Mercedes EQA 250 Progressive Advance 5d\n• Årgang: 01/2025\n• Kilometerstand: 9.500\n• Motor / Effekt: Elektrisk\n• Brændstof: Elektrisk\n• Gearkasse: Aut.\n• Træk: kan monteres til 12.500,- inkl. moms\n• Farve (udvendig / kabine): Grå med sort kabine.\n• Rækkevidde: 525 km.\n\n⸻\n\n✨ Udstyr (udvalgte highlights)\n• Progressive Advance\n• Adaptiv Fartpilot (aktiveres i app)\n• Aktiv vognbane assistent\n• Aktiv styre assistent\n• Apple CarPlay/Android Auto\n• Ambient belysning 64 farvemuligheder\n• Dødvinkel assistent\n• Rat varme\n• Aktiv bremse assistent\n• Aktiv parkerings assistent (PARKTRONIC)\n• Træthedsregistrering\n• Adaptive LED forlygter\n• Fuld servicehistorik ved Mercedes\n• Vinterpakke\n\nAftageligt træk kan monteres til 12.500,- inkl. moms\nKomplet sæt vinterhjul kan sælges til 12.500,- inkl moms\n(Fuld udstyrsliste fremsendes ved henvendelse)\n\n⸻\n\n📘 Stand & historik\n• Importeret og udvalgt af Nordic Autos.\n• Fuld servicehistorik ved Mercedes\n• Bilen fremstår i meget flot og velholdt stand\n\n⸻\n\n📑 Leasingvilkår\n• Vi tilbyder Privatleasing, erhvervsleasing samt split-leasing.\n• Leasingaftale kan tilpasses individuelt\n• Mulighed for tilkøb af service- og garantiløsning\n• Forsikring kan evt. formidles\n\n⸻\n\n🏢 Om Nordic Autos\nNordic Autos er specialiseret i leasing og salg af eksklusive kvalitetsbiler. Vi tilbyder professionel rådgivning, gennemsigtige leasingvilkår og en tryg proces fra start til slut.\n\n📞 Kontakt os for et skræddersyet leasingtilbud eller fremvisning (Fremvisning efter aftale)',
+        specifications: {
+            range: '528 km (WLTP)',
+            battery: '66,5 kWh',
+            power: '190 hk / 385 nm',
+            acceleration: '8,6 sek.',
+            topSpeed: '160 km/t',
+            towingCapacity: '1.500 kg',
+            energyConsumption: '144 Wh/km',
+            transmission: 'Automatisk',
+            drivetrain: 'Forhjulstræk',
+            doors: 5,
+            seats: 5,
+            trunkSize: '340 liter'
+        }
+    };
+
+    try {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/cars`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'apikey': SUPABASE_KEY,
+                'Authorization': `Bearer ${SUPABASE_KEY}`,
+                'Prefer': 'return=representation'
+            },
+            body: JSON.stringify(carData)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            status.className = 'success';
+            status.textContent = '✅ Bil tilføjet succesfuldt! ID: ' + result[0]?.id;
+            status.style.display = 'block';
+            btn.textContent = '✅ Tilføjet!';
+        } else {
+            throw new Error(result.message || result.details || JSON.stringify(result));
+        }
+    } catch (err) {
+        status.className = 'error';
+        status.textContent = '❌ Fejl ved opdatering: ' + err.message;
+        status.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = '➕ Prøv igen';
+    }
+}
+</script>
+</body>
+</html>

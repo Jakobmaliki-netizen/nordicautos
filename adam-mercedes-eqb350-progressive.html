@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tilføj Mercedes EQB350 Progressive - Nordic Autos</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 40px 20px; }
+        .container { max-width: 800px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); padding: 40px; }
+        h1 { color: #2d3748; margin-bottom: 10px; font-size: 32px; }
+        .subtitle { color: #718096; margin-bottom: 30px; font-size: 18px; }
+        .car-info { background: #f7fafc; padding: 30px; border-radius: 12px; margin-bottom: 30px; border-left: 4px solid #667eea; }
+        .car-info h2 { color: #2d3748; margin-bottom: 15px; font-size: 20px; }
+        .car-info p { color: #4a5568; line-height: 1.6; margin-bottom: 10px; }
+        .btn { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 18px 40px; border-radius: 12px; font-size: 18px; font-weight: 700; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); display: block; width: 100%; margin-top: 30px; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .result { margin-top: 20px; padding: 20px; border-radius: 12px; display: none; }
+        .result.success { background: #c6f6d5; color: #22543d; }
+        .result.error { background: #fed7d7; color: #742a2a; }
+        .loading { display: none; text-align: center; margin-top: 20px; }
+        .spinner { border: 4px solid #f3f4f6; border-top: 4px solid #667eea; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚗 Tilføj Mercedes EQB350</h1>
+        <p class="subtitle">Progressive Advance Plus 4Matic 5d - 2025</p>
+        
+        <div class="car-info">
+            <h2>📋 Bil information:</h2>
+            <p><strong>Mærke:</strong> Mercedes-Benz</p>
+            <p><strong>Model:</strong> EQB350</p>
+            <p><strong>Variant:</strong> Progressive Advance Plus 4Matic 5d</p>
+            <p><strong>Årgang:</strong> 2025</p>
+            <p><strong>Kilometerstand:</strong> 17.000 km</p>
+            <p><strong>Pris:</strong> 319.200 kr.</p>
+            <p><strong>Brændstof:</strong> El</p>
+            <p><strong>Hestekræfter:</strong> 292 hk</p>
+            <p><strong>Rækkevidde:</strong> 447 km</p>
+            <p><strong>Billeder:</strong> 9 stk.</p>
+        </div>
+        
+        <button class="btn" onclick="addCar()">➕ Tilføj bil til database</button>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p style="color: #718096; margin-top: 10px;">Tilføjer bil...</p>
+        </div>
+        
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://gfbsuydsquixhrrarjab.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdmYnN1eWRzcXVpeGhycmFyamFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwMjE5NDcsImV4cCI6MjA4NTU5Nzk0N30.M4nA8itsVSpcZb4l1w3cHtl_86KV89BHyt7xNE0hdSY';
+        const { createClient } = supabase;
+        window.supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        console.log('✅ Supabase client initialized');
+        
+        async function addCar() {
+            const btn = document.querySelector('.btn');
+            const loading = document.getElementById('loading');
+            const result = document.getElementById('result');
+            
+            btn.disabled = true;
+            btn.textContent = '⏳ Tilføjer bil...';
+            loading.style.display = 'block';
+            result.style.display = 'none';
+            
+            try {
+                if (!window.supabaseClient) throw new Error('Supabase ikke tilgængelig');
+                
+                const carData = {
+                    brand: 'Mercedes-Benz',
+                    model: 'EQB350',
+                    variant: 'Progressive Advance Plus 4Matic 5d',
+                    year: 2025,
+                    mileage: 17000,
+                    price: 319200,
+                    fuelType: 'El',
+                    bodyType: 'SUV',
+                    horsepower: 292,
+                    images: [
+                        'https://billeder.bilbasen.dk/bilinfo/1ddaee1f-fb82-4147-b6e3-979c289a9d59.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/a872ae33-dc31-4c00-9872-13a2d2c2df75.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/c4855b0b-f990-4faf-953a-935d666de98a.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/0f665b68-5070-4f21-8383-d2f88f836014.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/63339770-7215-4d81-aff4-0a2089ed5ba7.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/c12f6942-f3d6-4bbb-b1da-0e0d24c66fad.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/e9a8ee6f-ace5-4a08-acd8-27442b69d648.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/71aa64aa-f539-405b-880d-e1a8f5195882.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/c584af63-3a48-4e5f-b6d1-9b1b5ad7375c.png?class=S1600X1600'
+                    ],
+                    features: [
+                        'Progressive Advance Plus',
+                        'Adaptiv fartpilot',
+                        'Apple CarPlay/Android Auto',
+                        'Trådløs mobilopladning',
+                        'KeyLess Central lås',
+                        'Rat Varme',
+                        'Vognbane assistent',
+                        'Ambient belysning 64 farvemuligheder',
+                        'Dødvinkel assistent',
+                        'Aktiv parkerings assistent (PARKTRONIC)',
+                        '360 graders kamera',
+                        'Skilte genkendelse',
+                        'Vinterpakke',
+                        'Adaptive kurvelygter m. LED',
+                        'MBUX Navigation Premium',
+                        'LED High Performance forlygter',
+                        'Adaptiv fjernlys assistent',
+                        'Elektrisk svingbart træk',
+                        '4MATIC Firehjulstræk',
+                        '3. sæderække til 2 personer',
+                        'Køreassistentpakke',
+                        'Sædekomfortpakke',
+                        'Parkeringspakke med bakkamera'
+                    ],
+                    description: 'Mercedes EQB 350 4M Progressive Advance Plus\n\nBilen hjemtages på bestilling og leveres direkte fra Mercedes i Tyskland. Hvis denne model ikke helt rammer dine ønsker, er du meget velkommen til at kontakte os med dine præferencer – så finder vi hurtigt den helt rigtige bil til dig.\n\n⸻\n\n🚘 Køretøjsinformation\n• Mercedes EQB 350 4M Progressive Advance Plus\n• Årgang: 01/2025\n• Kilometerstand: 17.000\n• Motor / Effekt: Elektrisk\n• Brændstof: Elektrisk\n• Gearkasse: Aut.\n• Træk: Elektrisk svingbart træk (4MATIC)\n• Farve (udvendig / kabine): Sort med mørk kabine.\n• Rækkevidde: 447 km.\n\n⸻\n\n✨ Udstyr (udvalgte highlights)\n• Progressive Advance Plus\n• Adaptiv fartpilot\n• Apple CarPlay/Android Auto\n• Trådløs mobilopladning\n• KeyLess Central lås\n• Rat Varme\n• Vognbane assistent\n• Ambient belysning 64 farvemuligheder\n• Dødvinkel assistent\n• Aktiv parkerings assistent (PARKTRONIC)\n• 360 graders kamera\n• Skilte genkendelse\n• Fuld servicehistorik ved Mercedes\n• Vinterpakke\n• Adaptive kurvelygter m. LED\n\nVinterhjul fås fra 10.000 kr. og opefter, afhængigt af hvilken model der vælges.\n(Fuld udstyrsliste fremsendes ved henvendelse)\n\n⸻\n\n📘 Stand & historik\n• Importeret og udvalgt af Nordic Autos.\n• Fuld servicehistorik ved Mercedes\n• Bilen fremstår i meget flot og velholdt stand\n\n⸻\n\n📑 Leasingvilkår\n• Vi tilbyder Privatleasing, erhvervsleasing samt split-leasing.\n• Leasingaftale kan tilpasses individuelt\n• Mulighed for tilkøb af service- og garantiløsning\n• Forsikring kan evt. formidles\n\n⸻\n\n🏢 Om Nordic Autos\nNordic Autos er specialiseret i leasing og salg af eksklusive kvalitetsbiler. Vi tilbyder professionel rådgivning, gennemsigtige leasingvilkår og en tryg proces fra start til slut.\n\n📞 Kontakt os for et skræddersyet leasingtilbud eller fremvisning (Fremvisning efter aftale)',
+                    status: 'available',
+                    isNew: true,
+                    specifications: {
+                        engine: 'Dual Electric Motors',
+                        transmission: 'Automatgear',
+                        drivetrain: '4MATIC AWD',
+                        acceleration: '6.2 sekunder (0-100 km/t)',
+                        topSpeed: '160 km/t',
+                        range: '447 km',
+                        batteryCapacity: '66.5 kWh',
+                        energyConsumption: '172 Wh/km',
+                        towingCapacity: '1700 kg',
+                        seats: 7
+                    },
+                    history: {
+                        previousOwners: 1,
+                        serviceHistory: true,
+                        accidents: false
+                    }
+                };
+                
+                console.log('📤 Sender bil data:', carData);
+                
+                const { data, error } = await window.supabaseClient
+                    .from('cars')
+                    .insert([carData])
+                    .select();
+                
+                if (error) throw error;
+                
+                console.log('✅ Bil tilføjet:', data);
+                result.className = 'result success';
+                result.innerHTML = `
+                    <h3 style="margin-bottom: 10px;">✅ Mercedes EQB350 Progressive tilføjet!</h3>
+                    <p>Bilen er nu tilgængelig på hjemmesiden.</p>
+                    <p style="margin-top: 15px;"><strong>Bil ID:</strong> ${data[0].id}</p>
+                    <p><strong>Næste skridt:</strong> Gå til lagerbiler-siden og genindlæs for at se bilen.</p>
+                `;
+                result.style.display = 'block';
+                btn.textContent = '✅ Bil tilføjet!';
+                
+            } catch (error) {
+                console.error('❌ Fejl:', error);
+                result.className = 'result error';
+                result.innerHTML = `<h3 style="margin-bottom: 10px;">❌ Fejl ved tilføjelse</h3><p>${error.message}</p>`;
+                result.style.display = 'block';
+                btn.disabled = false;
+                btn.textContent = '➕ Tilføj bil til database';
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tilføj Mini Cooper SE Classic Trim - Nordic Autos</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 40px 20px; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); padding: 40px; }
+        h1 { color: #2d3748; margin-bottom: 10px; font-size: 32px; }
+        .subtitle { color: #718096; margin-bottom: 30px; font-size: 18px; }
+        .car-info { background: #f7fafc; padding: 30px; border-radius: 12px; margin-bottom: 30px; }
+        .car-info h2 { color: #2d3748; margin-bottom: 20px; font-size: 24px; }
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .info-item { display: flex; flex-direction: column; }
+        .info-label { font-size: 12px; color: #718096; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
+        .info-value { font-size: 18px; color: #2d3748; font-weight: 600; }
+        .description { background: white; padding: 20px; border-radius: 8px; margin-top: 20px; border-left: 4px solid #667eea; }
+        .description h3 { color: #2d3748; margin-bottom: 15px; }
+        .description p { color: #4a5568; line-height: 1.8; margin-bottom: 10px; white-space: pre-line; }
+        .features { background: white; padding: 20px; border-radius: 8px; margin-top: 15px; }
+        .features h3 { color: #2d3748; margin-bottom: 15px; }
+        .features ul { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 10px; }
+        .features li { color: #4a5568; padding: 8px 0; display: flex; align-items: center; }
+        .features li:before { content: "✓"; color: #48bb78; font-weight: bold; margin-right: 10px; font-size: 18px; }
+        .image-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin: 30px 0; }
+        .image-gallery img { width: 100%; height: 150px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .btn { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 18px 40px; border-radius: 12px; font-size: 18px; font-weight: 700; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); display: block; width: 100%; margin-top: 30px; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .result { margin-top: 20px; padding: 20px; border-radius: 12px; display: none; }
+        .result.success { background: #c6f6d5; color: #22543d; }
+        .result.error { background: #fed7d7; color: #742a2a; }
+        .loading { display: none; text-align: center; margin-top: 20px; }
+        .spinner { border: 4px solid #f3f4f6; border-top: 4px solid #667eea; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚗 Tilføj Mini Cooper SE Classic Trim</h1>
+        <p class="subtitle">Gennemse biloplysninger og klik på knappen for at tilføje til databasen</p>
+        
+        <div class="car-info">
+            <h2>Bil Information</h2>
+            <div class="info-grid">
+                <div class="info-item"><span class="info-label">Mærke</span><span class="info-value">Mini</span></div>
+                <div class="info-item"><span class="info-label">Model</span><span class="info-value">Cooper SE Classic Trim</span></div>
+                <div class="info-item"><span class="info-label">Årgang</span><span class="info-value">2023</span></div>
+                <div class="info-item"><span class="info-label">Kilometerstand</span><span class="info-value">18.500 km</span></div>
+                <div class="info-item"><span class="info-label">Brændstof</span><span class="info-value">El</span></div>
+                <div class="info-item"><span class="info-label">Hestekræfter</span><span class="info-value">184 HK</span></div>
+                <div class="info-item"><span class="info-label">Pris</span><span class="info-value" style="color: #667eea; font-size: 24px;">159.000 kr.</span></div>
+            </div>
+            
+            <div class="description">
+                <h3>📝 Beskrivelse</h3>
+                <p>Mini Cooper SE Classic Trim 3d
+
+Bilen hjemtages på bestilling og leveres direkte fra BMW/Mini i Tyskland. Hvis denne model ikke helt rammer dine ønsker, er du meget velkommen til at kontakte os med dine præferencer – så finder vi hurtigt den helt rigtige bil til dig.
+
+🚘 Køretøjsinformation
+• Mini Cooper SE Classic Trim 3d
+• Årgang: 01/2023
+• Kilometerstand: 17.500
+• Motor / Effekt: Elektrisk
+• Brændstof: Elektrisk
+• Gearkasse: Aut.
+• Træk: Nej
+• Farve (udvendig / kabine): Sølv med sort kabine.
+• Rækkevidde: 232 km.
+
+✨ Udstyr (udvalgte highlights)
+• Classic Trim
+• Ambient belysning
+• Fartpilot
+• Sædevarme
+• Nøglefri adgang / Keyless
+• Fjernlys assistent
+• Vognbane assistent
+• LED Lys
+• Navigation
+• Varmepumpe
+• Parkerings sensor
+• Sports rat med multifunktion
+• Apple CarPlay/Android Auto
+• Kollisionadvarsel med bremsefunktion
+• Skiltegenkendelse
+
+(Fuld udstyrsliste fremsendes ved henvendelse)
+
+📘 Stand & historik
+• Importeret og udvalgt af Nordic Autos.
+• Fuld servicehistorik ved Mini
+• Bilen fremstår i meget flot og velholdt stand
+
+📑 Leasingvilkår
+• Vi tilbyder Privatleasing, erhvervsleasing samt split-leasing.
+• Leasingaftale kan tilpasses individuelt
+• Mulighed for tilkøb af service- og garantiløsning
+• Forsikring kan evt. formidles
+
+🏢 Om Nordic Autos
+Nordic Autos er specialiseret i leasing og salg af eksklusive kvalitetsbiler. Vi tilbyder professionel rådgivning, gennemsigtige leasingvilkår og en tryg proces fra start til slut.
+
+📞 Kontakt os for et skræddersyet leasingtilbud eller fremvisning (Fremvisning efter aftale)</p>
+            </div>
+            
+            <div class="features">
+                <h3>✨ Komplet udstyrsliste</h3>
+                <ul>
+                    <li>16 tommer Alufælge</li>
+                    <li>ESP / ESC</li>
+                    <li>2 zone klima</li>
+                    <li>Fartpilot</li>
+                    <li>ABS-bremser</li>
+                    <li>Fjernb. centrallås</li>
+                    <li>Adaptive forlygter</li>
+                    <li>Fjernlysassistent</li>
+                    <li>Airbags</li>
+                    <li>Fuld LED forlygter</li>
+                    <li>Aircondition</li>
+                    <li>Fuldaut. klima</li>
+                    <li>Alufælge</li>
+                    <li>Håndfrit til mobil</li>
+                    <li>Ambiente belysning</li>
+                    <li>Højdejust. forsæde</li>
+                    <li>Antispin</li>
+                    <li>Intelligent hastighedsassistent</li>
+                    <li>App integration</li>
+                    <li>Isofix</li>
+                    <li>Apple carplay</li>
+                    <li>Klimaanlæg, 2-zonet</li>
+                    <li>Aut. nedbl. bakspejl</li>
+                    <li>Kørecomputer</li>
+                    <li>Auto hold</li>
+                    <li>Kunstlæder</li>
+                    <li>Auto. nødbremse</li>
+                    <li>Kunstlæderindtræk</li>
+                    <li>Automatgear</li>
+                    <li>Læderindtræk</li>
+                    <li>Automatisk lys</li>
+                    <li>Læderrat</li>
+                    <li>Automatisk nødbremsesystem</li>
+                    <li>LED baglygter</li>
+                    <li>Automatisk start/stop</li>
+                    <li>LED Kørelys</li>
+                    <li>Bagagerumsdækken</li>
+                    <li>Mørk loftbeklædning</li>
+                    <li>Bakspejl m. nedbl.</li>
+                    <li>Multifunktionsrat</li>
+                    <li>CD</li>
+                    <li>Musikstreaming via bluetooth</li>
+                    <li>CD afspiller</li>
+                    <li>Navigation</li>
+                    <li>CD/radio</li>
+                    <li>Nøglefri adgang</li>
+                    <li>Centrallås</li>
+                    <li>Nøglefri tænding</li>
+                    <li>DAB radio</li>
+                    <li>Regnsensor</li>
+                    <li>DAB+ Radio</li>
+                    <li>Sædebetræk, læder</li>
+                    <li>Digitalt cockpit</li>
+                    <li>Sædevarme</li>
+                    <li>Dobbelt bagagerumsbund</li>
+                    <li>Skiltegenkendelse</li>
+                    <li>EDR-boks</li>
+                    <li>Sportssæder</li>
+                    <li>El-klapbare sidespejle</li>
+                    <li>Træthedsregistrering</li>
+                    <li>El-klapbare sidespejle m. varme</li>
+                    <li>Udv. temp. måler</li>
+                    <li>El-ruder</li>
+                    <li>Varmepumpe</li>
+                    <li>El-sidespejle</li>
+                    <li>Virtuelle sidespejle</li>
+                    <li>El-sidespejle m. varme</li>
+                    <li>Vognbaneassistent</li>
+                </ul>
+            </div>
+        </div>
+        
+        <h3 style="color: #2d3748; margin-bottom: 15px;">📸 Billeder (18 stk.)</h3>
+        <div class="image-gallery" id="imageGallery"></div>
+        
+        <button class="btn" onclick="addCar()">➕ Tilføj Mini Cooper SE til Database</button>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p style="color: #718096; margin-top: 10px;">Tilføjer bil til database...</p>
+        </div>
+        
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://gfbsuydsquixhrrarjab.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdmYnN1eWRzcXVpeGhycmFyamFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwMjE5NDcsImV4cCI6MjA4NTU5Nzk0N30.M4nA8itsVSpcZb4l1w3cHtl_86KV89BHyt7xNE0hdSY';
+        const { createClient } = supabase;
+        window.supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        console.log('✅ Supabase client initialized');
+        
+        const carData = {
+            brand: 'Mini',
+            model: 'Cooper SE Classic Trim',
+            variant: 'Classic Trim 3d',
+            year: 2023,
+            mileage: 18500,
+            price: 159000,
+            fuelType: 'El',
+            bodyType: 'Mikro',
+            horsepower: 184,
+            description: `Mini Cooper SE Classic Trim 3d
+
+Bilen hjemtages på bestilling og leveres direkte fra BMW/Mini i Tyskland. Hvis denne model ikke helt rammer dine ønsker, er du meget velkommen til at kontakte os med dine præferencer – så finder vi hurtigt den helt rigtige bil til dig.
+
+🚘 Køretøjsinformation
+• Mini Cooper SE Classic Trim 3d
+• Årgang: 01/2023
+• Kilometerstand: 17.500
+• Motor / Effekt: Elektrisk
+• Brændstof: Elektrisk
+• Gearkasse: Aut.
+• Træk: Nej
+• Farve (udvendig / kabine): Sølv med sort kabine.
+• Rækkevidde: 232 km.
+
+✨ Udstyr (udvalgte highlights)
+• Classic Trim
+• Ambient belysning
+• Fartpilot
+• Sædevarme
+• Nøglefri adgang / Keyless
+• Fjernlys assistent
+• Vognbane assistent
+• LED Lys
+• Navigation
+• Varmepumpe
+• Parkerings sensor
+• Sports rat med multifunktion
+• Apple CarPlay/Android Auto
+• Kollisionadvarsel med bremsefunktion
+• Skiltegenkendelse
+
+(Fuld udstyrsliste fremsendes ved henvendelse)
+
+📘 Stand & historik
+• Importeret og udvalgt af Nordic Autos.
+• Fuld servicehistorik ved Mini
+• Bilen fremstår i meget flot og velholdt stand
+
+📑 Leasingvilkår
+• Vi tilbyder Privatleasing, erhvervsleasing samt split-leasing.
+• Leasingaftale kan tilpasses individuelt
+• Mulighed for tilkøb af service- og garantiløsning
+• Forsikring kan evt. formidles
+
+🏢 Om Nordic Autos
+Nordic Autos er specialiseret i leasing og salg af eksklusive kvalitetsbiler. Vi tilbyder professionel rådgivning, gennemsigtige leasingvilkår og en tryg proces fra start til slut.
+
+📞 Kontakt os for et skræddersyet leasingtilbud eller fremvisning (Fremvisning efter aftale)`,
+            features: ['16 tommer Alufælge','ESP / ESC','2 zone klima','Fartpilot','ABS-bremser','Fjernb. centrallås','Adaptive forlygter','Fjernlysassistent','Airbags','Fuld LED forlygter','Aircondition','Fuldaut. klima','Alufælge','Håndfrit til mobil','Ambiente belysning','Højdejust. forsæde','Antispin','Intelligent hastighedsassistent','App integration','Isofix','Apple carplay','Klimaanlæg, 2-zonet','Aut. nedbl. bakspejl','Kørecomputer','Auto hold','Kunstlæder','Auto. nødbremse','Kunstlæderindtræk','Automatgear','Læderindtræk','Automatisk lys','Læderrat','Automatisk nødbremsesystem','LED baglygter','Automatisk start/stop','LED Kørelys','Bagagerumsdækken','Mørk loftbeklædning','Bakspejl m. nedbl.','Multifunktionsrat','CD','Musikstreaming via bluetooth','CD afspiller','Navigation','CD/radio','Nøglefri adgang','Centrallås','Nøglefri tænding','DAB radio','Regnsensor','DAB+ Radio','Sædebetræk, læder','Digitalt cockpit','Sædevarme','Dobbelt bagagerumsbund','Skiltegenkendelse','EDR-boks','Sportssæder','El-klapbare sidespejle','Træthedsregistrering','El-klapbare sidespejle m. varme','Udv. temp. måler','El-ruder','Varmepumpe','El-sidespejle','Virtuelle sidespejle','El-sidespejle m. varme','Vognbaneassistent'],
+            images: [
+                'https://billeder.bilbasen.dk/bilinfo/b7f42850-5c0c-43ff-9aae-d6f108edc9c1.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/649aa92c-c7aa-42e6-ba6b-44c96ba180fb.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/0efd8c7b-847a-4f1b-9761-67de835dcb58.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/60381a16-ace2-4c67-a144-7157772dc1f5.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/128be77c-a7b3-471c-943a-f291b5c12596.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/a70cb742-5181-4350-a230-9a65bfa1b4ad.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/b80e1c92-a6e0-4f29-9feb-fe5e33214e5d.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/1709c8e5-e397-490d-bcea-390b188a1526.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/3b6dadc2-8052-4236-ac79-f12dd76e8565.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/982fc9f6-d1f0-4fe1-b047-ed603cb18cdf.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/0a20ff18-35ed-4b48-a435-816c1ef3357e.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/2376f2ec-d272-4f23-9670-c596ebeaffac.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/b9b6030b-7b21-4a46-bd17-41d67f91b4de.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/e05ea6c4-31f0-4869-a0b7-5d77cbf3c8bb.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/577971ac-3ccd-4326-80f0-ccd79d403b3c.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/9471c2d9-c346-4c18-92ce-e91c4c53ab6c.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/47106eda-c977-4ef1-a9ed-2c2cb641523d.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/c607c951-97a4-493e-b234-708a67b43cdc.png?class=S1600X1600'
+            ],
+            status: 'available',
+            specifications: {
+                color: 'Sølv',
+                interior: 'Sort',
+                transmission: 'Automatisk',
+                drive: 'Forhjulstræk',
+                electricRange: '232 km',
+                batteryCapacity: '28,9 kWh',
+                energyConsumption: '154 Wh/km'
+            }
+        };
+        
+        const gallery = document.getElementById('imageGallery');
+        carData.images.forEach(url => {
+            const img = document.createElement('img');
+            img.src = url;
+            img.alt = 'Mini Cooper SE Classic Trim';
+            gallery.appendChild(img);
+        });
+        
+        async function addCar() {
+            const btn = document.querySelector('.btn');
+            const loading = document.getElementById('loading');
+            const result = document.getElementById('result');
+            
+            btn.disabled = true;
+            btn.textContent = '⏳ Tilføjer bil...';
+            loading.style.display = 'block';
+            result.style.display = 'none';
+            
+            try {
+                if (!window.supabaseClient) throw new Error('Supabase ikke tilgængelig');
+                
+                const { data, error } = await window.supabaseClient.from('cars').insert([carData]).select();
+                if (error) throw error;
+                
+                console.log('✅ Bil tilføjet:', data);
+                result.className = 'result success';
+                result.innerHTML = `<h3 style="margin-bottom: 10px;">✅ Mini Cooper SE tilføjet!</h3><p>Bilen er nu tilgængelig på lagerbiler-siden.</p><p style="margin-top: 10px;"><strong>Bil ID:</strong> ${data[0].id}</p>`;
+                result.style.display = 'block';
+                btn.textContent = '✅ Bil tilføjet!';
+            } catch (error) {
+                console.error('❌ Fejl:', error);
+                result.className = 'result error';
+                result.innerHTML = `<h3 style="margin-bottom: 10px;">❌ Fejl ved tilføjelse</h3><p>${error.message}</p>`;
+                result.style.display = 'block';
+                btn.disabled = false;
+                btn.textContent = '➕ Tilføj Mini Cooper SE til Database';
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

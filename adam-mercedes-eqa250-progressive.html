@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tilføj Mercedes EQA250 Progressive - Nordic Autos</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 40px 20px; }
+        .container { max-width: 800px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); padding: 40px; }
+        h1 { color: #2d3748; margin-bottom: 10px; font-size: 32px; }
+        .subtitle { color: #718096; margin-bottom: 30px; font-size: 18px; }
+        .car-info { background: #f7fafc; padding: 30px; border-radius: 12px; margin-bottom: 30px; border-left: 4px solid #667eea; }
+        .car-info h2 { color: #2d3748; margin-bottom: 15px; font-size: 20px; }
+        .car-info p { color: #4a5568; line-height: 1.6; margin-bottom: 10px; }
+        .btn { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 18px 40px; border-radius: 12px; font-size: 18px; font-weight: 700; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); display: block; width: 100%; margin-top: 30px; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .result { margin-top: 20px; padding: 20px; border-radius: 12px; display: none; }
+        .result.success { background: #c6f6d5; color: #22543d; }
+        .result.error { background: #fed7d7; color: #742a2a; }
+        .loading { display: none; text-align: center; margin-top: 20px; }
+        .spinner { border: 4px solid #f3f4f6; border-top: 4px solid #667eea; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚗 Tilføj Mercedes EQA250</h1>
+        <p class="subtitle">Progressive 5d - 2022</p>
+        
+        <div class="car-info">
+            <h2>📋 Bil information:</h2>
+            <p><strong>Mærke:</strong> Mercedes-Benz</p>
+            <p><strong>Model:</strong> EQA250</p>
+            <p><strong>Variant:</strong> Progressive 5d</p>
+            <p><strong>Årgang:</strong> 2022</p>
+            <p><strong>Kilometerstand:</strong> 82.000 km</p>
+            <p><strong>Pris:</strong> 229.400 kr.</p>
+            <p><strong>Brændstof:</strong> El</p>
+            <p><strong>Hestekræfter:</strong> 190 hk</p>
+            <p><strong>Rækkevidde:</strong> 424 km</p>
+            <p><strong>Billeder:</strong> 18 stk.</p>
+        </div>
+        
+        <button class="btn" onclick="addCar()">➕ Tilføj bil til database</button>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p style="color: #718096; margin-top: 10px;">Tilføjer bil...</p>
+        </div>
+        
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://gfbsuydsquixhrrarjab.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdmYnN1eWRzcXVpeGhycmFyamFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwMjE5NDcsImV4cCI6MjA4NTU5Nzk0N30.M4nA8itsVSpcZb4l1w3cHtl_86KV89BHyt7xNE0hdSY';
+        const { createClient } = supabase;
+        window.supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        console.log('✅ Supabase client initialized');
+        
+        async function addCar() {
+            const btn = document.querySelector('.btn');
+            const loading = document.getElementById('loading');
+            const result = document.getElementById('result');
+            
+            btn.disabled = true;
+            btn.textContent = '⏳ Tilføjer bil...';
+            loading.style.display = 'block';
+            result.style.display = 'none';
+            
+            try {
+                if (!window.supabaseClient) throw new Error('Supabase ikke tilgængelig');
+                
+                const carData = {
+                    brand: 'Mercedes-Benz',
+                    model: 'EQA250',
+                    variant: 'Progressive 5d',
+                    year: 2022,
+                    mileage: 82000,
+                    price: 229400,
+                    fuelType: 'El',
+                    bodyType: 'SUV',
+                    horsepower: 190,
+                    images: [
+                        'https://billeder.bilbasen.dk/bilinfo/b034a9a7-711c-4f81-a58e-07d7ced572b1.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/b558d738-ebda-4e92-be9d-4f6f936fa453.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/80d0fa5e-dc44-428f-a42f-431e26b4d648.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/d065bb7c-664c-4939-a230-98942bf13e81.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/a8a7d94f-cc98-47a5-805d-5872e8f59a9a.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/885efabb-fbf2-4a7e-b104-553494037585.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/a76866d3-929a-4a64-8c3e-d7b2730729a2.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/28dd9350-c545-4029-9445-d0f507375177.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/d208a59a-80b3-438b-be89-a9c97e0e0099.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/a58bea58-3e8c-452f-a6d1-d46a03f54283.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/e214898a-13a4-4e0c-b948-63464b51dc71.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/df73f952-1323-4f75-919f-8245d5982c3a.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/886cc239-7f1a-4998-9b9a-9cfa4e2d2169.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/93453bda-31fb-4e5a-815f-60745569ac6f.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/a512eafb-5f14-4211-a612-68495e371903.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/8e4e2c06-8d05-4a7a-a4ab-4f0e49ca2d91.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/48f7daf8-aca2-4b30-bc4e-75f5bb27e17b.png?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/af3009d7-091e-43d6-9d62-1fb5fb93dd05.png?class=S1600X1600'
+                    ],
+                    features: [
+                        'Progressive udstyrspakke',
+                        'Apple CarPlay/Android Auto',
+                        'Aktiv styre assistent',
+                        'Ambient belysning 64 farvemuligheder',
+                        'Dødvinkel assistent',
+                        'Adaptive LED lygter',
+                        'Adaptiv fjernlys assistent',
+                        'Adaptiv fartpilot',
+                        'Elektrisk svingbart træk',
+                        'Rat varme',
+                        'Parkerings assistent',
+                        'MBUX Infotainment',
+                        'LED High Performance',
+                        'Keyless-Go',
+                        'Klimaautomatik',
+                        'Parkeringspakke',
+                        'Varmepumpe',
+                        'Elektrisk bagklap',
+                        'Navigation',
+                        'Bakkamera'
+                    ],
+                    description: 'Mercedes EQA 250 Progressive\n\nBilen hjemtages på bestilling og leveres direkte fra Mercedes i Tyskland. Hvis denne model ikke helt rammer dine ønsker, er du meget velkommen til at kontakte os med dine præferencer – så finder vi hurtigt den helt rigtige bil til dig.\n\n⸻\n\n🚘 Køretøjsinformation\n• Mercedes EQA 250 Progressive\n• Årgang: 01/2022\n• Kilometerstand: 82.000\n• Motor / Effekt: Elektrisk\n• Brændstof: Elektrisk\n• Gearkasse: Aut.\n• Træk: Ja\n• Farve (udvendig / kabine): Sort\n• Rækkevidde: 424 km.\n\n⸻\n\n✨ Udstyr (udvalgte highlights)\n• Progressive\n• Apple CarPlay/Android Auto\n• Aktiv styre assistent\n• Ambient belysning 64 farvemuligheder\n• Dødvinkel assistent\n• Adaptive LED lygter\n• Adaptiv fjernlys assistent\n• Adaptiv fartpilot\n• Elektrisk svingbart træk\n• Rat varme\n• Parkerings assistent\n\nKomplet sæt vinterhjul til 10.000,- kroner.\n(Fuld udstyrsliste fremsendes ved henvendelse)\n\n⸻\n\n📘 Stand & historik\n• Importeret og udvalgt af Nordic Autos.\n• Fuld servicehistorik ved Mercedes\n• Bilen fremstår i meget flot og velholdt stand\n\n⸻\n\n📑 Leasingvilkår\n• Vi tilbyder Privatleasing, erhvervsleasing samt split-leasing.\n• Leasingaftale kan tilpasses individuelt\n• Mulighed for tilkøb af service- og garantiløsning\n• Forsikring kan evt. formidles\n\n⸻\n\n🏢 Om Nordic Autos\nNordic Autos er specialiseret i leasing og salg af eksklusive kvalitetsbiler. Vi tilbyder professionel rådgivning, gennemsigtige leasingvilkår og en tryg proces fra start til slut.\n\n📞 Kontakt os for et skræddersyet leasingtilbud eller fremvisning (Fremvisning efter aftale)',
+                    status: 'available',
+                    isNew: true,
+                    specifications: {
+                        engine: 'Electric Motor',
+                        transmission: 'Automatgear',
+                        drivetrain: 'Forhjulstræk',
+                        acceleration: '8.9 sekunder (0-100 km/t)',
+                        topSpeed: '160 km/t',
+                        range: '424 km',
+                        batteryCapacity: '66.5 kWh',
+                        energyConsumption: '179 Wh/km',
+                        towingCapacity: '750 kg'
+                    },
+                    history: {
+                        previousOwners: 1,
+                        serviceHistory: true,
+                        accidents: false
+                    }
+                };
+                
+                console.log('📤 Sender bil data:', carData);
+                
+                const { data, error } = await window.supabaseClient
+                    .from('cars')
+                    .insert([carData])
+                    .select();
+                
+                if (error) throw error;
+                
+                console.log('✅ Bil tilføjet:', data);
+                result.className = 'result success';
+                result.innerHTML = `
+                    <h3 style="margin-bottom: 10px;">✅ Mercedes EQA250 Progressive tilføjet!</h3>
+                    <p>Bilen er nu tilgængelig på hjemmesiden.</p>
+                    <p style="margin-top: 15px;"><strong>Bil ID:</strong> ${data[0].id}</p>
+                    <p><strong>Næste skridt:</strong> Gå til lagerbiler-siden og genindlæs for at se bilen.</p>
+                `;
+                result.style.display = 'block';
+                btn.textContent = '✅ Bil tilføjet!';
+                
+            } catch (error) {
+                console.error('❌ Fejl:', error);
+                result.className = 'result error';
+                result.innerHTML = `<h3 style="margin-bottom: 10px;">❌ Fejl ved tilføjelse</h3><p>${error.message}</p>`;
+                result.style.display = 'block';
+                btn.disabled = false;
+                btn.textContent = '➕ Tilføj bil til database';
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

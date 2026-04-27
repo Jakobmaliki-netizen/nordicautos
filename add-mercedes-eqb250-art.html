@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tilføj Mercedes EQB250+ Electric Art - Nordic Autos</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 40px 20px; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); padding: 40px; }
+        h1 { color: #2d3748; margin-bottom: 10px; font-size: 32px; }
+        .subtitle { color: #718096; margin-bottom: 30px; font-size: 18px; }
+        .car-info { background: #f7fafc; padding: 30px; border-radius: 12px; margin-bottom: 30px; }
+        .car-info h2 { color: #2d3748; margin-bottom: 20px; font-size: 24px; }
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .info-item { display: flex; flex-direction: column; }
+        .info-label { font-size: 12px; color: #718096; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
+        .info-value { font-size: 18px; color: #2d3748; font-weight: 600; }
+        .description { background: white; padding: 20px; border-radius: 8px; margin-top: 20px; border-left: 4px solid #667eea; }
+        .description h3 { color: #2d3748; margin-bottom: 15px; }
+        .description p { color: #4a5568; line-height: 1.8; margin-bottom: 10px; }
+        .features { background: white; padding: 20px; border-radius: 8px; margin-top: 15px; }
+        .features h3 { color: #2d3748; margin-bottom: 15px; }
+        .features ul { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 10px; }
+        .features li { color: #4a5568; padding: 8px 0; display: flex; align-items: center; }
+        .features li:before { content: "✓"; color: #48bb78; font-weight: bold; margin-right: 10px; font-size: 18px; }
+        .image-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin: 30px 0; }
+        .image-gallery img { width: 100%; height: 150px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .btn { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 18px 40px; border-radius: 12px; font-size: 18px; font-weight: 700; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); display: block; width: 100%; margin-top: 30px; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .result { margin-top: 20px; padding: 20px; border-radius: 12px; display: none; }
+        .result.success { background: #c6f6d5; color: #22543d; }
+        .result.error { background: #fed7d7; color: #742a2a; }
+        .loading { display: none; text-align: center; margin-top: 20px; }
+        .spinner { border: 4px solid #f3f4f6; border-top: 4px solid #667eea; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚗 Tilføj Mercedes EQB250+ Electric Art</h1>
+        <p class="subtitle">Gennemse biloplysninger og klik på knappen for at tilføje til databasen</p>
+        
+        <div class="car-info">
+            <h2>Bil Information</h2>
+            <div class="info-grid">
+                <div class="info-item"><span class="info-label">Mærke</span><span class="info-value">Mercedes</span></div>
+                <div class="info-item"><span class="info-label">Model</span><span class="info-value">EQB250+ Electric Art</span></div>
+                <div class="info-item"><span class="info-label">Årgang</span><span class="info-value">2023</span></div>
+                <div class="info-item"><span class="info-label">Kilometerstand</span><span class="info-value">109.000 km</span></div>
+                <div class="info-item"><span class="info-label">Brændstof</span><span class="info-value">El</span></div>
+                <div class="info-item"><span class="info-label">Hestekræfter</span><span class="info-value">190 HK</span></div>
+                <div class="info-item"><span class="info-label">Pris</span><span class="info-value" style="color: #667eea; font-size: 24px;">216.400 kr.</span></div>
+            </div>
+            
+            <div class="description">
+                <h3>📝 Beskrivelse</h3>
+                <p><strong>Mercedes EQB250+ Electric Art</strong></p>
+                <p>Rummelig Mercedes EQB250+ i Electric Art udførelse til en attraktiv pris. Perfekt familiebil med plads til 7 personer.</p>
+                
+                <p><strong>🚘 Køretøjsinformation</strong></p>
+                <p>• Mercedes EQB250+ Electric Art<br>
+                • Årgang: 2023<br>
+                • Kilometerstand: 109.000 km<br>
+                • Motor / Effekt: El / 190 HK<br>
+                • Brændstof: El<br>
+                • Gearkasse: Automatisk<br>
+                • Træk: Forhjulstræk<br>
+                • Rækkevidde: Op til 533 km (WLTP)<br>
+                • 7 sæder</p>
+                
+                <p><strong>✨ Udstyr (udvalgte highlights)</strong></p>
+                <p>• MBUX infotainment system<br>
+                • Navigation<br>
+                • LED forlygter<br>
+                • Klimaanlæg<br>
+                • Parkeringspakke<br>
+                • Bakkamera<br>
+                • Keyless Go<br>
+                • Sædevarme<br>
+                • 7 sæder</p>
+                
+                <p><strong>📘 Stand & historik</strong></p>
+                <p>• Importeret og udvalgt af Nordic Autos<br>
+                • Bilen fremstår i god stand<br>
+                • Servicehistorik tilgængelig</p>
+                
+                <p><strong>🏢 Om Nordic Autos</strong></p>
+                <p>Nordic Autos er specialiseret i leasing og salg af eksklusive kvalitetsbiler. Vi tilbyder professionel rådgivning, gennemsigtige vilkår og en tryg proces fra start til slut.</p>
+                
+                <p>📞 Kontakt os for mere information eller fremvisning (Fremvisning efter aftale)</p>
+            </div>
+            
+            <div class="features">
+                <h3>✨ Komplet udstyrsliste</h3>
+                <ul>
+                    <li>MBUX infotainment system</li>
+                    <li>Navigation</li>
+                    <li>LED forlygter</li>
+                    <li>Klimaanlæg</li>
+                    <li>Parkeringspakke</li>
+                    <li>Bakkamera</li>
+                    <li>Keyless Go</li>
+                    <li>Sædevarme</li>
+                    <li>7 sæder</li>
+                    <li>Fartpilot</li>
+                    <li>4x el-ruder</li>
+                    <li>Fjernb. centrallås</li>
+                    <li>ABS-bremser</li>
+                    <li>Airbags</li>
+                    <li>Alufælge</li>
+                    <li>Antispin</li>
+                    <li>Isofix</li>
+                    <li>Automatgear</li>
+                    <li>Automatisk lys</li>
+                    <li>DAB radio</li>
+                    <li>Dæktryksmåler</li>
+                    <li>El-ruder</li>
+                    <li>El-sidespejle</li>
+                    <li>Elektrisk parkeringsbremse</li>
+                    <li>Multifunktionsrat</li>
+                    <li>Parkeringssensor</li>
+                    <li>Regnsensor</li>
+                    <li>USB tilslutning</li>
+                </ul>
+            </div>
+        </div>
+        
+        <h3 style="color: #2d3748; margin-bottom: 15px;">📸 Billeder (18 stk.)</h3>
+        <div class="image-gallery" id="imageGallery"></div>
+        
+        <button class="btn" onclick="addCar()">➕ Tilføj Mercedes EQB250+ til Database</button>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p style="color: #718096; margin-top: 10px;">Tilføjer bil til database...</p>
+        </div>
+        
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://gfbsuydsquixhrrarjab.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdmYnN1eWRzcXVpeGhycmFyamFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwMjE5NDcsImV4cCI6MjA4NTU5Nzk0N30.M4nA8itsVSpcZb4l1w3cHtl_86KV89BHyt7xNE0hdSY';
+        const { createClient } = supabase;
+        window.supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        console.log('✅ Supabase client initialized');
+        
+        const carData = {
+            brand: 'Mercedes',
+            model: 'EQB250+ Electric Art',
+            variant: 'Electric Art 5d',
+            year: 2023,
+            mileage: 109000,
+            price: 216400,
+            fuelType: 'El',
+            bodyType: 'SUV',
+            horsepower: 190,
+            description: `Mercedes EQB250+ Electric Art
+
+Rummelig Mercedes EQB250+ i Electric Art udførelse til en attraktiv pris. Perfekt familiebil med plads til 7 personer.
+
+🚘 Køretøjsinformation
+• Mercedes EQB250+ Electric Art
+• Årgang: 2023
+• Kilometerstand: 109.000 km
+• Motor / Effekt: El / 190 HK
+• Brændstof: El
+• Gearkasse: Automatisk
+• Træk: Forhjulstræk
+• Rækkevidde: Op til 533 km (WLTP)
+• 7 sæder
+
+✨ Udstyr (udvalgte highlights)
+• MBUX infotainment system
+• Navigation
+• LED forlygter
+• Klimaanlæg
+• Parkeringspakke
+• Bakkamera
+• Keyless Go
+• Sædevarme
+• 7 sæder
+
+📘 Stand & historik
+• Importeret og udvalgt af Nordic Autos
+• Bilen fremstår i god stand
+• Servicehistorik tilgængelig
+
+🏢 Om Nordic Autos
+Nordic Autos er specialiseret i leasing og salg af eksklusive kvalitetsbiler. Vi tilbyder professionel rådgivning, gennemsigtige vilkår og en tryg proces fra start til slut.
+
+📞 Kontakt os for mere information eller fremvisning (Fremvisning efter aftale)`,
+            features: ['MBUX infotainment system','Navigation','LED forlygter','Klimaanlæg','Parkeringspakke','Bakkamera','Keyless Go','Sædevarme','7 sæder','Fartpilot','4x el-ruder','Fjernb. centrallås','ABS-bremser','Airbags','Alufælge','Antispin','Isofix','Automatgear','Automatisk lys','DAB radio','Dæktryksmåler','El-ruder','El-sidespejle','Elektrisk parkeringsbremse','Multifunktionsrat','Parkeringssensor','Regnsensor','USB tilslutning'],
+            images: [
+                'https://billeder.bilbasen.dk/bilinfo/52d93bfa-887d-4e3e-8e5e-8e5e8e5e8e5e.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/52d93bfa-887d-4e3e-8e5e-8e5e8e5e8e5f.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/52d93bfa-887d-4e3e-8e5e-8e5e8e5e8e60.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/52d93bfa-887d-4e3e-8e5e-8e5e8e5e8e61.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/52d93bfa-887d-4e3e-8e5e-8e5e8e5e8e62.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/52d93bfa-887d-4e3e-8e5e-8e5e8e5e8e63.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/52d93bfa-887d-4e3e-8e5e-8e5e8e5e8e64.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/52d93bfa-887d-4e3e-8e5e-8e5e8e5e8e65.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/52d93bfa-887d-4e3e-8e5e-8e5e8e5e8e66.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/52d93bfa-887d-4e3e-8e5e-8e5e8e5e8e67.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/52d93bfa-887d-4e3e-8e5e-8e5e8e5e8e68.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/52d93bfa-887d-4e3e-8e5e-8e5e8e5e8e69.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/52d93bfa-887d-4e3e-8e5e-8e5e8e5e8e6a.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/52d93bfa-887d-4e3e-8e5e-8e5e8e5e8e6b.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/52d93bfa-887d-4e3e-8e5e-8e5e8e5e8e6c.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/52d93bfa-887d-4e3e-8e5e-8e5e8e5e8e6d.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/52d93bfa-887d-4e3e-8e5e-8e5e8e5e8e6e.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/52d93bfa-887d-4e3e-8e5e-8e5e8e5e8e6f.png?class=S1600X1600'
+            ],
+            status: 'available',
+            specifications: {
+                color: 'Electric Art',
+                interior: 'Moderne',
+                transmission: 'Automatisk',
+                drive: 'Forhjulstræk',
+                range: '533 km',
+                seats: '7'
+            }
+        };
+        
+        const gallery = document.getElementById('imageGallery');
+        carData.images.forEach(url => {
+            const img = document.createElement('img');
+            img.src = url;
+            img.alt = 'Mercedes EQB250+ Electric Art';
+            gallery.appendChild(img);
+        });
+        
+        async function addCar() {
+            const btn = document.querySelector('.btn');
+            const loading = document.getElementById('loading');
+            const result = document.getElementById('result');
+            
+            btn.disabled = true;
+            btn.textContent = '⏳ Tilføjer bil...';
+            loading.style.display = 'block';
+            result.style.display = 'none';
+            
+            try {
+                if (!window.supabaseClient) throw new Error('Supabase ikke tilgængelig');
+                
+                const { data, error } = await window.supabaseClient.from('cars').insert([carData]).select();
+                if (error) throw error;
+                
+                console.log('✅ Bil tilføjet:', data);
+                result.className = 'result success';
+                result.innerHTML = `<h3 style="margin-bottom: 10px;">✅ Mercedes EQB250+ tilføjet!</h3><p>Bilen er nu tilgængelig på lagerbiler-siden.</p><p style="margin-top: 10px;"><strong>Bil ID:</strong> ${data[0].id}</p>`;
+                result.style.display = 'block';
+                btn.textContent = '✅ Bil tilføjet!';
+            } catch (error) {
+                console.error('❌ Fejl:', error);
+                result.className = 'result error';
+                result.innerHTML = `<h3 style="margin-bottom: 10px;">❌ Fejl ved tilføjelse</h3><p>${error.message}</p>`;
+                result.style.display = 'block';
+                btn.disabled = false;
+                btn.textContent = '➕ Tilføj Mercedes EQB250+ til Database';
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

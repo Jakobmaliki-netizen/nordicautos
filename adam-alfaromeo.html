@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tilføj Alfa Romeo Junior - Nordic Autos</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 40px 20px; }
+        .container { max-width: 800px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); padding: 40px; }
+        h1 { color: #2d3748; margin-bottom: 10px; font-size: 32px; }
+        .subtitle { color: #718096; margin-bottom: 30px; font-size: 18px; }
+        .car-info { background: #f7fafc; padding: 30px; border-radius: 12px; margin-bottom: 30px; border-left: 4px solid #667eea; }
+        .car-info h2 { color: #2d3748; margin-bottom: 15px; font-size: 20px; }
+        .car-info p { color: #4a5568; line-height: 1.6; margin-bottom: 10px; }
+        .btn { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 18px 40px; border-radius: 12px; font-size: 18px; font-weight: 700; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); display: block; width: 100%; margin-top: 30px; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .result { margin-top: 20px; padding: 20px; border-radius: 12px; display: none; }
+        .result.success { background: #c6f6d5; color: #22543d; }
+        .result.error { background: #fed7d7; color: #742a2a; }
+        .loading { display: none; text-align: center; margin-top: 20px; }
+        .spinner { border: 4px solid #f3f4f6; border-top: 4px solid #667eea; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚗 Tilføj Alfa Romeo Junior</h1>
+        <p class="subtitle">Elettrica Speciale 5d - 2025</p>
+        
+        <div class="car-info">
+            <h2>📋 Bil information:</h2>
+            <p><strong>Mærke:</strong> Alfa Romeo</p>
+            <p><strong>Model:</strong> Junior</p>
+            <p><strong>Variant:</strong> Elettrica Speciale 5d</p>
+            <p><strong>Årgang:</strong> 2025</p>
+            <p><strong>Kilometerstand:</strong> 11.800 km</p>
+            <p><strong>Pris:</strong> 194.800 kr.</p>
+            <p><strong>Brændstof:</strong> El</p>
+            <p><strong>Hestekræfter:</strong> 156 hk</p>
+            <p><strong>Rækkevidde:</strong> 410 km</p>
+            <p><strong>Billeder:</strong> 9 stk.</p>
+        </div>
+        
+        <button class="btn" onclick="addCar()">➕ Tilføj bil til database</button>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p style="color: #718096; margin-top: 10px;">Tilføjer bil...</p>
+        </div>
+        
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://gfbsuydsquixhrrarjab.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdmYnN1eWRzcXVpeGhycmFyamFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwMjE5NDcsImV4cCI6MjA4NTU5Nzk0N30.M4nA8itsVSpcZb4l1w3cHtl_86KV89BHyt7xNE0hdSY';
+        const { createClient } = supabase;
+        window.supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        console.log('✅ Supabase client initialized');
+        
+        async function addCar() {
+            const btn = document.querySelector('.btn');
+            const loading = document.getElementById('loading');
+            const result = document.getElementById('result');
+            
+            btn.disabled = true;
+            btn.textContent = '⏳ Tilføjer bil...';
+            loading.style.display = 'block';
+            result.style.display = 'none';
+            
+            try {
+                if (!window.supabaseClient) throw new Error('Supabase ikke tilgængelig');
+                
+                const carData = {
+                    brand: 'Alfa Romeo',
+                    model: 'Junior',
+                    variant: 'Elettrica Speciale 5d',
+                    year: 2025,
+                    mileage: 11800,
+                    price: 194800,
+                    fuelType: 'El',
+                    bodyType: 'SUV',
+                    horsepower: 156,
+                    images: [
+                        'https://billeder.bilbasen.dk/bilinfo/45b0c4de-08cf-4a78-b37d-372a3b6c18b0.jpeg?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/a60fe8fe-5165-47b8-97aa-11482c316271.jpeg?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/f8d0fe48-0d4a-4615-b081-0d3bc2a8d099.jpeg?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/6de63ad6-3f3f-48fd-8b3e-9b6ffa29add2.jpeg?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/c3f9dba8-c6b3-48bd-9a0b-62584bfa10b3.jpeg?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/0a7ac77c-92e9-4c7f-9219-d911397a1f1a.jpeg?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/6116b1c5-41c4-4e83-8547-09fde3321339.jpeg?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/a7dc85a2-7db6-4351-a7bb-8383660dc687.jpeg?class=S1600X1600',
+                        'https://billeder.bilbasen.dk/bilinfo/3cb36ad2-d3f9-4029-80e2-83f469ebc863.png?class=S1600X1600'
+                    ],
+                    features: [
+                        'Speciale udstyrspakke',
+                        'Ambient belysning',
+                        'Adaptiv fartpilot',
+                        'Elektrisk bagklap',
+                        'Nøglefri adgang / Keyless',
+                        'Fjernlys assistent',
+                        'Vognbane assistent',
+                        'LED Lys',
+                        'Navigation',
+                        'Trådløs mobilopladning',
+                        'Skilte genkendelse',
+                        'Parkerings sensor',
+                        '2 Zonet klima anlæg',
+                        'Lys og regnsensor',
+                        'Apple CarPlay/Android Auto',
+                        'Kollisionadvarsel med bremsefunktion',
+                        'Sort loftbeklædning',
+                        'Isofix',
+                        'Matrix LED forlygter',
+                        'Massage i førersæde',
+                        'Varmepumpe'
+                    ],
+                    description: 'Alfa Romeo Junior Elettrica Speciale\n\nBilen sælges for en kunde, og kan være her efter aftale.\n\n⸻\n\n🚘 Køretøjsinformation\n• Alfa Romeo Junior Elettrica Speciale\n• Årgang: 01/2025\n• Kilometerstand: 11.800\n• Motor / Effekt: Elektrisk\n• Brændstof: Elektrisk\n• Gearkasse: Aut.\n• Træk: Nej\n• Farve (udvendig / kabine): Beige med sort kabine.\n• Rækkevidde: 410 km.\n\n⸻\n\n✨ Udstyr (udvalgte highlights)\n• Speciale\n• Ambient belysning\n• Adaptiv fartpilot\n• Elektrisk bagklap\n• Nøglefri adgang / Keyless\n• Fjernlys assistent\n• Vognbane assistent\n• LED Lys\n• Navigation\n• Trådløs mobilopladning\n• Skilte genkendelse\n• Parkerings sensor\n• 2 Zonet klima anlæg\n• Lys og regnsensor\n• Apple CarPlay/Android Auto\n• Kollisionadvarsel med bremsefunktion\n• Sort loftbeklædning\n• Isofix\n(Fuld udstyrsliste fremsendes ved henvendelse)\n\nBilen sælges for en kunde.\n\n⸻\n\n📘 Stand & historik\n• Importeret og udvalgt af Nordic Autos.\n• Fuld servicehistorik ved Alfa Romeo.\n• Bilen fremstår i meget flot og velholdt stand\n\n⸻\n\n📑 Leasingvilkår\n• Vi tilbyder Privatleasing, erhvervsleasing samt split-leasing.\n• Leasingaftale kan tilpasses individuelt\n• Mulighed for tilkøb af service- og garantiløsning\n• Forsikring kan evt. formidles\n\n⸻\n\n🏢 Om Nordic Autos\nNordic Autos er specialiseret i leasing og salg af eksklusive kvalitetsbiler. Vi tilbyder professionel rådgivning, gennemsigtige leasingvilkår og en tryg proces fra start til slut.\n\n📞 Kontakt os for et skræddersyet leasingtilbud eller fremvisning (Fremvisning efter aftale)',
+                    status: 'available',
+                    isNew: true,
+                    specifications: {
+                        engine: 'Electric Motor',
+                        transmission: 'Automatgear',
+                        drivetrain: 'Forhjulstræk',
+                        acceleration: '9.0 sekunder (0-100 km/t)',
+                        topSpeed: '150 km/t',
+                        range: '410 km',
+                        batteryCapacity: '51.0 kWh',
+                        energyConsumption: '151 Wh/km'
+                    },
+                    history: {
+                        previousOwners: 1,
+                        serviceHistory: true,
+                        accidents: false
+                    }
+                };
+                
+                console.log('📤 Sender bil data:', carData);
+                
+                const { data, error } = await window.supabaseClient
+                    .from('cars')
+                    .insert([carData])
+                    .select();
+                
+                if (error) throw error;
+                
+                console.log('✅ Bil tilføjet:', data);
+                result.className = 'result success';
+                result.innerHTML = `
+                    <h3 style="margin-bottom: 10px;">✅ Alfa Romeo Junior tilføjet!</h3>
+                    <p>Bilen er nu tilgængelig på hjemmesiden.</p>
+                    <p style="margin-top: 15px;"><strong>Bil ID:</strong> ${data[0].id}</p>
+                    <p><strong>Næste skridt:</strong> Gå til lagerbiler-siden og genindlæs for at se bilen.</p>
+                `;
+                result.style.display = 'block';
+                btn.textContent = '✅ Bil tilføjet!';
+                
+            } catch (error) {
+                console.error('❌ Fejl:', error);
+                result.className = 'result error';
+                result.innerHTML = `<h3 style="margin-bottom: 10px;">❌ Fejl ved tilføjelse</h3><p>${error.message}</p>`;
+                result.style.display = 'block';
+                btn.disabled = false;
+                btn.textContent = '➕ Tilføj bil til database';
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

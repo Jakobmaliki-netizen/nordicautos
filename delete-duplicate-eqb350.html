@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fjern duplikat EQB350</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 50px auto; padding: 20px; background: #f5f5f5; }
+        .card { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { color: #333; font-size: 22px; margin-bottom: 10px; }
+        .car-item { background: #f9f9f9; border: 1px solid #ddd; padding: 12px 15px; border-radius: 8px; margin: 8px 0; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+        .car-info { font-size: 13px; flex: 1; }
+        .car-info strong { display: block; font-size: 15px; margin-bottom: 3px; }
+        .del-btn { background: #dc2626; color: white; border: none; padding: 8px 16px; font-size: 13px; border-radius: 6px; cursor: pointer; white-space: nowrap; }
+        .del-btn:hover { background: #b91c1c; }
+        .del-btn:disabled { background: #9ca3af; }
+        #loadBtn { background: #2563eb; color: white; border: none; width: 100%; padding: 14px; font-size: 16px; border-radius: 8px; margin-bottom: 20px; cursor: pointer; }
+        #loadBtn:hover { background: #1d4ed8; }
+        #loadBtn:disabled { background: #9ca3af; }
+        #status { margin-top: 15px; padding: 12px; border-radius: 8px; display: none; font-weight: bold; text-align: center; }
+        .success { background: #d1fae5; color: #065f46; }
+        .error { background: #fee2e2; color: #991b1b; }
+        #carList { margin-top: 10px; }
+        .filter-note { color: #666; font-size: 13px; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1>🗑️ Fjern duplikat EQB350</h1>
+    <p class="filter-note">Viser alle biler i databasen - find de 2 EQB350 og slet den ene.</p>
+
+    <button id="loadBtn" onclick="loadCars()">🔍 Hent alle biler fra database</button>
+
+    <div id="carList"></div>
+    <div id="status"></div>
+</div>
+
+<script>
+const URL = 'https://gfbsuydsquixhrrarjab.supabase.co/rest/v1/cars?select=id,brand,model,year,mileage,price,created_at&order=brand.asc,model.asc';
+const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdmYnN1eWRzcXVpeGhycmFyamFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwMjE5NDcsImV4cCI6MjA4NTU5Nzk0N30.M4nA8itsVSpcZb4l1w3cHtl_86KV89BHyt7xNE0hdSY';
+const HEADERS = { 'apikey': KEY, 'Authorization': 'Bearer ' + KEY };
+
+async function loadCars() {
+    const btn = document.getElementById('loadBtn');
+    const carList = document.getElementById('carList');
+    btn.disabled = true;
+    btn.textContent = '⏳ Henter...';
+
+    try {
+        const res = await fetch(URL, { headers: HEADERS });
+        const cars = await res.json();
+
+        if (!res.ok) throw new Error(JSON.stringify(cars));
+
+        carList.innerHTML = `<p style="color:#555; margin-bottom:10px;">Fandt <strong>${cars.length}</strong> biler:</p>` +
+            cars.map(car => `
+                <div class="car-item">
+                    <div class="car-info">
+                        <strong>${car.brand} ${car.model}</strong>
+                        ${car.year} &nbsp;·&nbsp; ${(car.mileage||0).toLocaleString('da-DK')} km &nbsp;·&nbsp; ${(car.price||0).toLocaleString('da-DK')} kr
+                        <br><small style="color:#999;">ID: ${car.id} · Oprettet: ${new Date(car.created_at).toLocaleDateString('da-DK')}</small>
+                    </div>
+                    <button class="del-btn" onclick="deleteCar(${car.id}, this)">🗑️ Slet</button>
+                </div>
+            `).join('');
+
+        btn.textContent = '🔄 Opdater';
+        btn.disabled = false;
+
+    } catch (err) {
+        carList.innerHTML = `<p style="color:red;">❌ Fejl: ${err.message}</p>`;
+        btn.textContent = '🔍 Prøv igen';
+        btn.disabled = false;
+    }
+}
+
+async function deleteCar(id, btn) {
+    if (!confirm('Slet bil ID ' + id + '?')) return;
+    const status = document.getElementById('status');
+    btn.disabled = true;
+    btn.textContent = '...';
+
+    try {
+        const res = await fetch('https://gfbsuydsquixhrrarjab.supabase.co/rest/v1/cars?id=eq.' + id, {
+            method: 'DELETE',
+            headers: HEADERS
+        });
+
+        if (res.ok) {
+            status.className = 'success';
+            status.textContent = '✅ Bil ID ' + id + ' er slettet!';
+            status.style.display = 'block';
+            setTimeout(loadCars, 800);
+        } else {
+            const err = await res.json();
+            throw new Error(JSON.stringify(err));
+        }
+    } catch (err) {
+        status.className = 'error';
+        status.textContent = '❌ ' + err.message;
+        status.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = '🗑️ Slet';
+    }
+}
+</script>
+</body>
+</html>

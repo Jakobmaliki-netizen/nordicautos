@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Showroom Billede</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2d3748;
+            margin-bottom: 20px;
+        }
+        .status {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .success {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        .error {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        button:hover {
+            background: #5568d3;
+        }
+        .danger {
+            background: #f56565;
+        }
+        .danger:hover {
+            background: #e53e3e;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Test Showroom Billede</h1>
+        
+        <div id="status"></div>
+        
+        <div>
+            <button onclick="checkImage()">🔄 Tjek Billede</button>
+            <button onclick="clearImage()" class="danger">🗑️ Slet Billede</button>
+        </div>
+        
+        <div id="imageContainer"></div>
+    </div>
+
+    <script>
+        function checkImage() {
+            const statusDiv = document.getElementById('status');
+            const imageContainer = document.getElementById('imageContainer');
+            
+            try {
+                const savedContent = localStorage.getItem('nordic-autos-content');
+                
+                if (!savedContent) {
+                    statusDiv.className = 'status error';
+                    statusDiv.innerHTML = '❌ Ingen data fundet i localStorage.<br>Upload billedet via add-showroom-image.html først.';
+                    imageContainer.innerHTML = '';
+                    return;
+                }
+                
+                const content = JSON.parse(savedContent);
+                
+                if (!content.showroomImage) {
+                    statusDiv.className = 'status error';
+                    statusDiv.innerHTML = '❌ Showroom billede ikke fundet i localStorage.<br>Upload billedet via add-showroom-image.html først.';
+                    imageContainer.innerHTML = '';
+                    return;
+                }
+                
+                // Success - show image
+                statusDiv.className = 'status success';
+                statusDiv.innerHTML = '✅ Showroom billede fundet i localStorage!<br>Billedstørrelse: ' + (content.showroomImage.length / 1024).toFixed(2) + ' KB';
+                
+                imageContainer.innerHTML = `
+                    <h3>Preview:</h3>
+                    <img src="${content.showroomImage}" alt="Showroom billede">
+                `;
+                
+            } catch (error) {
+                statusDiv.className = 'status error';
+                statusDiv.innerHTML = '❌ Fejl: ' + error.message;
+                imageContainer.innerHTML = '';
+            }
+        }
+        
+        function clearImage() {
+            if (!confirm('Er du sikker på at du vil slette showroom-billedet?')) {
+                return;
+            }
+            
+            try {
+                const savedContent = localStorage.getItem('nordic-autos-content');
+                if (savedContent) {
+                    const content = JSON.parse(savedContent);
+                    delete content.showroomImage;
+                    localStorage.setItem('nordic-autos-content', JSON.stringify(content));
+                }
+                
+                document.getElementById('status').className = 'status success';
+                document.getElementById('status').innerHTML = '✅ Showroom billede slettet!';
+                document.getElementById('imageContainer').innerHTML = '';
+                
+            } catch (error) {
+                document.getElementById('status').className = 'status error';
+                document.getElementById('status').innerHTML = '❌ Fejl: ' + error.message;
+            }
+        }
+        
+        // Check on load
+        window.addEventListener('load', checkImage);
+    </script>
+</body>
+</html>

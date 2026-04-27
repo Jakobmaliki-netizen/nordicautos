@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slet Mercedes A200 - Nordic Autos</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        h1 {
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 28px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            color: #718096;
+            margin-bottom: 30px;
+            font-size: 16px;
+            text-align: center;
+        }
+        
+        .warning {
+            background: #fed7d7;
+            color: #742a2a;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-left: 4px solid #f56565;
+        }
+        
+        .warning strong {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        .car-info {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+        
+        .car-info h3 {
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+        
+        .car-info p {
+            color: #4a5568;
+            margin-bottom: 8px;
+        }
+        
+        .btn {
+            background: #f56565;
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(245, 101, 101, 0.4);
+            display: block;
+            width: 100%;
+        }
+        
+        .btn:hover {
+            background: #e53e3e;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 101, 101, 0.6);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-cancel {
+            background: #718096;
+            margin-top: 15px;
+        }
+        
+        .btn-cancel:hover {
+            background: #4a5568;
+        }
+        
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 12px;
+            display: none;
+        }
+        
+        .result.success {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        
+        .result.error {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f4f6;
+            border-top: 4px solid #f56565;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🗑️ Slet Mercedes A200</h1>
+        <p class="subtitle">Bilen er solgt og skal fjernes fra lagerbiler</p>
+        
+        <div class="warning">
+            <strong>⚠️ Advarsel!</strong>
+            Denne handling kan ikke fortrydes. Mercedes A200 vil blive permanent slettet fra databasen.
+        </div>
+        
+        <div class="car-info">
+            <h3>Bil der slettes:</h3>
+            <p><strong>Mærke:</strong> Mercedes-Benz</p>
+            <p><strong>Model:</strong> A200</p>
+            <p><strong>Årgang:</strong> 2022</p>
+            <p><strong>Leasingydelse:</strong> 1.200 kr./md.</p>
+        </div>
+        
+        <button class="btn" onclick="deleteCar()">
+            🗑️ Slet Mercedes A200
+        </button>
+        
+        <button class="btn btn-cancel" onclick="window.close()">
+            ❌ Annuller
+        </button>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p style="color: #718096; margin-top: 10px;">Sletter bil...</p>
+        </div>
+        
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        let supabase;
+        
+        // Initialize Supabase
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof window.supabaseClient !== 'undefined') {
+                supabase = window.supabaseClient;
+                console.log('✅ Supabase initialiseret');
+            } else {
+                console.error('❌ Supabase ikke tilgængelig');
+                showResult('error', '❌ Fejl: Supabase ikke tilgængelig. Tjek supabase-config.js');
+            }
+        });
+        
+        async function deleteCar() {
+            if (!confirm('Er du HELT SIKKER på at du vil slette Mercedes A200?\n\nDenne handling kan IKKE fortrydes!')) {
+                return;
+            }
+            
+            const btn = document.querySelector('.btn');
+            const loading = document.getElementById('loading');
+            const result = document.getElementById('result');
+            
+            btn.disabled = true;
+            btn.textContent = '⏳ Sletter...';
+            loading.style.display = 'block';
+            result.style.display = 'none';
+            
+            try {
+                console.log('🔍 Søger efter Mercedes A200...');
+                
+                // Find Mercedes A200 in database - search for A200 in model field
+                const { data: cars, error: searchError } = await supabase
+                    .from('cars')
+                    .select('*')
+                    .ilike('model', '%A200%');
+                
+                if (searchError) {
+                    throw new Error('Fejl ved søgning: ' + searchError.message);
+                }
+                
+                console.log('📊 Fundet biler:', cars);
+                
+                if (!cars || cars.length === 0) {
+                    throw new Error('Mercedes A200 ikke fundet i databasen. Måske er den allerede slettet?');
+                }
+                
+                // Find the Mercedes A200 (not A250)
+                const a200 = cars.find(car => 
+                    car.model && car.model.includes('A200') && 
+                    car.brand && car.brand.toLowerCase().includes('mercedes')
+                );
+                
+                if (!a200) {
+                    throw new Error('Mercedes A200 ikke fundet. Fandt kun: ' + cars.map(c => c.brand + ' ' + c.model).join(', '));
+                }
+                
+                console.log('✅ Fundet Mercedes A200:', a200);
+                
+                const carId = a200.id;
+                
+                // Delete the car
+                console.log('🗑️ Sletter bil med ID:', carId);
+                
+                const { error: deleteError } = await supabase
+                    .from('cars')
+                    .delete()
+                    .eq('id', carId);
+                
+                if (deleteError) {
+                    throw new Error('Fejl ved sletning: ' + deleteError.message);
+                }
+                
+                console.log('✅ Mercedes A200 slettet!');
+                
+                showResult('success', `✅ Mercedes A200 er slettet!<br><br>Bilen vises ikke længere på lagerbiler-siden.<br><br>Genindlæs lagerbiler.html for at se ændringen.`);
+                
+                btn.textContent = '✅ Slettet!';
+                
+            } catch (error) {
+                console.error('❌ Fejl:', error);
+                showResult('error', '❌ Fejl: ' + error.message);
+                btn.disabled = false;
+                btn.textContent = '🗑️ Slet Mercedes A200';
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+        
+        function showResult(type, message) {
+            const result = document.getElementById('result');
+            result.className = 'result ' + type;
+            result.innerHTML = message;
+            result.style.display = 'block';
+            
+            result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    </script>
+</body>
+</html>
