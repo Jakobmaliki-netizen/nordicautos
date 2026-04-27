@@ -78,6 +78,41 @@ class CarCatalog {
                     return !(isMercedes && isA200);
                 });
                 
+                // Hide Skoda Enyaq (sold)
+                this.cars = this.cars.filter(car => {
+                    const isSkoda = car.brand && car.brand.toLowerCase().includes('skoda');
+                    const isEnyaq = car.model && car.model.toLowerCase().includes('enyaq');
+                    return !(isSkoda && isEnyaq);
+                });
+                
+                // Hide BMW X5 (sold)
+                this.cars = this.cars.filter(car => {
+                    const isBMW = car.brand && car.brand.toLowerCase().includes('bmw');
+                    const isX5 = car.model && car.model.toLowerCase().includes('x5');
+                    return !(isBMW && isX5);
+                });
+                
+                // Hide Mini Cooper SE (sold)
+                this.cars = this.cars.filter(car => {
+                    const isMini = car.brand && car.brand.toLowerCase().includes('mini');
+                    const isCooper = car.model && car.model.toLowerCase().includes('cooper');
+                    return !(isMini && isCooper);
+                });
+                
+                // Hide all Mercedes EQA models (sold)
+                this.cars = this.cars.filter(car => {
+                    const isMercedes = car.brand && car.brand.toLowerCase().includes('mercedes');
+                    const isEQA = car.model && car.model.toLowerCase().includes('eqa');
+                    return !(isMercedes && isEQA);
+                });
+                
+                // Hide all Mercedes EQB models (sold)
+                this.cars = this.cars.filter(car => {
+                    const isMercedes = car.brand && car.brand.toLowerCase().includes('mercedes');
+                    const isEQB = car.model && car.model.toLowerCase().includes('eqb');
+                    return !(isMercedes && isEQB);
+                });
+                
                 window.carsData = this.cars; // Make available globally
                 
                 return;
