@@ -296,6 +296,7 @@ class CarCatalog {
             this.filters.bodyTypes.push(bodyType);
         }
         
+        this._resetPageOnNextFilter = true;
         this.applyFiltersAndSort();
     }
 
@@ -311,6 +312,7 @@ class CarCatalog {
             this.filters.fuelTypes = this.filters.fuelTypes.filter(type => type !== fuelType);
         }
         
+        this._resetPageOnNextFilter = true;
         this.applyFiltersAndSort();
     }
 
