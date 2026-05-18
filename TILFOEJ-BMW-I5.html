@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tilføj BMW i5 - Nordic Autos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 32px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 18px;
+            text-align: center;
+        }
+        
+        .info-box {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+        }
+        
+        .info-box h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .info-box p {
+            color: #555;
+            line-height: 1.8;
+            margin: 8px 0;
+            font-size: 15px;
+        }
+        
+        .info-box strong {
+            color: #333;
+            font-weight: 600;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            font-size: 20px;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        button:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(102, 126, 234, 0.6);
+        }
+        
+        button:active:not(:disabled) {
+            transform: translateY(-1px);
+        }
+        
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        #status {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 12px;
+            font-weight: 500;
+            text-align: center;
+            display: none;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        #status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #c3e6cb;
+            display: block;
+        }
+        
+        #status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 2px solid #f5c6cb;
+            display: block;
+        }
+        
+        #status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 2px solid #bee5eb;
+            display: block;
+        }
+        
+        .highlight {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .highlight p {
+            color: #856404;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚗 BMW i5 eDrive40 Touring</h1>
+        <p class="subtitle">M-Sport 2025 - Klar til upload</p>
+        
+        <div class="info-box">
+            <h3>📋 Bil Information</h3>
+            <p><strong>Model:</strong> BMW i5 eDrive40 Touring M-Sport 5d</p>
+            <p><strong>Årgang:</strong> 2025</p>
+            <p><strong>Kilometerstand:</strong> 6.000 km</p>
+            <p><strong>Pris:</strong> 588.600 kr.</p>
+            <p><strong>Farve:</strong> Mørkblåmetal</p>
+            <p><strong>Effekt:</strong> 340 hk / 400 nm</p>
+            <p><strong>Rækkevidde:</strong> 580 km (WLTP)</p>
+            <p><strong>Batteri:</strong> 81,2 kWh</p>
+        </div>
+
+        <div class="info-box">
+            <h3>✨ Highlights</h3>
+            <p>• M Sport interiør & eksteriør pakke</p>
+            <p>• Bowers & Wilkins lydanlæg</p>
+            <p>• 360° kamera + Parking Assistant</p>
+            <p>• 4-zone klimaanlæg</p>
+            <p>• Elektrisk svingbart træk</p>
+            <p>• 36 måneders BMW garanti</p>
+            <p>• 17 professionelle billeder</p>
+        </div>
+
+        <div class="highlight">
+            <p><strong>⚠️ VIGTIGT:</strong> Denne fil virker KUN via Vercel URL, ikke lokalt. Åbn filen på:<br><br>
+            <strong>https://nordicautos.vercel.app/TILFOEJ-BMW-I5.html</strong></p>
+        </div>
+
+        <button id="addCarBtn" onclick="addCar()">
+            🚀 TILFØJ BMW i5 TIL DATABASE
+        </button>
+
+        <div id="status"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Supabase configuration
+        const SUPABASE_URL = 'https://gfbsuydsquixhrrarjab.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdmYnN1eWRzcXVpeGhycmFyamFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwMjE5NDcsImV4cCI6MjA4NTU5Nzk0N30.M4nA8itsVSpcZb4l1w3cHtl_86KV89BHyt7xNE0hdSY';
+
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        const carData = {
+            brand: 'BMW',
+            model: 'i5',
+            variant: 'eDrive40 Touring M-Sport 5d',
+            year: 2025,
+            price: 588600,
+            mileage: 6000,
+            fuelType: 'El',
+            transmission: 'Automatisk',
+            horsepower: 340,
+            bodyType: 'Stationcar',
+            description: `BMW i5 40e Touring M. Sport
+
+Bilen hjemtages på bestilling og leveres direkte fra BMW i Tyskland. Hvis denne model ikke helt rammer dine ønsker, er du meget velkommen til at kontakte os med dine præferencer – så finder vi hurtigt den helt rigtige bil til dig.
+
+⸻
+
+🚘 Køretøjsinformation
+• BMW i5 40e Touring M. Sport
+• Årgang: 01/2025
+• Kilometerstand: 6.000
+• Motor / Effekt: Elektrisk
+• Brændstof: Elektrisk
+• Gearkasse: Aut.
+• Træk: Ja
+• Farve (udvendig / kabine): Mørkblåmetal med sort kabine
+• 36 måneders BMW Garanti fra første registreringsdato
+
+⸻
+
+✨ Udstyr (udvalgte highlights)
+• M Sport interiørpakke
+• M Sport eksteriørpakke
+• Højglans Shadow line
+• Bowers & Wilkins Lydanlæg
+• Apple CarPlay/Android Auto
+• 360 graders kamera
+• 4 zoners klimanlæg
+• Ratvarme
+• Elektrisk svingbart træk
+• Komfort adgang (nøglefri adgang)
+• Elektrisk sædejustering med memory
+• BMW IconicSound Electric
+• Driving Assistant Professional
+• Active Guard Sikkerhedssystem
+• Motorvejsassistent
+• Adaptive LED forlygter
+• Parking assistant professional
+• Active Guard Assistant
+• Trådsløs mobilopladning
+• M Sports-undervogn
+
+Vinterdæk kan tilkøbes til 12.500,- inkl. moms
+(Fuld udstyrsliste fremsendes ved henvendelse)
+
+⸻
+
+📘 Stand & historik
+• Importeret og udvalgt af Nordic Autos
+• Fuld servicehistorik ved BMW
+• Bilen fremstår i meget flot og velholdt stand
+
+⸻
+
+📑 Leasingvilkår
+• Vi tilbyder Privatleasing, erhvervsleasing samt split-leasing
+• Leasingaftale kan tilpasses individuelt
+• Mulighed for tilkøb af service- og garantiløsning
+• Forsikring kan evt. formidles
+
+⸻
+
+🏢 Om Nordic Autos
+Nordic Autos er specialiseret i leasing og salg af eksklusive kvalitetsbiler. Vi tilbyder professionel rådgivning, gennemsigtige leasingvilkår og en tryg proces fra start til slut.
+
+📞 Kontakt os for et skræddersyet leasingtilbud eller fremvisning (Fremvisning efter aftale)`,
+            images: [
+                'https://billeder.bilbasen.dk/bilinfo/03ea563d-8b42-4b1d-9469-b75c568dd625.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/19bcee68-a1d8-4b61-ab1e-d258fa7264c0.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/2bfbdd3e-3356-4c40-8f1a-3bcb3901c1ab.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/3332b922-3408-40d0-a080-9241253fcf9f.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/970584ed-b764-4fef-b1d4-0800455cdbde.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/2145cb87-4e57-4c98-bb65-bffce9d6bc31.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/ac9e2307-4ca4-4378-99d8-8a21cc9923a8.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/932db8b8-c6cd-4c71-8580-bbdee3c8c4cd.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/886b7bc6-0c72-4129-b4c5-66c04b1e05a7.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/cc8c8699-fdef-4496-bb42-97bc81686bbc.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/9ab28dde-5bf3-4a03-8adb-22f21698dd1f.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/737accc8-8ed7-4239-a913-578cd6b58eca.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/92bd3174-6fe0-420e-9842-69afbc194f66.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/127b22e6-1d41-4988-a6a9-a2b2f35dad20.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/6625f43f-1975-4086-81c8-58e4e187af55.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/ded961cd-2d83-4332-80c3-bdd430f31456.png?class=S1600X1600',
+                'https://billeder.bilbasen.dk/bilinfo/e104a79c-d9c0-46f8-b575-25759fe9f17b.png?class=S1600X1600'
+            ],
+            specifications: {
+                range: '580 km',
+                batteryCapacity: '81,2 kWh',
+                energyConsumption: '160 Wh/km',
+                acceleration: '6,1 sek',
+                topSpeed: '193 km/t',
+                torque: '400 nm',
+                doors: 5,
+                seats: 5,
+                weight: 2255,
+                towingCapacity: 1500,
+                trunkCapacity: '570 liter',
+                warranty: '36 måneder BMW garanti'
+            },
+            status: 'available',
+            isNew: true
+        };
+
+        async function addCar() {
+            const button = document.getElementById('addCarBtn');
+            const status = document.getElementById('status');
+            
+            button.disabled = true;
+            button.textContent = '⏳ TILFØJER BIL...';
+            status.className = 'info';
+            status.textContent = 'Opretter forbindelse til database...';
+            status.style.display = 'block';
+
+            try {
+                console.log('Tilføjer BMW i5 til Supabase...');
+
+                const { data, error } = await supabase
+                    .from('cars')
+                    .insert([carData])
+                    .select();
+
+                if (error) {
+                    throw error;
+                }
+
+                console.log('✅ Bil tilføjet:', data);
+                status.className = 'success';
+                status.innerHTML = `<strong>✅ SUCCESS!</strong><br><br>BMW i5 eDrive40 Touring er blevet tilføjet til databasen!<br><br>🎉 Du kan nu se bilen på hjemmesiden`;
+                button.textContent = '✓ BIL TILFØJET!';
+                button.style.background = '#28a745';
+
+            } catch (error) {
+                console.error('❌ Fejl:', error);
+                status.className = 'error';
+                status.innerHTML = `<strong>❌ FEJL</strong><br><br>${error.message}<br><br>Prøv at åbne filen via Vercel URL i stedet.`;
+                button.disabled = false;
+                button.textContent = '🔄 PRØV IGEN';
+            }
+        }
+
+        // Check connection on load
+        window.addEventListener('load', async () => {
+            const status = document.getElementById('status');
+            
+            // Check if running locally
+            if (window.location.protocol === 'file:') {
+                status.className = 'error';
+                status.innerHTML = `<strong>⚠️ LOKAL FIL DETEKTERET</strong><br><br>Denne fil virker ikke lokalt pga. CORS begrænsninger.<br><br>Åbn filen via:<br><strong>https://nordicautos.vercel.app/TILFOEJ-BMW-I5.html</strong>`;
+                status.style.display = 'block';
+                document.getElementById('addCarBtn').disabled = true;
+                return;
+            }
+
+            status.className = 'info';
+            status.textContent = '🔍 Tjekker database forbindelse...';
+            status.style.display = 'block';
+
+            try {
+                const { data, error } = await supabase
+                    .from('cars')
+                    .select('count')
+                    .limit(1);
+
+                if (error) throw error;
+
+                status.className = 'success';
+                status.textContent = '✅ Database forbindelse OK - Klar til at tilføje bil!';
+                
+                setTimeout(() => {
+                    status.style.display = 'none';
+                }, 3000);
+
+            } catch (error) {
+                status.className = 'error';
+                status.textContent = `⚠️ Database fejl: ${error.message}`;
+            }
+        });
+    </script>
+</body>
+</html>
